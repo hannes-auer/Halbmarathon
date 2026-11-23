@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Halbmarathon</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Halbmarathon">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#b23a26">
+<script src="config.js"></script>
+<script src="vendor/supabase.js"></script>
+<style>
+@font-face{font-family:Barlow;font-weight:400;font-display:swap;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:600;font-display:swap;src:url(fonts/barlow-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-weight:500;font-display:swap;src:url(fonts/barlow-condensed-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-weight:700;font-display:swap;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
+
+/* VOICE: sporty, direct, a training log you open every morning.
+   IDEA: a race bib + paper training diary.
+   PICTURE: the month calendar itself, coloured session marks, big countdown on the bib band.
+   COLOUR and TYPE: Heidelberg sandstone red dominant, ink support, Neckar teal accent; Barlow Condensed + Barlow.
+   LAYOUT: bib band on top with progress, calendar left, day + week right; stacks on phones. */
+:root{color-scheme:light dark;
+--bg:light-dark(#fbf8f5,#16110f);--card:light-dark(#fff,#211a17);--ink:light-dark(#1d1716,#f3ece8);--mute:light-dark(#6f625d,#b3a49d);
+--line:light-dark(#e8ddd6,#3a2f2a);--red:#b23a26;--redd:light-dark(#8e2b1b,#e0664f);--teal:light-dark(#0f766e,#3cc2b5);--gym:light-dark(#3b3330,#cfc4bf);
+--sky:light-dark(#2f7fc1,#7bb8ea);--amber:light-dark(#b7791f,#f0b44c);--gold:#d9a21b}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,.num{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;line-height:1.05;margin:0}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.bib{background:var(--red);color:#fff;padding:calc(clamp(20px,3vw,40px) + env(safe-area-inset-top)) max(4vw,16px,env(safe-area-inset-right)) clamp(20px,3vw,40px) max(4vw,16px,env(safe-area-inset-left))}
+.bibin{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(16px,3vw,48px);align-items:end}
+.bib h1{font-size:clamp(30px,4.4vw,48px);text-wrap:balance}
+.bib .sub{opacity:.9;margin-top:6px}
+.count{display:flex;align-items:baseline;gap:10px;margin-top:14px}
+.count .num{font-size:clamp(56px,9vw,96px)}
+.meters{display:grid;gap:14px}
+.meter .top{display:flex;justify-content:space-between;gap:8px;font-weight:600}
+.bar{height:14px;border-radius:7px;background:rgba(255,255,255,.25);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:#fff;border-radius:7px;transition:width .5s}
+.stats{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px;opacity:.95}
+.stats b{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:22px;margin-right:4px}
+.sync{font-size:13px;opacity:.85}
+main{max-width:1240px;margin:0 auto;padding:clamp(16px,3vw,36px) max(4vw,16px) calc(clamp(16px,3vw,36px) + env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(16px,3vw,36px)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(14px,2vw,22px)}
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.calhead h2{font-size:30px}
+.nav{display:flex;gap:6px}
+.nav button,.today{min-width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;padding:0 12px}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{font-size:13px;color:var(--mute);text-align:center;padding-bottom:4px}
+.day{min-height:76px;border-radius:9px;border:1px solid var(--line);background:var(--bg);padding:5px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px}
+.day.out{visibility:hidden}
+.day .d{font-size:13px;font-weight:600;color:var(--mute)}
+.day.now .d{color:#fff;background:var(--red);border-radius:6px;padding:0 6px;align-self:flex-start}
+.day.sel{border:2px solid var(--ink)}
+.day.race{background:light-dark(#fff4d6,#3a2f10)}
+.mk{height:14px;border-radius:4px;background:var(--c);color:#fff;font-size:11px;font-weight:700;line-height:14px;text-align:center}
+.mk.done::after{content:'✓'}
+.mk.miss{opacity:.3}
+.mk.info{opacity:.45}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:13px;color:var(--mute)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:16px;height:10px;border-radius:4px;background:var(--c)}
+.side{display:grid;gap:clamp(16px,3vw,24px);align-content:start}
+.dhead h2{font-size:30px}
+.dhead p{margin:4px 0 0;color:var(--mute)}
+.items{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.it{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;padding:10px;border-radius:12px;border:1px solid var(--line);border-left:6px solid var(--c)}
+.it .cb{width:44px;height:44px;border-radius:10px;border:2px solid var(--c);background:transparent;cursor:pointer;display:grid;place-items:center;font-size:24px;color:#fff}
+.it.done .cb{background:var(--c)}
+.it.done .t{text-decoration:line-through;color:var(--mute)}
+.it .tag{font-size:13px;font-weight:600;color:var(--c)}
+.it .t{font-weight:500}
+.it .h{font-size:14px;color:var(--mute);margin-top:2px}
+.it.info{border-left-color:var(--c);opacity:.9}
+.it.info .cb{border:0;background:transparent;color:var(--c);cursor:default}
+.empty{color:var(--mute);margin-top:12px}
+.week h3{font-size:24px}
+.week .meta{color:var(--mute);font-size:15px;margin:4px 0 10px}
+.wrow{display:grid;grid-template-columns:3.2em minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left}
+.wrow .wd{font-weight:600;color:var(--mute);font-size:14px}
+.wrow .wt{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrow .ws{font-size:14px;white-space:nowrap;color:var(--mute)}
+.wrow.sel .wd{color:var(--red)}
+.kmbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.kmbar i{display:block;height:100%;background:var(--teal)}
+.legs{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+.legs h3{font-size:24px}
+.legs h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:19px;margin:16px 0 8px;color:var(--redd)}
+.legs .meta{color:var(--mute);font-size:15px;margin:4px 0 0}
+.exl{display:grid;gap:10px}
+.ex{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;align-items:center;margin:0;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.ex svg{width:120px;height:120px;display:block}
+.ex b{display:block;font-weight:600}
+.ex .dose{display:block;font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:18px;color:var(--red)}
+.ex .cue{display:block;font-size:14px;color:var(--mute);line-height:1.4}
+@media(max-width:420px){.ex{grid-template-columns:96px minmax(0,1fr)}.ex svg{width:96px;height:96px}}
+.sync{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.acct{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer;font-weight:600}
+dialog{border:0;border-radius:16px;padding:0;max-width:min(420px,92vw);width:100%;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dlg{padding:22px;display:grid;gap:12px}
+.dlg h2{font-size:28px}
+.dlg p{margin:0;color:var(--mute);font-size:15px}
+.dlg label{display:grid;gap:4px;font-weight:600;font-size:15px}
+.dlg input{font:inherit;font-size:16px;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.dlg .row{display:flex;flex-wrap:wrap;gap:8px}
+.dlg .b{min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:600}
+.dlg .b.pri{background:var(--red);border-color:var(--red);color:#fff}
+.dlg .err{color:var(--red);font-size:15px;min-height:1em}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<header class="bib"><div class="bibin">
+  <div>
+    <h1>Heidelberger Halbmarathon</h1>
+    <div class="sub">Sonntag, 25. April 2027 · 21,1 km · 22-Wochen-Plan</div>
+    <div class="count"><span class="num" id="days">–</span><span id="dayslbl">Tage bis zum Start</span></div>
+  </div>
+  <div class="meters">
+    <div class="meter"><div class="top"><span>Vorbereitung: <span id="plabel">–</span></span><span id="ppct">–</span></div><div class="bar"><i id="pbar" style="width:0"></i></div></div>
+    <div class="meter"><div class="top"><span>Gesamtplan erledigt</span><span id="gpct">–</span></div><div class="bar"><i id="gbar" style="width:0"></i></div></div>
+    <div class="stats" id="stats"></div>
+    <div class="sync"><span id="sync">Nur auf diesem Gerät gespeichert</span><button class="acct" id="acct">Anmelden für Sync</button></div>
+  </div>
+</div></header>
+<main>
+  <section class="card">
+    <div class="calhead"><h2 id="mname">–</h2><div class="nav"><button id="prev" aria-label="Vorheriger Monat">‹</button><button class="today" id="tod">Heute</button><button id="next" aria-label="Nächster Monat">›</button></div></div>
+    <div class="grid" id="dow"></div>
+    <div class="grid" id="cal"></div>
+    <div class="legend">
+      <span style="--c:var(--red)"><i></i>Lauf</span><span style="--c:var(--redd)"><i></i>Langer Lauf</span><span style="--c:var(--teal)"><i></i>HOAM Club</span><span style="--c:var(--gym)"><i></i>Gym</span><span style="--c:var(--sky)"><i></i>Ski</span><span style="--c:var(--amber)"><i></i>Prüfung</span><span style="--c:var(--gold)"><i></i>Rennen</span><span>✓ = erledigt · blass = verpasst</span>
+    </div>
+  </section>
+  <div class="side">
+    <section class="card"><div class="dhead"><h2 id="dtitle">–</h2><p id="dsub"></p></div><ul class="items" id="items"></ul><div id="legs"></div></section>
+    <section class="card week" id="week"></section>
+  </div>
+</main>
+
+<dialog id="dlg"><form class="dlg" id="form">
+<h2 id="dh">Sync einrichten</h2>
+<p id="dp">Mit einem Konto sind deine Häkchen auf iPhone und PC gleich. Offline gemachte Häkchen werden nachgeladen, sobald du wieder online bist.</p>
+<div id="fields"><label>E-Mail<input type="email" id="em" autocomplete="email" required></label>
+<label style="margin-top:10px">Passwort (mind. 6 Zeichen)<input type="password" id="pw" autocomplete="current-password" minlength="6" required></label></div>
+<div class="err" id="err"></div>
+<div class="row" id="btns"><button class="b pri" type="submit" id="login">Anmelden</button><button class="b" type="button" id="signup">Konto erstellen</button><button class="b" type="button" id="close">Abbrechen</button></div>
+</form></dialog>
+<script>
+{
+const START='2026-11-23',RACE='2027-04-25';
+const PH=n=>n<=5?'Grundlage':n<=7?'Ski & Wiedereinstieg':n<=11?'Aufbau':n<=19?'Spezifisch · Prüfungsphase':'Letzter Block & Taper';
+const LIGHT=[4,11,15,19,21,22];
+const CLUB=['Club: 7 km bei 5:30/km',7],CLUBL=['Club langsamer oder 6 km locker',6];
+// [di, mi, fr(optional), so]
+const W=[
+[['6 km locker',6],CLUB,null,['11 km locker',11]],
+[['6 km locker + 4 Steigerungen',6],CLUB,null,['12 km locker',12]],
+[['7 km locker + 6 Steigerungen',7],CLUB,null,['13 km locker',13]],
+[['5 km locker',5],CLUBL,null,['10 km locker',10]],
+[['7 km locker + 6 Steigerungen',7],['Club oder 6 km locker',7],null,['14 km locker',14]],
+[['7 km locker + 6 Steigerungen',7],['Club oder 6 km locker',7],null,null],
+[null,null,null,['11 km locker',11]],
+[['7 km locker + 6×10 s Bergsprints',7],CLUB,['5 km locker',5],['14 km locker',14]],
+[['7 km locker + 6 Steigerungen',7],CLUB,['5 km locker',5],['15 km locker',15]],
+[['8 km locker + 8×10 s Bergsprints',8],CLUB,['6 km locker',6],['16 km locker',16]],
+[['6 km locker + 4 Steigerungen',6],CLUBL,null,['12 km locker',12]],
+[['8 km locker + 6 Steigerungen',8],CLUB,['5 km locker',5],['16 km locker',16]],
+[['8 km locker + 8×10 s Bergsprints',8],CLUB,null,['17 km hügelig',17]],
+[['8 km locker',8],CLUB,['6 km locker, hügelig',6],['18 km hügelig',18]],
+[['6 km locker + 4 Steigerungen',6],CLUBL,null,['13 km locker',13]],
+[['8 km locker + 6 Steigerungen',8],CLUB,['6 km locker, hügelig',6],['18 km, km 14–17 im HM-Tempo',18]],
+[['9 km locker + 8×10 s Bergsprints',9],CLUB,['6 km locker',6],['19 km hügelig',19]],
+[['8 km locker',8],CLUB,['5 km locker',5],['16 km mit 3×3 km HM-Tempo, je 1 km locker dazwischen',16]],
+[['6 km locker + 4 Steigerungen',6],CLUBL,null,['14 km locker',14]],
+[['8 km locker + 6 Steigerungen',8],CLUB,['6 km locker',6],['Generalprobe: 19–20 km hügelig. Schuhe, Frühstück, Gels testen',20]],
+[['6 km locker + 4 Steigerungen',6],['Club, nur 5 km oder bei 5:45/km',5],null,['13 km, km 9–11 im HM-Tempo',13]],
+[['5 km locker + 4 Steigerungen',5],['4–5 km locker, kein Clubtempo',5],null,null]];
+const T={run:['Lauf','var(--red)',2],long:['Langer Lauf','var(--redd)',3],club:['HOAM Running Club','var(--teal)',2],opt:['Optionaler Lauf','var(--red)',0],gym:['Gym','var(--gym)',1],race:['Rennen','var(--gold)',5],ski:['Skiurlaub','var(--sky)',-1],exam:['Prüfung','var(--amber)',-1],rest:['Ruhetag','var(--line)',-1]};
+const LEGS='Ca. 60 min, ohne Bänder. Übungen mit Animationen unten.';
+const EXD=[{"id": "cossack", "name": "Cossack Squat", "block": "mob", "frames": [{"H": [100, 115.4], "N": [100.0, 63.4], "hd": [100.0, 45.4], "KR": [118.8, 150.7], "AR": [137.6, 186.0], "TR": [143.6, 186.0], "ER": [107.2, 90.4], "WR": [111.8, 116.0], "KL": [81.2, 150.7], "AL": [62.4, 186.0], "TL": [56.4, 186.0], "EL": [92.8, 90.4], "WL": [88.2, 116.0]}, {"H": [118, 133.6], "N": [113.5, 81.8], "hd": [111.9, 63.9], "KR": [156.0, 146.0], "AR": [156.0, 186.0], "TR": [162.0, 186.0], "ER": [125.3, 107.2], "WR": [132.0, 132.3], "KL": [86.5, 158.3], "AL": [55.0, 182.9], "TL": [55.0, 176.9], "EL": [108.6, 109.4], "WL": [106.3, 135.3]}], "props": [], "dose": ["2 Runden × 5 je Seite", "2 Runden × 5 je Seite", "2 Runden × 5 je Seite"], "cue": "Ferse bleibt am Boden, Brust aufrecht, so tief wie es sauber geht. Das gestreckte Bein zeigt Zehen nach oben.", "hold": [0.5, 1.0], "trans": 0.7}, {"id": "hocke", "name": "Tiefe Hocke halten", "block": "mob", "frames": [{"H": [95, 170.1], "N": [117.0, 123.0], "hd": [124.6, 106.7], "KR": [129.6, 150.1], "AR": [106.7, 182.9], "TR": [119.7, 182.9], "ER": [144.6, 127.9], "WR": [170.6, 127.9], "KL": [131.3, 153.2], "AL": [108.3, 186.0], "TL": [121.3, 186.0], "EL": [144.0, 130.3], "WL": [169.9, 132.5]}], "props": [], "dose": ["2 × 30 s", "2 × 30 s", "2 × 30 s"], "cue": "Fersen am Boden, Ellbogen drücken die Knie sanft nach außen, ruhig atmen.", "hold": [1.5], "trans": 0.7}, {"id": "pogo", "name": "Pogo Jumps", "block": "jump", "frames": [{"H": [100, 115.0], "N": [104.5, 63.2], "hd": [106.1, 45.2], "KR": [105.6, 154.6], "AR": [101.4, 194.4], "TR": [111.3, 186.0], "ER": [114.1, 89.5], "WR": [136.6, 102.5], "KL": [106.9, 154.4], "AL": [104.2, 194.3], "TL": [114.1, 185.9], "EL": [111.8, 90.2], "WL": [133.1, 105.1]}, {"H": [100, 101.3], "N": [102.7, 49.4], "hd": [103.7, 31.4], "KR": [102.1, 141.3], "AR": [100.7, 181.3], "TR": [107.2, 170.0], "ER": [107.6, 77.0], "WR": [124.3, 96.9], "KL": [103.5, 141.2], "AL": [102.1, 181.2], "TL": [108.6, 169.9], "EL": [105.2, 77.3], "WL": [120.1, 98.6]}], "props": [], "dose": ["3 × 20", "3 × 20", "2 × 15"], "cue": "Kleine, schnelle Sprünge nur aus den Sprunggelenken. Knie fast gestreckt, leise landen, kurzer Bodenkontakt.", "hold": [0.18, 0.18], "trans": 0.14}, {"id": "skater", "name": "Skater Jumps", "block": "jump", "frames": [{"H": [135, 106.5], "N": [145.8, 55.7], "hd": [149.6, 38.1], "KR": [138.5, 146.4], "AR": [132.9, 186.0], "TR": [138.9, 186.0], "ER": [127.8, 77.1], "WR": [118.9, 101.6], "KL": [147.4, 144.6], "AL": [167.4, 179.2], "TL": [161.4, 179.2], "EL": [119.5, 65.3], "WL": [97.0, 78.3]}, {"H": [100, 85.1], "N": [100.0, 33.1], "hd": [100.0, 15.1], "KR": [108.3, 124.2], "AR": [112.5, 164.0], "TR": [118.5, 164.0], "ER": [116.1, 56.0], "WR": [136.0, 72.7], "KL": [91.7, 124.2], "AL": [87.5, 164.0], "TL": [81.5, 164.0], "EL": [83.9, 56.0], "WL": [64.0, 72.7]}, {"H": [65, 106.5], "N": [54.2, 55.7], "hd": [50.4, 38.1], "KR": [52.6, 144.6], "AR": [32.6, 179.2], "TR": [38.6, 179.2], "ER": [80.5, 65.3], "WR": [103.0, 78.3], "KL": [61.5, 146.4], "AL": [67.1, 186.0], "TL": [61.1, 186.0], "EL": [72.2, 77.1], "WL": [81.1, 101.6]}, {"H": [100, 85.1], "N": [100.0, 33.1], "hd": [100.0, 15.1], "KR": [108.3, 124.2], "AR": [112.5, 164.0], "TR": [118.5, 164.0], "ER": [116.1, 56.0], "WR": [136.0, 72.7], "KL": [91.7, 124.2], "AL": [87.5, 164.0], "TL": [81.5, 164.0], "EL": [83.9, 56.0], "WL": [64.0, 72.7]}], "props": [], "dose": ["3 × 5 je Seite", "2 × 5 je Seite", null], "cue": "Seitlich abspringen, auf einem Bein landen und die Landung 2 s stabil halten, Knie über dem Fuß.", "hold": [0.8, 0.25, 0.8, 0.25], "trans": 0.32}, {"id": "squat", "name": "Goblet-Kniebeuge, volle Tiefe", "block": "kraft", "frames": [{"H": [100, 106.0], "N": [100.0, 54.0], "hd": [100.0, 36.0], "KR": [100.0, 146.0], "AR": [100.0, 186.0], "TR": [113.0, 186.0], "ER": [116.1, 76.9], "WR": [122.8, 51.8], "KL": [102.1, 145.9], "AL": [104.2, 185.9], "TL": [117.2, 185.9], "EL": [114.0, 78.2], "WL": [122.9, 53.8]}, {"H": [92, 158.1], "N": [118.0, 113.1], "hd": [127.0, 97.5], "KR": [131.4, 151.2], "AR": [108.4, 183.9], "TR": [121.4, 183.9], "ER": [140.9, 129.1], "WR": [143.2, 103.2], "KL": [131.7, 153.2], "AL": [108.8, 186.0], "TL": [121.8, 186.0], "EL": [139.4, 131.1], "WL": [144.0, 105.5]}], "props": [["db", "WR"]], "dose": ["3 × 6", "2 × 5", null], "cue": "Kurzhantel vor der Brust, so tief wie es mit geradem Rücken geht, Knie dürfen nach vorn. Mit Langhantel schwerer möglich.", "hold": [0.6, 0.8], "trans": 0.7}, {"id": "bss", "name": "Bulgarian Split Squat", "block": "kraft", "frames": [{"H": [115, 107.0], "N": [122.2, 55.5], "hd": [124.7, 37.7], "KR": [123.3, 146.1], "AR": [120.5, 186.0], "TR": [133.5, 186.0], "ER": [122.2, 83.5], "WR": [122.2, 109.5], "KL": [98.1, 143.2], "AL": [61.8, 126.3], "TL": [57.4, 114.1], "EL": [122.2, 83.5], "WL": [122.2, 109.5]}, {"H": [118, 139.4], "N": [131.5, 89.2], "hd": [136.1, 71.8], "KR": [157.4, 146.4], "AR": [163.0, 186.0], "TR": [176.0, 186.0], "ER": [133.9, 117.1], "WR": [136.2, 143.0], "KL": [124.9, 178.8], "AL": [85.6, 171.9], "TL": [81.1, 159.7], "EL": [133.9, 117.1], "WL": [136.2, 143.0]}], "props": [["bench", 40, 140, 50, 22]], "dose": ["3 × 8 je Seite", "2 × 8 je Seite", null], "cue": "Hinterer Fuß auf der Bank. Senkrecht runter, bis das hintere Knie fast den Boden berührt. Mit Kurzhanteln schwerer machen.", "hold": [0.6, 0.6], "trans": 0.7}, {"id": "slrdl", "name": "Einbeiniges Rumänisches Kreuzheben", "block": "kraft", "frames": [{"H": [100, 106.0], "N": [100.0, 54.0], "hd": [100.0, 36.0], "KR": [100.0, 146.0], "AR": [100.0, 186.0], "TR": [113.0, 186.0], "ER": [100.0, 82.0], "WR": [100.0, 108.0], "KL": [91.7, 145.1], "AL": [83.4, 184.3], "TL": [96.4, 184.3], "EL": [100.0, 82.0], "WL": [100.0, 108.0]}, {"H": [105, 106.6], "N": [156.5, 99.4], "hd": [174.3, 96.9], "KR": [110.6, 146.2], "AR": [106.4, 186.0], "TR": [119.4, 186.0], "ER": [156.5, 127.4], "WR": [156.5, 153.4], "KL": [65.0, 108.0], "AL": [25.0, 108.0], "TL": [25.0, 121.0], "EL": [156.5, 127.4], "WL": [156.5, 153.4]}], "props": [["db", "WR"]], "dose": ["3 × 8 je Seite", "2 × 8 je Seite", null], "cue": "Hüfte nach hinten schieben, Rücken gerade, hinteres Bein bildet eine Linie mit dem Oberkörper. Balance ist Teil der Übung.", "hold": [0.7, 0.7], "trans": 0.7}, {"id": "stepdown", "name": "Poliquin Step-down", "block": "kraft", "frames": [{"H": [92, 84.0], "N": [92.0, 32.0], "hd": [92.0, 14.0], "KR": [92.0, 124.0], "AR": [92.0, 164.0], "TR": [105.0, 164.0], "ER": [110.0, 53.4], "WR": [126.7, 73.4], "KL": [102.4, 122.6], "AL": [109.3, 162.0], "TL": [122.3, 162.0], "EL": [108.1, 54.9], "WL": [123.0, 76.2]}, {"H": [92, 119.7], "N": [105.5, 69.4], "hd": [110.1, 52.1], "KR": [129.6, 133.4], "AR": [103.9, 164.0], "TR": [116.9, 164.0], "ER": [133.0, 74.3], "WR": [158.6, 78.8], "KL": [114.9, 152.4], "AL": [137.9, 185.2], "TL": [150.9, 185.2], "EL": [132.5, 76.7], "WL": [157.6, 83.4]}], "props": [["box", 55, 0, 62, 22]], "dose": ["2 × 10 je Seite", "2 × 8 je Seite", null], "cue": "Auf der Box stehen, Knie weit über die Zehen schieben und die Ferse des freien Beins langsam zum Boden tippen. Kräftigt Knie und Oberschenkel.", "hold": [0.7, 0.7], "trans": 0.7}, {"id": "nordic", "name": "Nordic Curl", "block": "kraft", "frames": [{"H": [55, 146.0], "N": [55.0, 94.0], "hd": [55.0, 76.0], "KR": [55.0, 186.0], "AR": [15.0, 186.0], "TR": [15.0, 173.0], "ER": [82.6, 98.9], "WR": [108.2, 103.4], "KL": [55.0, 186.0], "AL": [15.0, 186.0], "TL": [15.0, 173.0], "EL": [82.6, 98.9], "WL": [108.2, 103.4]}, {"H": [88, 163.1], "N": [130.6, 133.2], "hd": [145.3, 122.9], "KR": [55.2, 186.0], "AR": [15.2, 186.0], "TR": [15.2, 173.0], "ER": [152.0, 151.2], "WR": [172.0, 167.9], "KL": [55.2, 186.0], "AL": [15.2, 186.0], "TL": [15.2, 173.0], "EL": [150.4, 153.0], "WL": [168.8, 171.4]}], "props": [["pad", "AR"]], "dose": ["3 × 3–5, langsam", "2 × 3, langsam", null], "cue": "Knie auf einer Matte, Fersen unter dem Polster der Rückenstrecker-Bank einhaken. So langsam wie möglich nach vorn kippen, Hüfte gestreckt, mit den Händen abfangen.", "hold": [0.6, 1.6], "trans": 0.7}, {"id": "wallsit", "name": "Wandsitz", "block": "iso", "frames": [{"H": [60, 144.6], "N": [60.0, 92.6], "hd": [60.0, 74.6], "KR": [100.0, 144.6], "AR": [100.0, 184.6], "TR": [113.0, 184.6], "ER": [88.0, 92.6], "WR": [114.0, 92.6], "KL": [100.0, 146.0], "AL": [100.0, 186.0], "TL": [113.0, 186.0], "EL": [87.9, 95.0], "WL": [113.8, 97.3]}], "props": [["wall", 38]], "dose": ["3 × 45 s", "2 × 60 s", "2 × 30 s"], "cue": "Rücken an der Wand, Knie im rechten Winkel, Gewicht auf den Fersen. Wird jede Woche ein paar Sekunden länger.", "hold": [1.5], "trans": 0.7}, {"id": "calfiso", "name": "Einbeiniger Waden-Halt", "block": "iso", "frames": [{"H": [100, 106.3], "N": [100.0, 54.3], "hd": [100.0, 36.3], "KR": [103.5, 146.2], "AR": [100.0, 186.0], "TR": [113.0, 186.0], "ER": [124.2, 40.3], "WR": [150.2, 40.3], "KL": [96.5, 146.2], "AL": [57.1, 153.1], "TL": [54.9, 140.3], "EL": [125.4, 42.5], "WL": [151.3, 44.7]}, {"H": [100, 117.0], "N": [100.0, 65.0], "hd": [100.0, 47.0], "KR": [106.9, 156.3], "AR": [101.4, 196.0], "TR": [109.7, 186.0], "ER": [124.2, 51.0], "WR": [150.2, 51.0], "KL": [96.5, 156.8], "AL": [57.1, 163.7], "TL": [54.9, 150.9], "EL": [125.4, 53.1], "WL": [151.3, 55.4]}], "props": [["wall", 160]], "dose": ["3 × 30 s je Seite", "3 × 30 s je Seite", "2 × 20 s je Seite"], "cue": "Auf einem Bein auf den Ballen hochdrücken, Knie leicht gebeugt, oben halten. Hand nur zur Balance an der Wand.", "hold": [0.6, 1.6], "trans": 0.7}, {"id": "copen", "name": "Copenhagen Plank", "block": "iso", "frames": [{"H": [88, 171.5], "N": [37.8, 158.0], "hd": [20.4, 153.3], "KR": [127.4, 164.5], "AR": [134.3, 203.9], "TR": [140.3, 203.9], "ER": [37.8, 186.0], "WR": [11.8, 186.0], "KL": [127.4, 164.5], "AL": [166.8, 157.6], "TL": [166.8, 151.6], "EL": [65.7, 155.6], "WL": [52.7, 133.0]}, {"H": [88, 158.0], "N": [36.0, 158.0], "hd": [18.0, 158.0], "KR": [128.0, 158.0], "AR": [134.9, 197.4], "TR": [140.9, 197.4], "ER": [36.0, 186.0], "WR": [10.0, 186.0], "KL": [128.0, 158.0], "AL": [168.0, 158.0], "TL": [168.0, 152.0], "EL": [63.9, 155.6], "WL": [50.9, 133.0]}], "props": [["bench", 150, 0, 50, 28]], "dose": ["2 × 20–30 s je Seite", "2 × 30 s je Seite", null], "cue": "Seitstütz auf dem Unterarm, oberes Bein liegt auf der Bank. Hüfte hoch, Körper in einer Linie. Stärkt die Adduktoren.", "hold": [0.6, 1.6], "trans": 0.7}, {"id": "bridge", "name": "Einbeinige Brücke halten", "block": "iso", "frames": [{"H": [95, 174.3], "N": [43.2, 178.8], "hd": [25.3, 180.4], "KR": [127.8, 151.4], "AR": [107.8, 186.0], "TR": [120.8, 186.0], "ER": [71.1, 176.4], "WR": [97.0, 174.1], "KL": [127.8, 151.4], "AL": [160.5, 128.4], "TL": [162.8, 115.6], "EL": [71.1, 176.4], "WL": [97.0, 174.1]}, {"H": [95, 154.3], "N": [46.1, 172.1], "hd": [29.2, 178.3], "KR": [134.4, 147.4], "AR": [124.0, 186.0], "TR": [137.0, 186.0], "ER": [74.0, 169.7], "WR": [99.9, 167.4], "KL": [134.4, 147.4], "AL": [173.8, 140.4], "TL": [176.0, 127.6], "EL": [74.0, 169.7], "WL": [99.9, 167.4]}], "props": [], "dose": ["2 × 30 s je Seite", "2 × 30 s je Seite", "1 × 30 s je Seite"], "cue": "Auf dem Rücken, ein Fuß aufgestellt, das andere Bein gestreckt. Hüfte hochdrücken und halten, Gesäß fest anspannen.", "hold": [0.6, 1.6], "trans": 0.7}];
+const BLK={"mob": "1 · Aufwärmen & Beweglichkeit", "jump": "2 · Sprung & Athletik", "kraft": "3 · Kraft mit großem Bewegungsumfang", "iso": "4 · Isometrie (halten)"};
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const add=(s,n)=>{const d=pd(s);d.setDate(d.getDate()+n);return iso(d)};
+const DOWS=['Mo','Di','Mi','Do','Fr','Sa','So'];
+const MON=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const fmt=s=>{const d=pd(s);return DOWS[(d.getDay()+6)%7]+', '+d.getDate()+'. '+MON[d.getMonth()]};
+const EV={};const ITEMS=[];
+const put=(date,type,text,km,hint,wk)=>{const id=date+'-'+type+'-'+((EV[date]||[]).length);const e={id,date,type,text,km:km||0,hint:hint||'',wk};(EV[date]=EV[date]||[]).push(e);ITEMS.push(e)};
+W.forEach((w,i)=>{const n=i+1,m=add(START,i*7),d=k=>add(m,k);const[di,mi,fr,so]=w;const lite=LIGHT.includes(n);
+ const lowUni=d(0)>'2027-02-12'?'':' · McFit nach der Uni';
+ if(n===7){for(let k=0;k<4;k++)put(d(k),'ski','Skiurlaub – zählt als Training','','',n);put(d(4),'run','5 km locker',5,'Sanfter Wiedereinstieg nach dem Ski',n);put(d(5),'rest','Ruhetag','','',n);put(d(6),'long',so[0],so[1],'',n);return}
+ put(d(0),'gym',n===22?'Push, locker':'Push','',n===22?'Nur leicht, nichts Neues':'Oberkörper'+lowUni,n);
+ put(d(1),'run',di[0],di[1],'Locker = 6:30–7:00/km, ganze Sätze sprechen',n);
+ put(d(1),'gym',n===22?'Pull, locker':'Pull','',n===22?'Nur leicht':'Nach dem Lauf'+lowUni,n);
+ put(d(2),'club',mi[0],mi[1],lite?'Leichte Woche: bewusst ruhig':'Deine Tempoeinheit der Woche. Ab und zu stattdessen Bahn 4–5×1000 m',n);
+ if(n===6){put(d(3),'long','12 km locker (vorgezogener langer Lauf)',12,'Vor dem Skiurlaub',n);for(let k=4;k<7;k++)put(d(k),'ski','Skiurlaub – zählt als Training','','',n);return}
+ if(n===22){put(d(4),'run','3–4 km locker + 3 Steigerungen',4,'Kurz vor dem Rennen nur auflockern',n);put(d(5),'rest','Ruhetag, Startunterlagen und Sachen packen','','',n);put(d(6),'race','Heidelberger Halbmarathon, 21,1 km',21.1,'Erste 5 km bewusst ruhig, bergauf Tempo raus, ab km 15 darfst du zulegen',n);return}
+ put(d(3),'gym',n===21?'Beine, leicht':'Beine','',n===21?'Nur Aufwärmen, Pogo und Halteübungen, siehe unten':LEGS,n);
+ if(n===13)put(d(4),'exam','Prüfung Angewandte Luftfahrtsysteme, 9–11 Uhr','','Heute kein Lauf',n);
+ if(fr)put(d(4),'opt',fr[0],fr[1],'Optional: früh morgens oder Heimweg von der Uni als Lauf',n);
+ put(d(5),'rest','Ruhetag','','',n);
+ put(d(6),'long',so[0],so[1],(n===18?'Ostersonntag · ':'')+'Locker, Wasser mitnehmen'+(n>=12?', Gel testen':''),n);
+});
+const WEEKKM=W.map((_,i)=>ITEMS.filter(e=>e.wk===i+1&&['run','long','club','race'].includes(e.type)).reduce((a,e)=>a+e.km,0));
+// state: done[id] = {v:0|1, t:ms}
+let state={done:{},synced:0};
+try{const s=JSON.parse(localStorage.getItem('hm27')||'null');if(s&&s.done){state.done=s.done;state.synced=s.synced||0;for(const k in state.done)if(typeof state.done[k]!=='object')state.done[k]={v:1,t:1}}}catch(e){}
+const today=iso(new Date());
+let sel=today<START?START:today>RACE?RACE:today;
+let month=sel.slice(0,7);
+const $=id=>document.getElementById(id);
+const setSync=t=>$('sync').textContent=t;
+const isDone=e=>!!(state.done[e.id]&&state.done[e.id].v);
+const checkable=e=>T[e.type][2]>=0;
+function calc(){let due=0,got=0,tot=0,gt=0,km=0,kmDue=0,longest=0,opt=0;
+ for(const e of ITEMS){const w=T[e.type][2];if(w<0)continue;const d=isDone(e);
+  if(d&&['run','long','club','opt','race'].includes(e.type)){km+=e.km;if(e.type==='long'||e.type==='race')longest=Math.max(longest,e.km)}
+  if(w===0){if(d)opt++;continue}
+  tot+=w;if(d)gt+=w;if(e.date<=today){due+=w;if(d)got+=w;if(e.type!=='gym')kmDue+=e.km}}
+ return{p:due?Math.round(got/due*100):null,g:Math.round(gt/tot*100),km,kmDue,longest,opt}}
+function head(){const c=calc();const dl=Math.round((pd(RACE)-pd(today))/864e5);
+ $('days').textContent=dl>0?dl:dl===0?'Heute':'✓';$('dayslbl').textContent=dl>0?'Tage bis zum Start':dl===0?'ist Renntag!':'Rennen gelaufen';
+ const p=c.p;$('ppct').textContent=p===null?'–':p+' %';$('pbar').style.width=(p===null?0:Math.min(p,100))+'%';
+ $('plabel').textContent=p===null?'startet heute':p>=90?'voll im Plan':p>=70?'gut dabei':p>=50?'etwas Rückstand':'deutlich hinter Plan';
+ $('gpct').textContent=c.g+' %';$('gbar').style.width=c.g+'%';
+ const wn=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
+ $('stats').innerHTML=`<span><b>${Math.round(c.km)}</b>km gelaufen</span><span><b>${c.longest||'–'}</b>km längster Lauf</span><span><b>${wn}</b>/ 22 Wochen</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
+function mark(e){const c=T[e.type][1];if(!checkable(e))return`<span class="mk info" style="--c:${c}"></span>`;
+ const cls=isDone(e)?'done':(e.date<today&&e.type!=='opt'?'miss':'');return`<span class="mk ${cls}" style="--c:${c}"></span>`}
+function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MON[m-1]+' '+y;
+ const first=new Date(y,m-1,1),off=(first.getDay()+6)%7,len=new Date(y,m,0).getDate();let h='';
+ for(let k=0;k<off;k++)h+='<div class="day out"></div>';
+ for(let k=1;k<=len;k++){const s=y+'-'+pad(m)+'-'+pad(k);const ev=(EV[s]||[]).filter(e=>e.type!=='rest');
+  h+=`<button class="day${s===today?' now':''}${s===sel?' sel':''}${s===RACE?' race':''}" data-d="${s}" aria-label="${fmt(s)}"><span class="d">${k}</span>${ev.map(mark).join('')}</button>`}
+ $('cal').innerHTML=h;$('prev').disabled=month<='2026-11';$('next').disabled=month>='2027-04'}
+function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute':fmt(sel);
+ const e0=ev[0];$('dsub').textContent=(sel===today?fmt(sel)+' · ':'')+(e0?'Woche '+e0.wk+' · '+PH(e0.wk):'Außerhalb des Plans');
+ $('items').innerHTML=ev.length?ev.map(e=>{const[tl,c]=T[e.type];const ck=checkable(e),d=isDone(e);
+  return`<li class="it${d?' done':''}${ck?'':' info'}" style="--c:${c}"><button class="cb" ${ck?`data-id="${e.id}" aria-pressed="${d}" aria-label="${tl} abhaken"`:'tabindex="-1" aria-hidden="true"'}>${ck?(d?'✓':''):'•'}</button><div><div class="tag">${tl}${e.km?' · '+String(e.km).replace('.',',')+' km':''}</div><div class="t">${e.text}</div>${e.hint?`<div class="h">${e.hint}</div>`:''}</div></li>`}).join(''):'<li class="empty">Für diesen Tag ist nichts geplant.</li>';const leg=ev.find(e=>e.type==='gym'&&e.text.startsWith('Beine'));$('legs').innerHTML=leg?legsHTML(leg.wk):''}
+function legsHTML(n){const k=n<=11?0:n<=20?1:2;const list=EXD.filter(e=>e.dose[k]);
+ const blocks=Object.keys(BLK).map(b=>{const xs=list.filter(e=>e.block===b);if(!xs.length)return'';
+  return`<h4>${BLK[b]}</h4><div class="exl">${xs.map(e=>`<figure class="ex"><svg viewBox="0 0 200 200" data-ex="${e.id}" role="img" aria-label="${e.name}">${propsSVG(e)}<g class="fg"></g></svg><figcaption><b>${e.name}</b><span class="dose">${e.dose[k]}</span><span class="cue">${e.cue}</span></figcaption></figure>`).join('')}</div>`}).join('');
+ const note=k===0?'Wochen 1–11: volles Programm, ca. 60 min.':k===1?'Ab Woche 12: weniger Sätze, damit die Beine für die langen Läufe frisch bleiben.':'Woche 21: nur leicht, nichts Schweres mehr.';
+ return`<section class="legs"><h3>Beintag-Übungen</h3><p class="meta">${note} Pausen 60–90 s. Wenn die Zeit knapp ist, kannst du Block 4 auch zu Hause an einem anderen Tag machen.</p>${blocks}</section>`}
+const FL=186;
+function propsSVG(e){let s='';for(const p of e.props){if(p[0]==='bench'||p[0]==='box')s+=`<rect x="${p[1]}" y="${FL-p[4]}" width="${p[3]}" height="${p[4]}" rx="3" fill="var(--mute)" opacity=".3"/>`;if(p[0]==='wall')s+=`<rect x="${p[1]-6}" y="20" width="6" height="${FL-20}" fill="var(--mute)" opacity=".3"/>`}
+ return s+`<line x1="0" y1="${FL}" x2="200" y2="${FL}" stroke="var(--mute)" stroke-width="2"/>`}
+function figSVG(J,e){const ln=(a,b,c,w)=>`<line x1="${J[a][0]}" y1="${J[a][1]}" x2="${J[b][0]}" y2="${J[b][1]}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+ const f='var(--mute)',k='var(--ink)';let s=ln('H','KL',f,6)+ln('KL','AL',f,6)+ln('AL','TL',f,6)+ln('N','EL',f,6)+ln('EL','WL',f,6)+ln('N','H',k,7)+ln('H','KR',k,6)+ln('KR','AR',k,6)+ln('AR','TR',k,6)+ln('N','ER',k,6)+ln('ER','WR',k,6)+`<circle cx="${J.hd[0]}" cy="${J.hd[1]}" r="10" fill="${k}"/>`;
+ for(const p of e.props){if(p[0]==='db'){const w=J[p[1]];s+=`<rect x="${w[0]-9}" y="${w[1]-3}" width="18" height="7" rx="2" fill="var(--red)"/>`}if(p[0]==='pad'){const a=J[p[1]];s+=`<rect x="${a[0]-12}" y="${a[1]-14}" width="24" height="8" rx="3" fill="var(--mute)"/>`}}return s}
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function poseAt(e,t){const F=e.frames,n=F.length;if(n===1||RM)return F[n-1];let tot=0;for(let i=0;i<n;i++)tot+=e.hold[i]+e.trans;let x=t%tot;
+ for(let i=0;i<n;i++){if(x<e.hold[i])return F[i];x-=e.hold[i];if(x<e.trans){let u=x/e.trans;u=u<.5?2*u*u:1-((-2*u+2)**2)/2;const A=F[i],B=F[(i+1)%n],J={};for(const key in A)J[key]=[A[key][0]+(B[key][0]-A[key][0])*u,A[key][1]+(B[key][1]-A[key][1])*u];return J}x-=e.trans}return F[0]}
+const EXI=Object.fromEntries(EXD.map(e=>[e.id,e]));
+function anim(ts){const t=ts/1000;document.querySelectorAll('svg[data-ex]').forEach(s=>{const e=EXI[s.dataset.ex];s.querySelector('.fg').innerHTML=figSVG(poseAt(e,t),e)});if(!RM)requestAnimationFrame(anim)}
+requestAnimationFrame(anim);
+function weekv(){const e0=(EV[sel]||[])[0];if(!e0){$('week').innerHTML='<h3>Trainingsplan</h3><p class="meta">Der Plan läuft vom 23.11.2026 bis zum 25.04.2027.</p>';return}
+ const n=e0.wk,m=add(START,(n-1)*7);let kmDone=0;
+ const rows=[0,1,2,3,4,5,6].map(k=>{const s=add(m,k),ev=(EV[s]||[]).filter(e=>e.type!=='rest');ev.forEach(e=>{if(isDone(e)&&e.km)kmDone+=e.km});
+  const ck=ev.filter(checkable),dn=ck.filter(isDone).length;
+  return`<button class="wrow${s===sel?' sel':''}" data-d="${s}"><span class="wd">${DOWS[k]} ${pd(s).getDate()}.</span><span class="wt">${ev.length?ev.map(e=>e.type==='gym'?e.text.split(',')[0]:e.km?e.km+' km '+(e.type==='club'?'Club':e.type==='long'?'lang':e.type==='opt'?'opt.':e.type==='race'?'Rennen':'Lauf'):T[e.type][0]).join(' · '):(k===5?'Ruhetag':'frei')}</span><span class="ws">${ck.length?dn+'/'+ck.length:''}</span></button>`}).join('');
+ const goal=WEEKKM[n-1];
+ $('week').innerHTML=`<h3>Woche ${n} von 22${LIGHT.includes(n)&&n<21?' · leichte Woche':''}</h3><div class="meta">${PH(n)} · ${Math.round(kmDone)} von ${Math.round(goal)} km</div><div class="kmbar"><i style="width:${Math.min(100,kmDone/goal*100)}%"></i></div>${rows}`}
+function render(){head();cal();dayv();weekv()}
+function cache(){try{localStorage.setItem('hm27',JSON.stringify(state))}catch(e){}}
+let tmr;function save(){cache();clearTimeout(tmr);tmr=setTimeout(sync,800)}
+document.addEventListener('click',ev=>{const b=ev.target.closest('[data-id]');if(b){const id=b.dataset.id;const cur=state.done[id];state.done[id]={v:cur&&cur.v?0:1,t:Date.now()};save();render();return}
+ const d=ev.target.closest('[data-d]');if(d){sel=d.dataset.d;month=sel.slice(0,7);render()}});
+const mv=k=>{const[y,m]=month.split('-').map(Number);const d=new Date(y,m-1+k,1);month=d.getFullYear()+'-'+pad(d.getMonth()+1);cal()};
+$('prev').onclick=()=>mv(-1);$('next').onclick=()=>mv(1);
+$('tod').onclick=()=>{sel=today<START?START:today>RACE?RACE:today;month=sel.slice(0,7);render()};
+$('dow').innerHTML=DOWS.map(d=>`<div class="dow">${d}</div>`).join('');
+render();
+// ---------- sync (Supabase)
+const CFG=window.HM_CONFIG||{};const sb=(CFG.url&&CFG.anonKey&&window.supabase)?window.supabase.createClient(CFG.url,CFG.anonKey,{auth:{persistSession:true,autoRefreshToken:true}}):null;
+let user=null,busy=false,again=false;
+const rel=t=>{const m=Math.round((Date.now()-t)/6e4);return m<1?'gerade eben':m<60?'vor '+m+' min':m<1440?'vor '+Math.round(m/60)+' h':'vor '+Math.round(m/1440)+' Tagen'};
+function status(){const btn=$('acct');
+ if(!sb){setSync('Nur auf diesem Gerät gespeichert (Sync nicht eingerichtet)');btn.hidden=true;return}
+ btn.hidden=false;btn.textContent=user?'Konto':'Anmelden für Sync';
+ if(!user){setSync('Nur auf diesem Gerät gespeichert');return}
+ if(!navigator.onLine){setSync('Offline · wird synchronisiert, sobald du online bist');return}
+ setSync(state.synced?'Synchronisiert '+rel(state.synced):'Wird synchronisiert …')}
+function merge(remote){let changed=false;for(const k in remote){const r=remote[k],l=state.done[k];if(!l||r.t>l.t){state.done[k]=r;changed=true}}return changed}
+async function sync(){if(!sb||!user||!navigator.onLine){status();return}
+ if(busy){again=true;return}busy=true;
+ try{const{data,error}=await sb.from('progress').select('done').eq('user_id',user.id).maybeSingle();if(error)throw error;
+  if(data&&data.done&&merge(data.done))render();
+  const{error:e2}=await sb.from('progress').upsert({user_id:user.id,done:state.done,updated_at:new Date().toISOString()});if(e2)throw e2;
+  state.synced=Date.now();cache()}
+ catch(e){setSync('Sync fehlgeschlagen, neuer Versuch später');busy=false;return}
+ busy=false;status();if(again){again=false;sync()}}
+if(sb){sb.auth.getSession().then(({data})=>{user=data.session?data.session.user:null;status();sync()});
+ sb.auth.onAuthStateChange((ev,s)=>{user=s?s.user:null;status();if(user)sync()})}
+status();
+addEventListener('online',sync);addEventListener('offline',status);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')sync()});
+setInterval(()=>{if(document.visibilityState==='visible')sync()},60000);setInterval(status,30000);
+// account dialog
+const dlg=$('dlg'),err=$('err');
+function openDlg(){err.textContent='';const on=!!user;$('fields').hidden=on;$('dh').textContent=on?'Dein Konto':'Sync einrichten';
+ $('dp').textContent=on?'Angemeldet als '+user.email+'. Deine Häkchen werden automatisch synchronisiert.':'Mit einem Konto sind deine Häkchen auf iPhone und PC gleich. Offline gemachte Häkchen werden nachgeladen, sobald du wieder online bist.';
+ $('login').textContent=on?'Abmelden':'Anmelden';$('signup').hidden=on;$('em').required=!on;$('pw').required=!on;dlg.showModal()}
+$('acct').onclick=openDlg;$('close').onclick=()=>dlg.close();
+$('form').addEventListener('submit',async ev=>{ev.preventDefault();err.textContent='';
+ if(user){await sb.auth.signOut();dlg.close();return}
+ if(!navigator.onLine){err.textContent='Zum Anmelden brauchst du Internet.';return}
+ const{error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});
+ if(error){err.textContent='Anmelden hat nicht geklappt. E-Mail oder Passwort prüfen.';return}dlg.close()});
+$('signup').onclick=async()=>{err.textContent='';const em=$('em').value.trim(),pw=$('pw').value;
+ if(!em||pw.length<6){err.textContent='Bitte E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.';return}
+ if(!navigator.onLine){err.textContent='Zum Registrieren brauchst du Internet.';return}
+ const{data,error}=await sb.auth.signUp({email:em,password:pw});
+ if(error){err.textContent='Konto konnte nicht erstellt werden: '+error.message;return}
+ if(!data.session){err.textContent='Konto erstellt. Bestätige den Link in deiner E-Mail und melde dich dann hier an.';return}dlg.close()};
+// offline support
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+// keep "today" fresh when the app stays open overnight
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&iso(new Date())!==today)location.reload()});
+}
+</script>
+</body>
+</html>

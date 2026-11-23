@@ -1,5 +1,5 @@
 // Offline-Cache. Bei jeder Änderung an der App VERSION hochzählen.
-const VERSION = 'hm27-v1';
+const VERSION = 'hm27-v2';
 const FILES = [
   './', 'index.html', 'config.js', 'manifest.webmanifest', 'vendor/supabase.js',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',

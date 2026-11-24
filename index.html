@@ -195,6 +195,49 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .seg button{min-height:40px;padding:0 16px;border:0;background:var(--bg);cursor:pointer;font-weight:600}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
 .calc{font-size:15px;color:var(--mute)}.calc b{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:22px;color:var(--red);margin-left:4px}
+.day{position:relative;transition:background .2s}
+.day .dic2{display:flex;justify-content:center;gap:4px;margin-top:auto;margin-bottom:2px}
+.day .dic2 .ic{width:18px;height:18px}
+.day .frac{position:absolute;right:5px;bottom:3px;font-size:11px;font-weight:600}
+.st-plan .ic.run{stroke:var(--red)}.st-plan .ic.gym{stroke:var(--gym)}
+.st-free .ic{stroke:var(--mute);opacity:.6}
+.day.st-done{background:var(--teal);border-color:var(--teal);color:#fff}
+.day.st-done .d{color:#fff}.day.st-done .ic{stroke:#fff}
+.day.st-part{background:light-dark(#d3ebe7,#1b4641);border-color:light-dark(#a9d6cf,#2a6159)}
+.day.st-part .ic{stroke:var(--teal)}.day.st-part .frac{color:var(--teal)}
+.day.st-miss{background:light-dark(#f6dcd5,#46211b);border-color:light-dark(#ecbcb0,#6a3328)}
+.day.st-miss .d{color:var(--redd)}.day.st-miss .ic{stroke:var(--redd);opacity:.7}
+.day.st-ski{background:light-dark(#dcecf8,#1b3247);border-color:light-dark(#b9d7ef,#2b4a66)}.day.st-ski .ic{stroke:var(--sky)}
+.day.st-exam{background:light-dark(#f8e8c9,#433314);border-color:light-dark(#efd39a,#6a5220)}.day.st-exam .ic{stroke:var(--amber)}
+.day.st-race{background:var(--gold);border-color:var(--gold);color:#1d1716}.day.st-race .d{color:#1d1716}.day.st-race .ic{stroke:#1d1716}
+.day.now .d{color:#fff;background:var(--ink);border-radius:6px;padding:0 5px;align-self:flex-start}
+.day.st-done.now .d,.day.st-race.now .d{background:#fff;color:var(--ink)}
+.day.sel{outline:3px solid var(--ink);outline-offset:1px}
+.tog{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:600;font-size:14px;color:var(--ink)}
+.tog::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.tog[aria-expanded=true]::after{transform:rotate(-135deg) translateY(-1px)}
+.togs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.leg2{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:13px;color:var(--mute)}
+.leg2 span{display:inline-flex;align-items:center;gap:6px}
+.leg2 .sw{width:18px;height:18px;border-radius:5px;border:1px solid var(--line)}
+.leg2 .ic{width:15px;height:15px;stroke:var(--ink)}
+.leg2 p{flex-basis:100%;margin:0}
+.rl{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.rl li{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.rl .rh{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.rl .rh b{font-weight:600}
+.rl .rh span{font-size:14px;color:var(--mute)}
+.rl dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 0}
+.rl dt{font-size:12px;color:var(--mute)}.rl dd{margin:0;font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:19px}
+.rl .nt{margin:8px 0 0;font-size:14px;overflow-wrap:anywhere}
+.rl .ed{margin-top:4px}
+@media(max-width:600px){.day .dic2 .ic{width:14px;height:14px}.day .dic2{gap:2px}.day .frac{font-size:10px;right:3px}.rl dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.day,.tog::after{transition:none}}
+main{align-items:start}
+.toast{visibility:hidden;opacity:0;transform:translate(-50%,24px);transition:transform .35s,opacity .35s,visibility .35s}
+.toast.on{visibility:visible;opacity:1;transform:translate(-50%,0)}
+.day .frac{top:5px;bottom:auto}
+@media(max-width:600px){.day .frac{top:3px}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -216,7 +259,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <symbol id="i-shoe" viewBox="0 0 24 24"><path d="M2 17.5h18.5a1.5 1.5 0 0 0 .6-2.9l-5.6-2.4-2.3-3.4-2.6 1.6-1.8-1.6L4 7.5 2 9z"/><path d="M2 20.5h20"/><path d="M8.5 12.5l1.5-1M11 14l1.5-1"/></symbol>
-<symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
+<symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 </svg>
 <div class="bibin">
   <div>
@@ -237,14 +280,18 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="calhead"><h2 id="mname">–</h2><div class="nav"><button id="prev" aria-label="Vorheriger Monat">‹</button><button class="today" id="tod">Heute</button><button id="next" aria-label="Nächster Monat">›</button></div></div>
     <div class="grid" id="dow"></div>
     <div class="grid" id="cal"></div>
-    <div class="legend">
-      <span class="lg2"><span class="ib" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>Laufen</span>
-      <span class="lg2"><span class="ib" style="--c:var(--gym)"><svg class="ic"><use href="#i-dumbbell"/></svg></span>Gym</span>
-      <span class="lg2"><span class="ib done" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>erledigt</span>
-      <span class="lg2"><span class="ib miss" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>verpasst</span>
-      <span class="lg2"><span class="inf" style="--c:var(--sky)"></span>Ski</span>
-      <span class="lg2"><span class="inf" style="--c:var(--amber)"></span>Prüfung</span>
-      <span>Farbe: rot Lauf, dunkelrot lang, grün Club, gold Rennen</span>
+    <div class="togs"><button class="tog" id="calTog" aria-expanded="false" aria-controls="calLeg">Legende</button></div>
+    <div class="leg2" id="calLeg" hidden>
+      <span><i class="sw" style="background:var(--teal);border-color:var(--teal)"></i>erledigt</span>
+      <span><i class="sw" style="background:light-dark(#d3ebe7,#1b4641)"></i>teilweise erledigt</span>
+      <span><i class="sw" style="background:light-dark(#f6dcd5,#46211b)"></i>verpasst</span>
+      <span><i class="sw" style="background:var(--bg)"></i>geplant</span>
+      <span><i class="sw" style="background:light-dark(#dcecf8,#1b3247)"></i>Ski</span>
+      <span><i class="sw" style="background:light-dark(#f8e8c9,#433314)"></i>Prüfung</span>
+      <span><i class="sw" style="background:var(--gold);border-color:var(--gold)"></i>Rennen</span>
+      <span><svg class="ic"><use href="#i-shoe"/></svg>Laufen</span>
+      <span><svg class="ic"><use href="#i-dumbbell"/></svg>Gym</span>
+      <p>Optionale Läufe zählen nicht als verpasst. Die Zahl oben rechts zeigt, wie viele Einheiten erledigt sind.</p>
     </div>
   </section>
   <div class="side">
@@ -404,14 +451,17 @@ function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MO
  const first=new Date(y,m-1,1),off=(first.getDay()+6)%7,len=new Date(y,m,0).getDate();let h='';
  for(let k=0;k<off;k++)h+='<div class="day out"></div>';
  for(let k=1;k<=len;k++){const s=y+'-'+pad(m)+'-'+pad(k);const ev=(EV[s]||[]).filter(e=>e.type!=='rest');
-  const grp=(xs,col,ic,optOnly)=>{if(!xs.length)return'';const main=xs.filter(e=>e.type!=='opt'),base=main.length?main:xs;
-   const done=base.every(isDone)||(xs.some(e=>e.type==='opt')&&main.length===0&&xs.some(isDone));const miss=!done&&s<today&&main.length>0;
-   const cls=done?' done':miss?' miss':(!main.length?' opt':'');return`<span class="ib${cls}" style="--c:${col}"><svg class="ic"><use href="#${ic}"/></svg></span>`};
-  const runs=ev.filter(isRun),gyms=ev.filter(e=>e.type==='gym');
-  const rc=runs.find(e=>e.type==='race')?'var(--gold)':runs.find(e=>e.type==='long')?'var(--redd)':runs.find(e=>e.type==='club')?'var(--teal)':'var(--red)';
-  const info=ev.find(e=>e.type==='ski')?'<span class="inf" style="--c:var(--sky)"></span>':ev.find(e=>e.type==='exam')?'<span class="inf" style="--c:var(--amber)"></span>':'';
-  const lbl=ev.map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).join(', ');
-  h+=`<button class="day${s===today?' now':''}${s===sel?' sel':''}${s===RACE?' race':''}" data-d="${s}" aria-label="${fmt(s)}${lbl?': '+lbl:''}"><span class="d">${k}</span><span class="dic">${grp(runs,rc,'i-shoe')}${grp(gyms,'var(--gym)','i-dumbbell')}</span>${info}</button>`}
+  const req=ev.filter(e=>checkable(e)&&e.type!=='opt'),opt=ev.filter(e=>e.type==='opt'),nd=req.filter(isDone).length;
+  const ski=ev.some(e=>e.type==='ski'),exam=ev.some(e=>e.type==='exam'),race=ev.some(e=>e.type==='race');
+  let st='free';
+  if(req.length){st=nd===req.length?'done':nd>0?'part':s<today?'miss':'plan';if(race&&st!=='done')st='race'}
+  else if(opt.length)st=opt.some(isDone)?'done':'free';
+  else if(ski)st='ski';else if(exam)st='exam';
+  const run=ev.some(isRun),gym=ev.some(e=>e.type==='gym');
+  const ics=(run?'<svg class="ic run"><use href="#i-shoe"/></svg>':'')+(gym?'<svg class="ic gym"><use href="#i-dumbbell"/></svg>':'')+(!run&&!gym&&ski?'<svg class="ic"><use href="#i-snow"/></svg>':'')+(exam&&!req.length?'<svg class="ic"><use href="#i-pen"/></svg>':'');
+  const frac=st==='part'?`<span class="frac">${nd}/${req.length}</span>`:'';
+  const lbl=ev.filter(e=>e.type!=='rest').map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).join(', ');
+  h+=`<button class="day st-${st}${s===today?' now':''}${s===sel?' sel':''}" data-d="${s}" aria-label="${fmt(s)}${lbl?': '+lbl:''}"><span class="d">${k}</span><span class="dic2" aria-hidden="true">${ics}</span>${frac}</button>`}
  $('cal').innerHTML=h;$('prev').disabled=month<='2026-11';$('next').disabled=month>='2027-04'}
 function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute':fmt(sel);
  const e0=ev[0];$('dsub').textContent=(sel===today?fmt(sel)+' · ':'')+(e0?'Woche '+e0.wk+' · '+PH(e0.wk):'Außerhalb des Plans');
@@ -447,17 +497,27 @@ function regv(){const r=state.done.anmeldung&&state.done.anmeldung.v;
  :'<a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Ich bin angemeldet</button>'}
 function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="${e.id}">+ Echte Werte eintragen</button>`;
  return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''} · bearbeiten</button>`}
+let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
+const saveUi=()=>{try{localStorage.setItem('hm27ui',JSON.stringify(ui))}catch(e){}};
+function calLegv(){$('calLeg').hidden=!ui.calLeg;$('calTog').setAttribute('aria-expanded',ui.calLeg);$('calTog').textContent=ui.calLeg?'Legende ausblenden':'Legende'}
+$('calTog').onclick=()=>{ui.calLeg=!ui.calLeg;saveUi();calLegv()};
 function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
  const act=W.map((_,i)=>ITEMS.filter(e=>e.wk===i+1&&isRun(e)&&isDone(e)).reduce((a,e)=>a+akm(e),0));
  const mx=Math.max(...WEEKKM,...act,1);
  const cols=WEEKKM.map((p,i)=>`<div class="col${i+1===wk?' cur':''}" title="Woche ${i+1}: ${fkm(act[i])} von ${Math.round(p)} km"><div class="pl" style="height:${p/mx*100}%"></div><div class="ac" style="height:${act[i]/mx*100}%"></div></div>`).join('');
- const logs=ITEMS.filter(e=>isRun(e)&&isDone(e)&&LOG(e.id)).sort((a,b)=>a.date<b.date?1:-1).slice(0,6);
+ const logs=ITEMS.filter(e=>isRun(e)&&isDone(e)&&LOG(e.id)).sort((a,b)=>a.date<b.date?1:-1);
  const dots=f=>`<span class="dots" aria-label="Gefühl ${f} von 5">${[1,2,3,4,5].map(i=>`<i class="${i<=f?'on':''}"></i>`).join('')}</span>`;
- $('diary').innerHTML=`<h2>Lauftagebuch</h2><p class="sub2">Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p>
- <div class="tiles"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>
+ const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const runs=logs.map(e=>{const l=LOG(e.id);return`<li><div class="rh"><b>${fmt(e.date)}</b><span>${T[e.type][0]}</span></div>
+  <dl><div><dt>Distanz</dt><dd>${fkm(l.km)} km</dd></div><div><dt>Zeit</dt><dd>${l.sec?fdur(l.sec):'–'}</dd></div><div><dt>Pace</dt><dd>${fpace(l.km,l.sec)}</dd></div><div><dt>Gefühl</dt><dd>${l.feel?dots(l.feel):'–'}</dd></div></dl>
+  ${l.note?`<p class="nt">${esc(l.note)}</p>`:''}<button class="lg ed" data-log="${e.id}">bearbeiten</button></li>`}).join('');
+ $('diary').innerHTML=`<h2>Lauftagebuch</h2>
+ <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>
  <div class="chart" role="img" aria-label="Kilometer pro Woche, geplant und gelaufen">${cols}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
- <div class="clg"><span><i style="border:1.5px dashed var(--mute)"></i>geplant</span><span><i style="background:var(--red)"></i>gelaufen</span><span>Woche</span></div>
- ${logs.length?`<ul class="runs">${logs.map(e=>{const l=LOG(e.id);return`<li><span class="rd">${fmt(e.date).replace(/ [A-ZÄÖÜ][a-zäöü]+$/,m=>' '+m.trim().slice(0,3)+'.')}</span><span><span class="rv">${fkm(l.km)} km${l.sec?' · '+fpace(l.km,l.sec):''}</span> ${l.feel?dots(l.feel):''}<span class="rn">${l.note?l.note:e.text}</span></span><span>${l.sec?fdur(l.sec):''}</span></li>`}).join('')}</ul>`:'<p class="empty2">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}`}
+ <div class="togs"><button class="tog" data-ui="diaLeg" aria-expanded="${ui.diaLeg}">${ui.diaLeg?'Legende ausblenden':'Legende'}</button><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
+ ${ui.diaLeg?`<div class="leg2"><span><i class="sw" style="border:1.5px dashed var(--mute)"></i>geplante km der Woche</span><span><i class="sw" style="background:var(--red);border-color:var(--red)"></i>gelaufene km</span><span>Zahlen unten: Trainingswoche</span><p>Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div>`:''}
+ ${ui.runs?(logs.length?`<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'):''}`}
+$('diary').addEventListener('click',ev=>{const b=ev.target.closest('[data-ui]');if(!b)return;ui[b.dataset.ui]=!ui[b.dataset.ui];saveUi();diaryv()});
 let msAll=false;
 function badgesv(){const s=stats();const g=got();let ch=false;
  for(const m of MS){const k='ms:'+m[0];if(g.has(m[0])&&!(state.done[k]&&state.done[k].v)){state.done[k]={v:1,t:Date.now()};ch=true}}
@@ -499,7 +559,7 @@ $('lform').addEventListener('submit',ev=>{ev.preventDefault();const km=parseFloa
  $('ldlg').close();save();render();celebrate(before)});
 $('lskip').onclick=()=>{$('ldlg').close();if(pend){celebrate(pend);pend=null}};
 $('ldel').onclick=()=>{state.done['log:'+logId]={v:0,t:Date.now()};$('ldlg').close();save();render()};
-function render(){head();regv();cal();dayv();weekv();diaryv();badgesv()}
+function render(){head();regv();cal();calLegv();dayv();weekv();diaryv();badgesv()}
 function cache(){try{localStorage.setItem('hm27',JSON.stringify(state))}catch(e){}}
 let tmr;function save(){cache();clearTimeout(tmr);tmr=setTimeout(sync,800)}
 document.addEventListener('click',ev=>{if(ev.target.closest('[data-reg]')){const c=state.done.anmeldung;const before=got();state.done.anmeldung={v:c&&c.v?0:1,t:Date.now()};save();render();if(!(c&&c.v)){haptic();celebrate(before)}return}

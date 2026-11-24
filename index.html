@@ -57,10 +57,10 @@ main{max-width:1240px;margin:0 auto;padding:clamp(16px,3vw,36px) max(4vw,16px) c
 .nav button,.today{min-width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;padding:0 12px}
 .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .dow{font-size:13px;color:var(--mute);text-align:center;padding-bottom:4px}
-.day{min-height:76px;border-radius:9px;border:1px solid var(--line);background:var(--bg);padding:5px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px}
+.day{min-height:68px;border-radius:9px;border:1px solid var(--line);background:var(--bg);padding:5px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px}
 .day.out{visibility:hidden}
 .day .d{font-size:13px;font-weight:600;color:var(--mute)}
-.day.now .d{color:#fff;background:var(--red);border-radius:6px;padding:0 5px}
+.day.now .d{color:#fff;background:var(--red);border-radius:6px;padding:0 5px;align-self:flex-start}
 .day.sel{border:2px solid var(--ink)}
 .day.race{background:light-dark(#fff4d6,#3a2f10)}
 .mk{height:14px;border-radius:4px;background:var(--c);color:#fff;font-size:11px;font-weight:700;line-height:14px;text-align:center}
@@ -150,7 +150,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .runs li{display:grid;grid-template-columns:6.5em minmax(0,1fr) auto;gap:8px;padding:9px 0;border-top:1px solid var(--line);align-items:baseline}
 .runs .rd{color:var(--mute);font-size:14px}
 .runs .rv{font-weight:600;white-space:nowrap}
-.runs .rn{font-size:14px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.runs li>span{min-width:0}.runs .rn{display:block;font-size:14px;color:var(--mute);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .dots{display:inline-flex;gap:3px;vertical-align:1px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--teal)}
 .empty2{color:var(--mute)}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
@@ -160,6 +160,9 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .bdg .bt{font-size:13px;font-weight:600;line-height:1.25}
 .bdg .bp{font-size:12px;color:var(--mute);margin-top:2px}
 .bdg:not(.got) .bt{color:var(--mute)}
+.mslab{font-size:14px;font-weight:600;color:var(--mute);margin:14px 0 8px}
+.mslab:first-of-type{margin-top:0}
+.mstog{margin-top:14px;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:600;color:var(--ink)}
 .lg{margin-top:6px;font:inherit;font-size:14px;color:var(--teal);background:none;border:0;padding:6px 0;cursor:pointer;text-align:left;min-height:32px}
 .lg b{color:var(--ink);font-weight:600}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:10px}
@@ -177,6 +180,21 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 @media(max-width:900px){.extra{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.wls span:not(:nth-child(5n)):not(:first-child){visibility:hidden}.runs li{grid-template-columns:5.2em minmax(0,1fr) auto}}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
+.dic{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:auto;flex-wrap:wrap}
+.ib{width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.ib .ic{width:18px;height:18px;stroke:var(--c)}
+.ib.done{background:var(--c)}.ib.done .ic{stroke:#fff}
+.ib.opt .ic{opacity:.55}
+.ib.miss{opacity:.3}
+.inf{width:8px;height:8px;border-radius:50%;background:var(--c);margin:0 auto 6px;opacity:.8}
+.legend .lg2{display:inline-flex;align-items:center;gap:6px}
+.legend .ib{width:22px;height:22px}.legend .ib .ic{width:14px;height:14px}
+.legend .inf{margin:0}
+@media(max-width:600px){.day{min-height:52px;padding:3px}.ib{width:20px;height:20px}.ib .ic{width:13px;height:13px}.dic{gap:1px}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content}
+.seg button{min-height:40px;padding:0 16px;border:0;background:var(--bg);cursor:pointer;font-weight:600}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.calc{font-size:15px;color:var(--mute)}.calc b{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:22px;color:var(--red);margin-left:4px}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -220,7 +238,13 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="grid" id="dow"></div>
     <div class="grid" id="cal"></div>
     <div class="legend">
-      <span style="--c:var(--red)"><i></i>Lauf</span><span style="--c:var(--redd)"><i></i>Langer Lauf</span><span style="--c:var(--teal)"><i></i>HOAM Club</span><span style="--c:var(--gym)"><i></i>Gym</span><span style="--c:var(--sky)"><i></i>Ski</span><span style="--c:var(--amber)"><i></i>Prüfung</span><span style="--c:var(--gold)"><i></i>Rennen</span><span>✓ = erledigt · blass = verpasst</span>
+      <span class="lg2"><span class="ib" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>Laufen</span>
+      <span class="lg2"><span class="ib" style="--c:var(--gym)"><svg class="ic"><use href="#i-dumbbell"/></svg></span>Gym</span>
+      <span class="lg2"><span class="ib done" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>erledigt</span>
+      <span class="lg2"><span class="ib miss" style="--c:var(--red)"><svg class="ic"><use href="#i-shoe"/></svg></span>verpasst</span>
+      <span class="lg2"><span class="inf" style="--c:var(--sky)"></span>Ski</span>
+      <span class="lg2"><span class="inf" style="--c:var(--amber)"></span>Prüfung</span>
+      <span>Farbe: rot Lauf, dunkelrot lang, grün Club, gold Rennen</span>
     </div>
   </section>
   <div class="side">
@@ -229,16 +253,17 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   </div>
   <div class="extra">
     <section class="card" id="diary"></section>
-    <section class="card"><h2>Meilensteine</h2><p class="sub2" id="msub"></p><div class="badges" id="badges"></div></section>
+    <section class="card"><h2>Meilensteine</h2><p class="sub2" id="msub"></p><div id="badges"></div><button class="mstog" id="mstog" aria-expanded="false" aria-controls="badges">Alle Meilensteine anzeigen</button></section>
   </div>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <label class="hap" id="hapl" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
 <dialog id="ldlg"><form class="dlg" id="lform">
 <h2>Lauf eintragen</h2><p id="lp"></p>
+<div class="seg" role="group" aria-label="Eingabe"><button type="button" data-mode="time" aria-pressed="true">Zeit eingeben</button><button type="button" data-mode="pace" aria-pressed="false">Pace eingeben</button></div>
 <div class="two"><label>Distanz (km)<input id="lkm" inputmode="decimal" autocomplete="off" required></label>
-<label>Zeit<span class="tm"><input id="lmin" inputmode="numeric" placeholder="Min" aria-label="Minuten" autocomplete="off"> : <input id="lsec" inputmode="numeric" placeholder="Sek" aria-label="Sekunden" autocomplete="off"></span></label></div>
-<div class="pace" id="lpace">Pace: –</div>
+<label><span id="tlab">Zeit</span><span class="tm"><input id="lmin" inputmode="numeric" placeholder="Min" aria-label="Minuten" autocomplete="off"> : <input id="lsec" inputmode="numeric" placeholder="Sek" aria-label="Sekunden" autocomplete="off"></span></label></div>
+<div class="calc" id="lpace">Pace: –</div>
 <fieldset class="feel"><legend>Wie hat es sich angefühlt?</legend><div class="feelr" id="feelr">
 <button type="button" data-feel="1"><b>1</b>sehr zäh</button><button type="button" data-feel="2"><b>2</b>zäh</button><button type="button" data-feel="3"><b>3</b>okay</button><button type="button" data-feel="4"><b>4</b>gut</button><button type="button" data-feel="5"><b>5</b>sehr gut</button></div></fieldset>
 <label>Notiz (optional)<input id="lnote" maxlength="140" placeholder="z. B. Wind, neue Schuhe, Knie zwickt" autocomplete="off"></label>
@@ -372,16 +397,21 @@ function head(){const c=calc();const dl=Math.round((pd(RACE)-pd(today))/864e5);
  $('plabel').textContent=p===null?'noch nichts fällig':p>=90?'voll im Plan':p>=70?'gut dabei':p>=50?'etwas Rückstand':'deutlich hinter Plan';
  $('gpct').textContent=c.g+' %';$('gbar').style.width=c.g+'%';
  const wn=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
- $('stats').innerHTML=`<span><b>${Math.round(c.km)}</b>km gelaufen</span><span><b>${c.longest?fkm(c.longest):'–'}</b>km längster Lauf</span><span><b>${wn}</b>/ 22 Wochen</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
+ $('stats').innerHTML=`<span><b>${fkm(c.km)}</b>km gelaufen</span><span><b>${c.longest?fkm(c.longest):'–'}</b>km längster Lauf</span><span><b>${wn}</b>/ 22 Wochen</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
 function mark(e){const c=T[e.type][1];if(!checkable(e))return`<span class="mk info" style="--c:${c}"></span>`;
  const cls=isDone(e)?'done':(e.date<today&&e.type!=='opt'?'miss':'');return`<span class="mk ${cls}" style="--c:${c}"></span>`}
 function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MON[m-1]+' '+y;
  const first=new Date(y,m-1,1),off=(first.getDay()+6)%7,len=new Date(y,m,0).getDate();let h='';
  for(let k=0;k<off;k++)h+='<div class="day out"></div>';
  for(let k=1;k<=len;k++){const s=y+'-'+pad(m)+'-'+pad(k);const ev=(EV[s]||[]).filter(e=>e.type!=='rest');
-  const run=ev.some(e=>['run','long','club','opt'].includes(e.type)),gym=ev.some(e=>e.type==='gym'),rc=ev.some(e=>e.type==='race');
-  const ics=(rc?'<svg class="ic race"><use href="#i-shoe"/></svg>':run?'<svg class="ic run"><use href="#i-shoe"/></svg>':'')+(gym?'<svg class="ic gym"><use href="#i-dumbbell"/></svg>':'');
-  h+=`<button class="day${s===today?' now':''}${s===sel?' sel':''}${s===RACE?' race':''}" data-d="${s}" aria-label="${fmt(s)}"><span class="dtop"><span class="d">${k}</span><span class="ics" aria-hidden="true">${ics}</span></span>${ev.map(mark).join('')}</button>`}
+  const grp=(xs,col,ic,optOnly)=>{if(!xs.length)return'';const main=xs.filter(e=>e.type!=='opt'),base=main.length?main:xs;
+   const done=base.every(isDone)||(xs.some(e=>e.type==='opt')&&main.length===0&&xs.some(isDone));const miss=!done&&s<today&&main.length>0;
+   const cls=done?' done':miss?' miss':(!main.length?' opt':'');return`<span class="ib${cls}" style="--c:${col}"><svg class="ic"><use href="#${ic}"/></svg></span>`};
+  const runs=ev.filter(isRun),gyms=ev.filter(e=>e.type==='gym');
+  const rc=runs.find(e=>e.type==='race')?'var(--gold)':runs.find(e=>e.type==='long')?'var(--redd)':runs.find(e=>e.type==='club')?'var(--teal)':'var(--red)';
+  const info=ev.find(e=>e.type==='ski')?'<span class="inf" style="--c:var(--sky)"></span>':ev.find(e=>e.type==='exam')?'<span class="inf" style="--c:var(--amber)"></span>':'';
+  const lbl=ev.map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).join(', ');
+  h+=`<button class="day${s===today?' now':''}${s===sel?' sel':''}${s===RACE?' race':''}" data-d="${s}" aria-label="${fmt(s)}${lbl?': '+lbl:''}"><span class="d">${k}</span><span class="dic">${grp(runs,rc,'i-shoe')}${grp(gyms,'var(--gym)','i-dumbbell')}</span>${info}</button>`}
  $('cal').innerHTML=h;$('prev').disabled=month<='2026-11';$('next').disabled=month>='2027-04'}
 function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute':fmt(sel);
  const e0=ev[0];$('dsub').textContent=(sel===today?fmt(sel)+' · ':'')+(e0?'Woche '+e0.wk+' · '+PH(e0.wk):'Außerhalb des Plans');
@@ -428,20 +458,43 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
  <div class="chart" role="img" aria-label="Kilometer pro Woche, geplant und gelaufen">${cols}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
  <div class="clg"><span><i style="border:1.5px dashed var(--mute)"></i>geplant</span><span><i style="background:var(--red)"></i>gelaufen</span><span>Woche</span></div>
  ${logs.length?`<ul class="runs">${logs.map(e=>{const l=LOG(e.id);return`<li><span class="rd">${fmt(e.date).replace(/ [A-ZÄÖÜ][a-zäöü]+$/,m=>' '+m.trim().slice(0,3)+'.')}</span><span><span class="rv">${fkm(l.km)} km${l.sec?' · '+fpace(l.km,l.sec):''}</span> ${l.feel?dots(l.feel):''}<span class="rn">${l.note?l.note:e.text}</span></span><span>${l.sec?fdur(l.sec):''}</span></li>`}).join('')}</ul>`:'<p class="empty2">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}`}
-function badgesv(){const s=stats();const g=got();$('msub').textContent=g.size+' von '+MS.length+' erreicht';
- $('badges').innerHTML=MS.map(m=>{const ok=g.has(m[0]);return`<div class="bdg${ok?' got':''}"><div class="md">${m[1]}</div><div class="bt">${m[2]}</div><div class="bp">${ok?'geschafft':m[4](s)}</div></div>`}).join('')}
+let msAll=false;
+function badgesv(){const s=stats();const g=got();let ch=false;
+ for(const m of MS){const k='ms:'+m[0];if(g.has(m[0])&&!(state.done[k]&&state.done[k].v)){state.done[k]={v:1,t:Date.now()};ch=true}}
+ if(ch)save();
+ $('msub').textContent=g.size+' von '+MS.length+' erreicht';
+ const card=m=>{const ok=g.has(m[0]);return`<div class="bdg${ok?' got':''}"><div class="md">${m[1]}</div><div class="bt">${m[2]}</div><div class="bp">${ok?'geschafft':m[4](s)}</div></div>`};
+ let html;
+ if(msAll)html=`<div class="badges">${MS.map(card).join('')}</div>`;
+ else{const recent=MS.filter(m=>g.has(m[0])).sort((a,b)=>state.done['ms:'+b[0]].t-state.done['ms:'+a[0]].t).slice(0,3);
+  const next=MS.filter(m=>!g.has(m[0])).slice(0,3);
+  html=(recent.length?`<div class="mslab">Zuletzt erreicht</div><div class="badges">${recent.map(card).join('')}</div>`:'')
+   +(next.length?`<div class="mslab">Als Nächstes</div><div class="badges">${next.map(card).join('')}</div>`:'')}
+ $('badges').innerHTML=html;$('mstog').setAttribute('aria-expanded',msAll);$('mstog').textContent=msAll?'Weniger anzeigen':'Alle '+MS.length+' Meilensteine anzeigen'}
+$('mstog').onclick=()=>{msAll=!msAll;badgesv()};
 // log dialog
 let logId=null,feel=0,pend=null;
-function updPace(){const km=parseFloat(($('lkm').value||'').replace(',','.')),s=(+$('lmin').value||0)*60+(+$('lsec').value||0);$('lpace').textContent='Pace: '+fpace(km,s)}
+let mode='time';try{mode=localStorage.getItem('hm27mode')||'time'}catch(e){}
+const inSec=()=>(+$('lmin').value||0)*60+Math.min(59,+$('lsec').value||0);
+const kmv=()=>parseFloat(($('lkm').value||'').replace(',','.'));
+function totalSec(){const km=kmv(),s=inSec();if(!s)return 0;return mode==='time'?s:(km>0?Math.round(s*km):0)}
+function updPace(){const km=kmv(),t=totalSec();
+ $('lpace').innerHTML=mode==='time'?'Pace:<b>'+fpace(km,t)+'</b>':'Zeit:<b>'+(t?fdur(t):'–')+'</b>';
+ $('tlab').textContent=mode==='time'?'Zeit (gesamt)':'Pace pro km'}
+function setMode(m,keep){const t=keep?totalSec():0,km=kmv();mode=m;try{localStorage.setItem('hm27mode',m)}catch(e){}
+ document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+ if(keep&&t){const v=m==='time'?t:(km>0?Math.round(t/km):0);$('lmin').value=v?Math.floor(v/60):'';$('lsec').value=v?pad(v%60):''}
+ updPace()}
+document.querySelector('.seg').addEventListener('click',ev=>{const b=ev.target.closest('[data-mode]');if(b&&b.dataset.mode!==mode)setMode(b.dataset.mode,true)});
 function setFeel(f){feel=f;document.querySelectorAll('#feelr button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.feel===f))}
 function openLog(id){const e=ITEMS.find(x=>x.id===id);if(!e)return;logId=id;const l=LOG(id);
  $('lp').textContent=e.text+' · '+fmt(e.date);$('lkm').value=fkm(l?l.km:e.km);
- $('lmin').value=l&&l.sec?Math.floor(l.sec/60):'';$('lsec').value=l&&l.sec?pad(l.sec%60):'';$('lnote').value=l&&l.note||'';
+ {const km0=l?l.km:e.km,v=l&&l.sec?(mode==='time'?l.sec:Math.round(l.sec/km0)):0;$('lmin').value=v?Math.floor(v/60):'';$('lsec').value=v?pad(v%60):''}setMode(mode,false);$('lnote').value=l&&l.note||'';
  setFeel(l&&l.feel||0);$('ldel').hidden=!l;updPace();$('ldlg').showModal()}
 ['lkm','lmin','lsec'].forEach(i=>$(i).addEventListener('input',updPace));
 $('feelr').addEventListener('click',ev=>{const b=ev.target.closest('[data-feel]');if(b)setFeel(+b.dataset.feel)});
 $('lform').addEventListener('submit',ev=>{ev.preventDefault();const km=parseFloat($('lkm').value.replace(',','.'));if(!(km>0)){$('lkm').focus();return}
- const before=pend||got();pend=null;const sec=(+$('lmin').value||0)*60+(Math.min(59,+$('lsec').value||0));
+ const before=pend||got();pend=null;const sec=totalSec();
  state.done['log:'+logId]={v:1,t:Date.now(),km:Math.round(km*100)/100,sec:sec||0,feel:feel||0,note:$('lnote').value.trim().slice(0,140)};
  $('ldlg').close();save();render();celebrate(before)});
 $('lskip').onclick=()=>{$('ldlg').close();if(pend){celebrate(pend);pend=null}};

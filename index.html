@@ -376,6 +376,13 @@ label.cb:focus-within{outline:3px solid var(--teal);outline-offset:2px}
 }
 @media(max-width:600px){.recap .rg b{font-size:22px}.bests{grid-template-columns:minmax(0,1fr)}.bests div{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.tk{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.cb.pop,.day.flash,#cal.sl,#cal.sr{animation:none}.clp,.runner,.tline i,.snack{transition:none}}
+.lat{margin:-6px 0 0;font-size:14px;color:var(--mute)}
+.wx{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:10px;align-items:end}
+.wxs{font-size:13px;color:var(--mute);padding-bottom:12px}
+.rl .rm{font-size:13px;color:var(--mute);margin-top:2px}
+.sortr{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.sortr button{min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-weight:600;font-size:13px;cursor:pointer}
+.sortr button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -454,13 +461,14 @@ label.cb:focus-within{outline:3px solid var(--teal);outline-offset:2px}
 <div class="snack" id="snack" role="status" aria-live="polite"><span id="snackT"></span><button id="snackU">Rückgängig</button></div>
 <label class="hap" id="hapl" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
 <dialog id="ldlg"><form class="dlg" id="lform">
-<h2>Lauf eintragen</h2><p id="lp"></p>
+<h2>Lauf eintragen</h2><p id="lp"></p><p class="lat" id="lat"></p>
 <div class="seg" role="group" aria-label="Eingabe"><button type="button" data-mode="time" aria-pressed="true">Zeit eingeben</button><button type="button" data-mode="pace" aria-pressed="false">Pace eingeben</button></div>
 <div class="two"><label>Distanz (km)<input id="lkm" inputmode="decimal" autocomplete="off" required></label>
 <label><span id="tlab">Zeit</span><span class="tm"><input id="lmin" inputmode="numeric" placeholder="Min" aria-label="Minuten" autocomplete="off"> : <input id="lsec" inputmode="numeric" placeholder="Sek" aria-label="Sekunden" autocomplete="off"></span></label></div>
 <div class="calc" id="lpace">Pace: –</div>
 <fieldset class="feel"><legend>Wie hat es sich angefühlt?</legend><div class="feelr" id="feelr">
 <button type="button" data-feel="1"><b>1</b>sehr zäh</button><button type="button" data-feel="2"><b>2</b>zäh</button><button type="button" data-feel="3"><b>3</b>okay</button><button type="button" data-feel="4"><b>4</b>gut</button><button type="button" data-feel="5"><b>5</b>sehr gut</button></div></fieldset>
+<div class="wx"><label>Temperatur draußen (°C)<input id="ltemp" inputmode="decimal" autocomplete="off" placeholder="–"></label><span class="wxs" id="lwx"></span></div>
 <label>Notiz (optional)<input id="lnote" maxlength="140" placeholder="z. B. Wind, neue Schuhe, Knie zwickt" autocomplete="off"></label>
 <div class="row"><button class="b pri" type="submit">Speichern</button><button class="b" type="button" id="lskip">Später</button><button class="b" type="button" id="ldel">Werte löschen</button></div>
 </form></dialog>
@@ -646,7 +654,7 @@ function regv(){const r=state.done.anmeldung&&state.done.anmeldung.v;
  $('reg').innerHTML=r?'<span class="ok">✓ Für den Lauf angemeldet <button data-reg>Rückgängig</button></span>'
  :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>'}
 function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="${e.id}">+ Echte Werte eintragen</button>`;
- return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''} · bearbeiten</button>`}
+ return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''}${l.temp!=null?' · '+fkm(l.temp)+' °C':''} · bearbeiten</button>`}
 let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
 const saveUi=()=>{try{localStorage.setItem('hm27ui',JSON.stringify(ui))}catch(e){}};
 function calLegv(){$('calLegW').classList.toggle('open',!!ui.calLeg);$('calSw').checked=!!ui.calLeg}
@@ -655,10 +663,13 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
  const act=W.map((_,i)=>ITEMS.filter(e=>e.wk===i+1&&isRun(e)&&isDone(e)).reduce((a,e)=>a+akm(e),0));
  const mx=Math.max(...WEEKKM,...act,1);
  const cols=WEEKKM.map((p,i)=>`<div class="col${i+1===wk?' cur':''}" title="Woche ${i+1}: ${fkm(act[i])} von ${Math.round(p)} km"><div class="pl" style="height:${p/mx*100}%"></div><div class="ac" style="height:${act[i]/mx*100}%"></div></div>`).join('');
- const logs=ITEMS.filter(e=>isRun(e)&&isDone(e)&&LOG(e.id)).sort((a,b)=>a.date<b.date?1:-1);
+ const so=ui.sort||'new';const pc=e=>{const l=LOG(e.id);return l.sec&&l.km?l.sec/l.km:1e9};const tk=e=>e.date+String((LOG(e.id).at||0)).padStart(14,'0');
+ const logs=ITEMS.filter(e=>isRun(e)&&isDone(e)&&LOG(e.id)).sort((a,b)=>so==='old'?(tk(a)<tk(b)?-1:1):so==='pace'?pc(a)-pc(b):so==='dist'?LOG(b.id).km-LOG(a.id).km:(tk(a)<tk(b)?1:-1));
+ const SO=[['new','Neueste zuerst'],['old','Älteste zuerst'],['pace','Schnellste Pace'],['dist','Längste Distanz']];
+ const sortbar=logs.length>1?`<div class="sortr" role="group" aria-label="Läufe sortieren">${SO.map(([k,t])=>`<button data-sort="${k}" aria-pressed="${so===k}">${t}</button>`).join('')}</div>`:'';
  const dots=f=>`<span class="dots" aria-label="Gefühl ${f} von 5">${[1,2,3,4,5].map(i=>`<i class="${i<=f?'on':''}"></i>`).join('')}</span>`;
  const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
- const runs=logs.map(e=>{const l=LOG(e.id);return`<li><div class="rh"><b>${fmt(e.date)}</b><span>${T[e.type][0]}</span></div>
+ const runs=logs.map(e=>{const l=LOG(e.id);const meta=[l.at?'Eingetragen '+fdt(l.at):'',l.temp!=null?fkm(l.temp)+' °C':(l.lat!=null?'Temperatur folgt':'')].filter(Boolean).join(' · ');return`<li><div class="rh"><b>${fmt(e.date)}</b><span>${T[e.type][0]}</span></div>${meta?`<div class="rm">${meta}</div>`:''}
   <dl><div><dt>Distanz</dt><dd>${fkm(l.km)} km</dd></div><div><dt>Zeit</dt><dd>${l.sec?fdur(l.sec):'–'}</dd></div><div><dt>Pace</dt><dd>${fpace(l.km,l.sec)}</dd></div><div><dt>Gefühl</dt><dd>${l.feel?dots(l.feel):'–'}</dd></div></dl>
   ${l.note?`<p class="nt">${esc(l.note)}</p>`:''}<button class="lg ed" data-log="${e.id}">bearbeiten</button></li>`}).join('');
  $('diary').innerHTML=`<h2>Lauftagebuch</h2>
@@ -667,9 +678,9 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
  <div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2"><span><i class="sw" style="border:1.5px dashed var(--mute)"></i>geplante km der Woche</span><span><i class="sw" style="background:var(--red);border-color:var(--red)"></i>gelaufene km</span><span>Zahlen unten: Trainingswoche</span><p>Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>
  <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
 <div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:14px">${bestsHTML()}</div></div></div>
-<div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div>`;$('diary').dataset.n=logs.length}
+<div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`${sortbar}<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div>`;$('diary').dataset.n=logs.length}
 $('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$(x.dataset.sw==='recs'?'recsW':'diaLegW').classList.toggle('open',x.checked)});
-$('diary').addEventListener('click',ev=>{const b=ev.target.closest('[data-ui]');if(!b)return;ui.runs=!ui.runs;saveUi();$('runsW').classList.toggle('open',ui.runs);b.setAttribute('aria-expanded',ui.runs);b.textContent=ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+($('diary').dataset.n||0)+')'});
+$('diary').addEventListener('click',ev=>{const so=ev.target.closest('[data-sort]');if(so){ui.sort=so.dataset.sort;saveUi();diaryv();return}const b=ev.target.closest('[data-ui]');if(!b)return;ui.runs=!ui.runs;saveUi();$('runsW').classList.toggle('open',ui.runs);b.setAttribute('aria-expanded',ui.runs);b.textContent=ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+($('diary').dataset.n||0)+')'});
 let msAll=false;
 function badgesv(){const s=stats();const g=got();let ch=false;
  for(const m of MS){const k='ms:'+m[0];if(g.has(m[0])&&!(state.done[k]&&state.done[k].v)){state.done[k]={v:1,t:Date.now()};ch=true}}
@@ -699,15 +710,38 @@ function setMode(m,keep){const t=keep?totalSec():0,km=kmv();mode=m;try{localStor
  updPace()}
 document.querySelector('.seg').addEventListener('click',ev=>{const b=ev.target.closest('[data-mode]');if(b&&b.dataset.mode!==mode)setMode(b.dataset.mode,true)});
 function setFeel(f){feel=f;document.querySelectorAll('#feelr button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.feel===f))}
+// ---------- v14: time + temperature for logs ----------
+const fdt=ms=>{const d=new Date(ms);return DOWS[(d.getDay()+6)%7]+', '+d.getDate()+'.'+(d.getMonth()+1)+'. · '+pad(d.getHours())+':'+pad(d.getMinutes())+' Uhr'};
+let lastPos=null,logAt=0,wxFor=null;
+function getPos(){return new Promise(res=>{if(lastPos&&Date.now()-lastPos.ts<15*60e3)return res(lastPos);if(!navigator.geolocation)return res(null);
+ navigator.geolocation.getCurrentPosition(p=>{lastPos={lat:+p.coords.latitude.toFixed(2),lon:+p.coords.longitude.toFixed(2),ts:Date.now()};res(lastPos)},()=>res(null),{maximumAge:15*60e3,timeout:9000,enableHighAccuracy:false})})}
+async function fetchTemp(lat,lon,at){const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&hourly=temperature_2m&past_days=92&forecast_days=1&timezone=auto`);if(!r.ok)return null;const d=await r.json();
+ if(Date.now()-at<90*60e3&&d.current&&d.current.temperature_2m!=null)return d.current.temperature_2m;
+ const t=new Date(at),key=iso(t)+'T'+pad(t.getHours())+':00';const i=d.hourly?d.hourly.time.indexOf(key):-1;return i>=0?d.hourly.temperature_2m[i]:null}
+function wxStart(id){wxFor=id;$('lwx').textContent='Temperatur wird ermittelt …';
+ getPos().then(pos=>{if(wxFor!==id)return;if(!pos){$('lwx').textContent='Kein Standort freigegeben. Du kannst sie selbst eintragen.';return}
+  if(!navigator.onLine){$('lwx').textContent='Offline: wird nachgetragen, sobald du online bist.';return}
+  fetchTemp(pos.lat,pos.lon,logAt).then(t=>{if(wxFor!==id)return;if(t==null){$('lwx').textContent='Temperatur gerade nicht verfügbar.';return}
+   if($('ltemp').value.trim()==='')$('ltemp').value=fkm(Math.round(t*10)/10);$('lwx').textContent='Aktuell an deinem Standort'}).catch(()=>{if(wxFor===id)$('lwx').textContent='Temperatur gerade nicht verfügbar.'})})}
+let bfBusy=false;async function backfill(){if(bfBusy||!navigator.onLine)return;bfBusy=true;
+ try{for(const k of Object.keys(state.done)){const L=state.done[k];if(!k.startsWith('log:')||!L.v||L.temp!=null||L.lat==null||!L.at||Date.now()-L.at>90*864e5)continue;
+  const t=await fetchTemp(L.lat,L.lon,L.at).catch(()=>null);if(t==null)continue;const n={...L,temp:Math.round(t*10)/10,t:Date.now()};delete n.lat;delete n.lon;state.done[k]=n;save();render()}}finally{bfBusy=false}}
+addEventListener('online',()=>setTimeout(backfill,1500));setTimeout(backfill,2500);
 function openLog(id){const e=ITEMS.find(x=>x.id===id);if(!e)return;logId=id;const l=LOG(id);
  $('lp').textContent=e.text+' · '+fmt(e.date);$('lkm').value=fkm(l?l.km:e.km);
  {const km0=l?l.km:e.km,v=l&&l.sec?(mode==='time'?l.sec:Math.round(l.sec/km0)):0;$('lmin').value=v?Math.floor(v/60):'';$('lsec').value=v?pad(v%60):''}setMode(mode,false);$('lnote').value=l&&l.note||'';
- setFeel(l&&l.feel||0);$('ldel').hidden=!l;updPace();$('ldlg').showModal()}
+ setFeel(l&&l.feel||0);$('ldel').hidden=!l;updPace();
+ logAt=l&&l.at?l.at:Date.now();$('lat').textContent=(l&&l.at?'Eingetragen ':'Wird gespeichert mit: ')+fdt(logAt);
+ $('ltemp').value=l&&l.temp!=null?fkm(l.temp):'';if(l&&l.temp!=null){wxFor=null;$('lwx').textContent=''}else if(l&&l.lat!=null){wxFor=null;$('lwx').textContent='Wird nachgetragen, sobald du online bist.'}else wxStart(id);
+ $('ldlg').showModal()}
 ['lkm','lmin','lsec'].forEach(i=>$(i).addEventListener('input',updPace));
 $('feelr').addEventListener('click',ev=>{const b=ev.target.closest('[data-feel]');if(b)setFeel(+b.dataset.feel)});
 $('lform').addEventListener('submit',ev=>{ev.preventDefault();const km=parseFloat($('lkm').value.replace(',','.'));if(!(km>0)){$('lkm').focus();return}
  const before=pend||got();pend=null;const sec=totalSec();
- state.done['log:'+logId]={v:1,t:Date.now(),km:Math.round(km*100)/100,sec:sec||0,feel:feel||0,note:$('lnote').value.trim().slice(0,140)};
+ const tv=parseFloat($('ltemp').value.replace(',','.').replace('−','-'));const old=LOG(logId);
+ const ent={v:1,t:Date.now(),km:Math.round(km*100)/100,sec:sec||0,feel:feel||0,note:$('lnote').value.trim().slice(0,140),at:old&&old.at?old.at:logAt,temp:isFinite(tv)?Math.round(tv*10)/10:null};
+ if(ent.temp==null){const pp=old&&old.lat!=null?old:lastPos;if(pp){ent.lat=pp.lat;ent.lon=pp.lon}}
+ state.done['log:'+logId]=ent;wxFor=null;setTimeout(backfill,500);
  $('ldlg').close();save();render();celebrate(before)});
 $('lskip').onclick=()=>{$('ldlg').close();if(pend){celebrate(pend);pend=null}};
 $('ldel').onclick=()=>{state.done['log:'+logId]={v:0,t:Date.now()};$('ldlg').close();save();render()};

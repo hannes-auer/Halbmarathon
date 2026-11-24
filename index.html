@@ -319,8 +319,8 @@ label.cb:focus-within{outline:3px solid var(--teal);outline-offset:2px}
 .track{position:relative;height:34px;margin-top:6px}
 .tline{position:absolute;left:0;right:0;top:9px;height:8px;border-radius:4px;background:rgba(255,255,255,.25);overflow:hidden}
 .tline i{display:block;height:100%;background:#fff;border-radius:4px;transition:width .6s}
-.runner{position:absolute;top:0;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:left .6s}
-.runner svg{width:16px;height:16px;fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.runner{position:absolute;top:6px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.28),0 1px 4px rgba(0,0,0,.25);transition:left .6s}
+.runner svg{display:none}
 .tk{position:absolute;top:22px;font-size:11px;opacity:.85;transform:translateX(-50%);white-space:nowrap}
 .tk:first-of-type{transform:none}.tk.end{transform:translateX(-100%)}
 /* recap */
@@ -338,7 +338,7 @@ label.cb:focus-within{outline:3px solid var(--teal);outline-offset:2px}
 .tip{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:light-dark(#fbefe9,#2c201c);font-size:15px;line-height:1.45}
 .tip b{display:block;font-family:"Barlow Condensed",Barlow,sans-serif;font-size:18px;color:var(--redd);margin-bottom:2px}
 /* bests + trend */
-.bests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}
+.bests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px;padding-top:2px}
 .bests div{border:1px solid var(--line);border-radius:12px;padding:10px}
 .bests b{display:block;font-family:"Barlow Condensed",Barlow,sans-serif;font-size:24px;line-height:1.1}
 .bests span{font-size:13px;color:var(--mute)}
@@ -414,7 +414,7 @@ label.cb:focus-within{outline:3px solid var(--teal);outline-offset:2px}
   <div class="panel">
     <div class="mtrs">
       <div class="mtr"><div class="mt"><span>Vorbereitung <em id="plabel">–</em></span><b id="ppct">–</b></div><div class="bar"><i id="pbar" style="width:0"></i></div></div>
-      <div class="mtr"><div class="mt"><span>Gesamtplan <em id="trkkm">–</em></span><b id="gpct">–</b></div><div class="track" aria-hidden="true"><div class="tline"><i id="gbar" style="width:0"></i></div><span class="runner" id="runner" style="left:0"><svg><use href="#i-shoe"/></svg></span><span class="tk" style="left:0">Start</span><span class="tk" style="left:23.7%">5</span><span class="tk" style="left:47.4%">10</span><span class="tk" style="left:71.1%">15</span><span class="tk end" style="left:100%">Ziel 21,1</span></div></div>
+      <div class="mtr"><div class="mt"><span>Gesamtplan <em id="trkkm">–</em></span><b id="gpct">–</b></div><div class="track" aria-hidden="true"><div class="tline"><i id="gbar" style="width:0"></i></div><span class="runner" id="runner" style="left:0"></span><span class="tk" style="left:0">Start</span><span class="tk" style="left:23.7%">5</span><span class="tk" style="left:47.4%">10</span><span class="tk" style="left:71.1%">15</span><span class="tk end" style="left:100%">Ziel 21,1</span></div></div>
     </div>
     <div class="kpis" id="stats"></div>
   </div>
@@ -661,12 +661,12 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
   <dl><div><dt>Distanz</dt><dd>${fkm(l.km)} km</dd></div><div><dt>Zeit</dt><dd>${l.sec?fdur(l.sec):'–'}</dd></div><div><dt>Pace</dt><dd>${fpace(l.km,l.sec)}</dd></div><div><dt>Gefühl</dt><dd>${l.feel?dots(l.feel):'–'}</dd></div></dl>
   ${l.note?`<p class="nt">${esc(l.note)}</p>`:''}<button class="lg ed" data-log="${e.id}">bearbeiten</button></li>`}).join('');
  $('diary').innerHTML=`<h2>Lauftagebuch</h2>
- <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${bestsHTML()}${trendHTML()}
+ <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${trendHTML()}
  <div class="chart" role="img" aria-label="Kilometer pro Woche, geplant und gelaufen">${cols}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
- <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
-<div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2"><span><i class="sw" style="border:1.5px dashed var(--mute)"></i>geplante km der Woche</span><span><i class="sw" style="background:var(--red);border-color:var(--red)"></i>gelaufene km</span><span>Zahlen unten: Trainingswoche</span><p>Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>
+ <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
+<div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:14px">${bestsHTML()}</div></div></div><div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2"><span><i class="sw" style="border:1.5px dashed var(--mute)"></i>geplante km der Woche</span><span><i class="sw" style="background:var(--red);border-color:var(--red)"></i>gelaufene km</span><span>Zahlen unten: Trainingswoche</span><p>Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>
 <div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div>`;$('diary').dataset.n=logs.length}
-$('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$('diaLegW').classList.toggle('open',x.checked)});
+$('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$(x.dataset.sw==='recs'?'recsW':'diaLegW').classList.toggle('open',x.checked)});
 $('diary').addEventListener('click',ev=>{const b=ev.target.closest('[data-ui]');if(!b)return;ui.runs=!ui.runs;saveUi();$('runsW').classList.toggle('open',ui.runs);b.setAttribute('aria-expanded',ui.runs);b.textContent=ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+($('diary').dataset.n||0)+')'});
 let msAll=false;
 function badgesv(){const s=stats();const g=got();let ch=false;
@@ -677,9 +677,9 @@ function badgesv(){const s=stats();const g=got();let ch=false;
  let html;
  if(msAll)html=`<div class="badges">${MS.map(card).join('')}</div>`;
  else{const recent=MS.filter(m=>g.has(m[0])).sort((a,b)=>state.done['ms:'+b[0]].t-state.done['ms:'+a[0]].t).slice(0,3);
-  const next=MS.filter(m=>!g.has(m[0])).slice(0,3);
+  const next=[];
   html=(recent.length?`<div class="mslab">Zuletzt erreicht</div><div class="badges">${recent.map(card).join('')}</div>`:'')
-   +(next.length?`<div class="mslab">Als Nächstes</div><div class="badges">${next.map(card).join('')}</div>`:'')}
+   +(recent.length?'':'<p class="empty2">Noch kein Meilenstein erreicht. Der erste kommt mit deinem ersten Haken.</p>')}
  $('badges').innerHTML=html;$('mstog').setAttribute('aria-expanded',msAll);$('mstog').textContent=msAll?'Weniger anzeigen':'Alle '+MS.length+' Meilensteine anzeigen'}
 $('mstog').onclick=()=>{msAll=!msAll;badgesv()};
 // log dialog

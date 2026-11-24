@@ -257,6 +257,11 @@ main{align-items:start}
 .season{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.16);font-size:14px;font-weight:600}
 .season svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @media(prefers-reduced-motion:reduce){.fx i,.fx b{animation:none}.fx i{top:var(--ty,20%)}.fx b{opacity:.6}}
+[hidden]{display:none!important}
+.day .pb{position:absolute;left:6px;right:6px;bottom:4px;height:4px;border-radius:2px;background:light-dark(#a9d6cf,#2a6159);overflow:hidden}
+.day .pb i{display:block;height:100%;background:var(--teal);border-radius:2px}
+.day.st-part .dic2{margin-bottom:8px}
+@media(max-width:600px){.day .frac{display:none}.day .pb{left:4px;right:4px;bottom:3px;height:3px}.day.st-part .dic2{margin-bottom:6px}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -311,7 +316,7 @@ main{align-items:start}
       <span><i class="sw" style="background:var(--gold);border-color:var(--gold)"></i>Rennen</span>
       <span><svg class="ic"><use href="#i-shoe"/></svg>Laufen</span>
       <span><svg class="ic"><use href="#i-dumbbell"/></svg>Gym</span>
-      <p>Optionale Läufe zählen nicht als verpasst. Die Zahl oben rechts zeigt, wie viele Einheiten erledigt sind.</p>
+      <p>Optionale Läufe zählen nicht als verpasst. Bei teilweise erledigten Tagen zeigt der Balken unten, wie viel schon geschafft ist.</p>
     </div>
   </section>
   <div class="side">
@@ -479,7 +484,7 @@ function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MO
   else if(ski)st='ski';else if(exam)st='exam';
   const run=ev.some(isRun),gym=ev.some(e=>e.type==='gym');
   const ics=(run?'<svg class="ic run"><use href="#i-shoe"/></svg>':'')+(gym?'<svg class="ic gym"><use href="#i-dumbbell"/></svg>':'')+(!run&&!gym&&ski?'<svg class="ic"><use href="#i-snow"/></svg>':'')+(exam&&!req.length?'<svg class="ic"><use href="#i-pen"/></svg>':'');
-  const frac=st==='part'?`<span class="frac">${nd}/${req.length}</span>`:'';
+  const frac=st==='part'?`<span class="frac">${nd}/${req.length}</span><span class="pb" aria-hidden="true"><i style="width:${Math.round(nd/req.length*100)}%"></i></span>`:'';
   const lbl=ev.filter(e=>e.type!=='rest').map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).join(', ');
   h+=`<button class="day st-${st}${s===today?' now':''}${s===sel?' sel':''}" data-d="${s}" aria-label="${fmt(s)}${lbl?': '+lbl:''}"><span class="d">${k}</span><span class="dic2" aria-hidden="true">${ics}</span>${frac}</button>`}
  $('cal').innerHTML=h;$('prev').disabled=month<='2026-11';$('next').disabled=month>='2027-04'}

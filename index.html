@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Halbmarathon</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
-<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Halbmarathon">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#b23a26">
 <script src="config.js"></script>
-<script src="vendor/supabase.js"></script>
+<script src="supabase.js"></script>
 <style>
-@font-face{font-family:Barlow;font-weight:400;font-display:swap;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:Barlow;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:Barlow;font-weight:600;font-display:swap;src:url(fonts/barlow-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:"Barlow Condensed";font-weight:500;font-display:swap;src:url(fonts/barlow-condensed-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:"Barlow Condensed";font-weight:700;font-display:swap;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:400;font-display:swap;src:url(barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:500;font-display:swap;src:url(barlow-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:600;font-display:swap;src:url(barlow-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-weight:500;font-display:swap;src:url(barlow-condensed-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-weight:700;font-display:swap;src:url(barlow-condensed-latin-700-normal.woff2) format("woff2")}
 
 /* VOICE: sporty, direct, a training log you open every morning.
    IDEA: a race bib + paper training diary.
@@ -238,13 +238,32 @@ main{align-items:start}
 .toast.on{visibility:visible;opacity:1;transform:translate(-50%,0)}
 .day .frac{top:5px;bottom:auto}
 @media(max-width:600px){.day .frac{top:3px}}
+.swt{display:inline-flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;font-weight:600;font-size:14px;user-select:none}
+.swt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.swt .tr{position:relative;width:44px;height:26px;border-radius:13px;background:var(--line);transition:background .2s;flex-shrink:0}
+.swt .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.swt input:checked+.tr{background:var(--teal)}
+.swt input:checked+.tr::after{transform:translateX(18px)}
+.swt input:focus-visible+.tr{outline:3px solid var(--teal);outline-offset:2px}
+/* seasonal themes */
+.bib{background:var(--hbg,var(--red))}
+.fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.fx i{position:absolute;top:-6%;display:block;border-radius:50%;background:var(--pc,#fff);opacity:var(--po,.85);animation:fall var(--d,10s) linear var(--dl,0s) infinite}
+.fx i.cf{border-radius:2px}
+.fx i.pt{border-radius:60% 0 60% 0}
+.fx b{position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;animation:burst 3.2s ease-out var(--dl,0s) infinite;box-shadow:0 -26px 0 var(--pc),18px -18px 0 var(--pc),26px 0 0 var(--pc),18px 18px 0 var(--pc),0 26px 0 var(--pc),-18px 18px 0 var(--pc),-26px 0 0 var(--pc),-18px -18px 0 var(--pc)}
+@keyframes fall{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(var(--sw,20px),55vh) rotate(180deg)}100%{transform:translate(0,110vh) rotate(360deg)}}
+@keyframes burst{0%{transform:scale(.2);opacity:0}10%{opacity:1}60%{transform:scale(1.6);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+.season{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.16);font-size:14px;font-weight:600}
+.season svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:reduce){.fx i,.fx b{animation:none}.fx i{top:var(--ty,20%)}.fx b{opacity:.6}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head>
 <body>
-<header class="bib"><svg class="gate" viewBox="0 0 640 300" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<header class="bib"><div class="fx" id="fx" aria-hidden="true"></div><svg class="gate" viewBox="0 0 640 300" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
 <path d="M0 290 Q20 284 40 290 T80 290 T120 290 T160 290 T200 290 T240 290 T280 290 T320 290 T360 290 T400 290 T440 290 T480 290 T520 290 T560 290 T600 290 T640 290"/>
 <path d="M118 272 V108 H172 V272 M228 272 V108 H282 V272"/>
 <path d="M114 108 H176 M224 108 H286 M114 100 H176 M224 100 H286"/>
@@ -263,6 +282,7 @@ main{align-items:start}
 </svg>
 <div class="bibin">
   <div>
+    <div class="season" id="season" hidden></div>
     <h1>Heidelberger Halbmarathon</h1>
     <div class="sub">Sonntag, 25. April 2027 · 21,1 km · 22-Wochen-Plan</div>
     <div class="count"><span class="num" id="days">–</span><span id="dayslbl">Tage bis zum Start</span></div>
@@ -280,7 +300,7 @@ main{align-items:start}
     <div class="calhead"><h2 id="mname">–</h2><div class="nav"><button id="prev" aria-label="Vorheriger Monat">‹</button><button class="today" id="tod">Heute</button><button id="next" aria-label="Nächster Monat">›</button></div></div>
     <div class="grid" id="dow"></div>
     <div class="grid" id="cal"></div>
-    <div class="togs"><button class="tog" id="calTog" aria-expanded="false" aria-controls="calLeg">Legende</button></div>
+    <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" id="calSw" aria-controls="calLeg"><span class="tr"></span>Legende anzeigen</label></div>
     <div class="leg2" id="calLeg" hidden>
       <span><i class="sw" style="background:var(--teal);border-color:var(--teal)"></i>erledigt</span>
       <span><i class="sw" style="background:light-dark(#d3ebe7,#1b4641)"></i>teilweise erledigt</span>
@@ -499,8 +519,8 @@ function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="
  return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''} · bearbeiten</button>`}
 let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
 const saveUi=()=>{try{localStorage.setItem('hm27ui',JSON.stringify(ui))}catch(e){}};
-function calLegv(){$('calLeg').hidden=!ui.calLeg;$('calTog').setAttribute('aria-expanded',ui.calLeg);$('calTog').textContent=ui.calLeg?'Legende ausblenden':'Legende'}
-$('calTog').onclick=()=>{ui.calLeg=!ui.calLeg;saveUi();calLegv()};
+function calLegv(){$('calLeg').hidden=!ui.calLeg;$('calSw').checked=ui.calLeg}
+$('calSw').addEventListener('change',()=>{ui.calLeg=$('calSw').checked;saveUi();calLegv()});
 function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
  const act=W.map((_,i)=>ITEMS.filter(e=>e.wk===i+1&&isRun(e)&&isDone(e)).reduce((a,e)=>a+akm(e),0));
  const mx=Math.max(...WEEKKM,...act,1);
@@ -514,9 +534,10 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
  $('diary').innerHTML=`<h2>Lauftagebuch</h2>
  <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>
  <div class="chart" role="img" aria-label="Kilometer pro Woche, geplant und gelaufen">${cols}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
- <div class="togs"><button class="tog" data-ui="diaLeg" aria-expanded="${ui.diaLeg}">${ui.diaLeg?'Legende ausblenden':'Legende'}</button><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
+ <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
  ${ui.diaLeg?`<div class="leg2"><span><i class="sw" style="border:1.5px dashed var(--mute)"></i>geplante km der Woche</span><span><i class="sw" style="background:var(--red);border-color:var(--red)"></i>gelaufene km</span><span>Zahlen unten: Trainingswoche</span><p>Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div>`:''}
  ${ui.runs?(logs.length?`<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'):''}`}
+$('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();diaryv();const n=document.querySelector('[data-sw="'+x.dataset.sw+'"]');if(n)n.focus()});
 $('diary').addEventListener('click',ev=>{const b=ev.target.closest('[data-ui]');if(!b)return;ui[b.dataset.ui]=!ui[b.dataset.ui];saveUi();diaryv()});
 let msAll=false;
 function badgesv(){const s=stats();const g=got();let ch=false;
@@ -559,6 +580,44 @@ $('lform').addEventListener('submit',ev=>{ev.preventDefault();const km=parseFloa
  $('ldlg').close();save();render();celebrate(before)});
 $('lskip').onclick=()=>{$('ldlg').close();if(pend){celebrate(pend);pend=null}};
 $('ldel').onclick=()=>{state.done['log:'+logId]={v:0,t:Date.now()};$('ldlg').close();save();render()};
+// ---------- seasonal themes
+const SEAS=[
+ ['xmas','2026-11-23','2026-12-27'],['nye','2026-12-28','2027-01-06'],['winter','2027-01-07','2027-02-03'],['fasching','2027-02-04','2027-02-10'],
+ ['winter','2027-02-11','2027-02-28'],['spring','2027-03-01','2027-03-25'],['easter','2027-03-26','2027-03-29'],['spring','2027-03-30','2027-04-18'],['race','2027-04-19','2027-04-26']];
+const ICO={star:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',spark:'<path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"/>',
+ snow:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
+ egg:'<path d="M12 3c-4 0-7 6-7 10.5a7 7 0 0 0 14 0C19 9 16 3 12 3z"/>',flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'};
+const daysTo=d=>Math.round((pd(d)-pd(today))/864e5);
+const TH={
+ xmas:{bg:'linear-gradient(160deg,#21603f 0%,#133d2b 75%)',tc:'#1d5a3d',ic:'star',fx:'snow',n:42,
+  t:()=>today<'2026-12-24'?'Advent · noch '+daysTo('2026-12-24')+' Tage bis Heiligabend':today==='2026-12-24'?'Frohe Weihnachten! Heute ist Heiligabend':today<='2026-12-26'?'Frohe Weihnachten':'Schöne Feiertage'},
+ nye:{bg:'linear-gradient(160deg,#1a1f4d 0%,#2a1b4e 65%,#3d1d40 100%)',tc:'#1d1f4b',ic:'spark',fx:'fire',n:8,
+  t:()=>today<'2026-12-31'?'Bald ist Silvester · guten Rutsch!':today==='2026-12-31'?'Silvester · guten Rutsch ins neue Jahr!':'Frohes neues Jahr 2027'},
+ winter:{bg:'linear-gradient(160deg,#2f6a8c 0%,#1b4462 80%)',tc:'#285d7c',ic:'snow',fx:'snow',n:16,t:()=>'Winterlauf: Zwiebellook und Stirnlampe'},
+ fasching:{bg:'',tc:'#b23a26',ic:'star',fx:'confetti',n:46,t:()=>'Helau und Alaaf'},
+ spring:{bg:'linear-gradient(160deg,#b23a26 0%,#c75b3c 100%)',tc:'#b23a26',ic:'sun',fx:'petals',n:16,t:()=>'Frühling: die Tage werden länger'},
+ easter:{bg:'linear-gradient(160deg,#c06648 0%,#a93b2a 100%)',tc:'#b5492f',ic:'egg',fx:'pastel',n:22,t:()=>'Frohe Ostern'},
+ race:{bg:'linear-gradient(160deg,#211a18 0%,#3b2b12 100%)',tc:'#211a18',ic:'flag',fx:'gold',n:5,
+  t:()=>today===RACE?'Heute ist Renntag. Viel Erfolg!':today>RACE?'Finisher! Glückwunsch':'Race Week · noch '+daysTo(RACE)+' Tage'}};
+function applyTheme(){let id=null;try{id=new URLSearchParams(location.search).get('theme')}catch(e){}
+ if(!TH[id]){const s=SEAS.find(x=>today>=x[1]&&today<=x[2]);id=s?s[0]:null}
+ const th=TH[id];const bib=document.querySelector('.bib');const fx=$('fx');fx.innerHTML='';
+ if(!th){bib.style.removeProperty('--hbg');$('season').hidden=true;return}
+ if(th.bg)bib.style.setProperty('--hbg',th.bg);else bib.style.removeProperty('--hbg');
+ const m=document.querySelector('meta[name=theme-color]');if(m)m.content=th.tc;
+ $('season').hidden=false;$('season').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+ICO[th.ic]+'</svg>'+th.t();
+ const r=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.floor(Math.random()*a.length)];let s='';
+ const fall=(cls,cols,smin,smax,dmin,dmax,op)=>{for(let i=0;i<th.n;i++){const z=r(smin,smax);
+  s+=`<i class="${cls}" style="left:${r(0,100)}%;width:${z}px;height:${cls==='cf'?z*.45:z}px;--pc:${pick(cols)};--po:${op||r(.5,.95)};--d:${r(dmin,dmax)}s;--dl:${-r(0,dmax)}s;--sw:${r(-40,40)}px;--ty:${r(5,90)}%"></i>`}};
+ if(th.fx==='snow')fall('',['#fff'],3,7,8,16);
+ if(th.fx==='confetti')fall('cf',['#ffd23f','#3cc2b5','#ff6fb5','#7bb8ea','#fff','#9be15d'],7,12,5,10,.95);
+ if(th.fx==='petals')fall('pt',['#ffd1dc','#ffe4ea','#fff3c4'],8,13,10,18,.85);
+ if(th.fx==='pastel')fall('pt',['#ffd6e7','#d6f0ff','#fff1b8','#d9f7d0','#e8dcff'],8,13,9,16,.9);
+ if(th.fx==='fire'||th.fx==='gold'){const cols=th.fx==='gold'?['#f0c54c','#ffe08a']:['#ffd23f','#ff6fb5','#7bdcff','#b39bff','#fff'];
+  for(let i=0;i<th.n;i++)s+=`<b style="left:${r(8,92)}%;top:${r(8,60)}%;--pc:${pick(cols)};background:${pick(cols)};--dl:${-r(0,3.2)}s"></b>`;
+  if(th.fx==='fire'){th.n=14;fall('',['#ffe08a','#fff'],2,3,9,15,.7)}}
+ fx.innerHTML=s}
+applyTheme();
 function render(){head();regv();cal();calLegv();dayv();weekv();diaryv();badgesv()}
 function cache(){try{localStorage.setItem('hm27',JSON.stringify(state))}catch(e){}}
 let tmr;function save(){cache();clearTimeout(tmr);tmr=setTimeout(sync,800)}

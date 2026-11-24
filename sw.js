@@ -1,10 +1,10 @@
 // Offline-Cache. Bei jeder Änderung an der App VERSION hochzählen.
-const VERSION = 'hm27-v7';
+const VERSION = 'hm27-v8';
 const FILES = [
-  './', 'index.html', 'config.js', 'manifest.webmanifest', 'vendor/supabase.js',
-  'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
-  'fonts/barlow-latin-400-normal.woff2', 'fonts/barlow-latin-500-normal.woff2', 'fonts/barlow-latin-600-normal.woff2',
-  'fonts/barlow-condensed-latin-500-normal.woff2', 'fonts/barlow-condensed-latin-700-normal.woff2'
+  './', 'index.html', 'config.js', 'manifest.webmanifest', 'supabase.js',
+  'icon-180.png', 'icon-192.png', 'icon-512.png',
+  'barlow-latin-400-normal.woff2', 'barlow-latin-500-normal.woff2', 'barlow-latin-600-normal.woff2',
+  'barlow-condensed-latin-500-normal.woff2', 'barlow-condensed-latin-700-normal.woff2'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));

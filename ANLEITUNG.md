@@ -14,7 +14,7 @@ Einmal ca. 15 Minuten, danach läuft alles von selbst.
 ## 2. GitHub Pages (die Adresse der App)
 
 1. Auf GitHub ein neues Repository `halbmarathon` anlegen, **Public**.
-2. Auf **uploading an existing file** klicken und alle Dateien und Ordner aus diesem Ordner hineinziehen. **Commit changes**.
+2. Auf **uploading an existing file** klicken und alle Dateien aus diesem Ordner hineinziehen (es gibt keine Unterordner). **Commit changes**.
 3. Im Repository die Datei `config.js` öffnen, auf den Stift klicken und URL und Schlüssel aus Schritt 1.4 eintragen. **Commit changes**.
 4. **Settings → Pages**: bei *Source* „Deploy from a branch“, Branch **main** und **/(root)** wählen, **Save**.
    Nach 1–2 Minuten ist die App erreichbar unter `https://DEIN-NAME.github.io/halbmarathon/`.

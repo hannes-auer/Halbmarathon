@@ -262,6 +262,44 @@ main{align-items:start}
 .day .pb i{display:block;height:100%;background:var(--teal);border-radius:2px}
 .day.st-part .dic2{margin-bottom:8px}
 @media(max-width:600px){.day .frac{display:none}.day .pb{left:4px;right:4px;bottom:3px;height:3px}.day.st-part .dic2{margin-bottom:6px}}
+.hd{display:block}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:40px;margin-bottom:10px}
+.topbar .season{margin:0}
+.acct2{margin-left:auto;display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;position:relative}
+.acct2 .cl{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.acct2 .dot{position:absolute;left:25px;top:9px;width:9px;height:9px;border-radius:50%;border:2px solid rgba(0,0,0,.25);background:#d6cfcb}
+.dot[data-s=ok]{background:#6ee7a8}.dot[data-s=busy]{background:#ffd23f}.dot[data-s=off]{background:#c9d2dc}.dot[data-s=err]{background:#ff9b85}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
+.hero h1{font-size:clamp(28px,4.2vw,46px)}
+.hero .sub{opacity:.9;margin-top:6px}
+.count2{text-align:right;line-height:1}
+.count2 .num{display:block;font-size:clamp(64px,10vw,104px)}
+.count2 #dayslbl{display:block;font-size:14px;opacity:.9;margin-top:4px}
+.bib .reg{margin-top:14px;gap:0}
+.bib .reg .grp{display:inline-flex;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.55)}
+.bib .reg .grp a,.bib .reg .grp button{border-radius:0;min-height:40px;border:0}
+.bib .reg .grp a{background:#fff;color:var(--red)}
+.bib .reg .grp button{background:transparent;color:#fff;border-left:1px solid rgba(255,255,255,.55)}
+.bib .reg .ok{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.16)}
+.bib .reg .ok button{min-height:28px;padding:0 10px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.45)}
+.panel{margin-top:clamp(16px,2.5vw,24px);background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:clamp(12px,2vw,18px)}
+.mtrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
+.mt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:600;font-size:15px}
+.mt em{font-style:normal;font-weight:500;font-size:13px;opacity:.85;margin-left:6px;white-space:nowrap}
+.mt b{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:22px}
+.panel .bar{height:8px;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+.kpis span{display:flex;flex-direction:column;padding:0 12px;border-left:1px solid rgba(255,255,255,.18);font-size:13px;opacity:.95}
+.kpis span:first-child{border-left:0;padding-left:0}
+.kpis b{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:26px;line-height:1.1;margin:0;white-space:nowrap}
+.kpis small{font-size:.62em;font-weight:500;opacity:.85}
+@media(max-width:600px){.hero{gap:10px}.hero .sub{font-size:14px}.count2 .num{font-size:64px}.count2 #dayslbl{font-size:12px;max-width:6.5em;margin-left:auto}
+ .mtrs{grid-template-columns:minmax(0,1fr);gap:10px}.kpis span{padding:0 8px}.kpis b{font-size:22px}.topbar .season{font-size:13px;padding:4px 10px}.acct2{padding:0 12px 0 10px}}
+.hero .reg{grid-column:1/-1;margin-top:4px}
+.acct2,.bib .reg a,.bib .reg button,.topbar .season{white-space:nowrap}
+.topbar .season{min-width:0;overflow:hidden;text-overflow:ellipsis;display:inline-block;line-height:1.6}
+.topbar .season svg{vertical-align:-3px;margin-right:6px}
+@media(max-width:600px){.hm{display:none}.bib .reg .grp a,.bib .reg .grp button{padding:0 12px;font-size:14px}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -283,22 +321,29 @@ main{align-items:start}
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <symbol id="i-shoe" viewBox="0 0 24 24"><path d="M2 17.5h18.5a1.5 1.5 0 0 0 .6-2.9l-5.6-2.4-2.3-3.4-2.6 1.6-1.8-1.6L4 7.5 2 9z"/><path d="M2 20.5h20"/><path d="M8.5 12.5l1.5-1M11 14l1.5-1"/></symbol>
-<symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 </svg>
-<div class="bibin">
-  <div>
+<div class="bibin hd">
+  <div class="topbar">
     <div class="season" id="season" hidden></div>
-    <h1>Heidelberger Halbmarathon</h1>
-    <div class="sub">Sonntag, 25. April 2027 · 21,1 km · 22-Wochen-Plan</div>
-    <div class="count"><span class="num" id="days">–</span><span id="dayslbl">Tage bis zum Start</span></div>
+    <button class="acct2" id="acct" aria-label="Sync und Konto"><svg class="cl" aria-hidden="true"><use href="#i-cloud"/></svg><span class="dot" id="sdot" data-s="local"></span><span id="acctTxt">Sync</span></button>
+  </div>
+  <div class="hero">
+    <div class="ttl">
+      <h1>Heidelberger Halbmarathon</h1>
+      <div class="sub">Sonntag, 25. April 2027 · 21,1 km<span class="hm"> · 22-Wochen-Plan</span></div>
+    </div>
+    <div class="count2"><span class="num" id="days">–</span><span id="dayslbl">Tage bis zum Start</span></div>
     <div class="reg" id="reg"></div>
   </div>
-  <div class="meters">
-    <div class="meter"><div class="top"><span>Vorbereitung: <span id="plabel">–</span></span><span id="ppct">–</span></div><div class="bar"><i id="pbar" style="width:0"></i></div></div>
-    <div class="meter"><div class="top"><span>Gesamtplan erledigt</span><span id="gpct">–</span></div><div class="bar"><i id="gbar" style="width:0"></i></div></div>
-    <div class="stats" id="stats"></div>
-    <div class="sync"><span id="sync">Nur auf diesem Gerät gespeichert</span><button class="acct" id="acct">Anmelden für Sync</button></div>
+  <div class="panel">
+    <div class="mtrs">
+      <div class="mtr"><div class="mt"><span>Vorbereitung <em id="plabel">–</em></span><b id="ppct">–</b></div><div class="bar"><i id="pbar" style="width:0"></i></div></div>
+      <div class="mtr"><div class="mt"><span>Gesamtplan</span><b id="gpct">–</b></div><div class="bar"><i id="gbar" style="width:0"></i></div></div>
+    </div>
+    <div class="kpis" id="stats"></div>
   </div>
+  <span id="sync" hidden>Nur auf diesem Gerät gespeichert</span>
 </div></header>
 <main>
   <section class="card">
@@ -345,6 +390,7 @@ main{align-items:start}
 <dialog id="dlg"><form class="dlg" id="form">
 <h2 id="dh">Sync einrichten</h2>
 <p id="dp">Mit einem Konto sind deine Häkchen auf iPhone und PC gleich. Offline gemachte Häkchen werden nachgeladen, sobald du wieder online bist.</p>
+<p id="dsync" style="font-weight:600;color:var(--ink)"></p>
 <div id="fields"><label>E-Mail<input type="email" id="em" autocomplete="email" required></label>
 <label style="margin-top:10px">Passwort (mind. 6 Zeichen)<input type="password" id="pw" autocomplete="current-password" minlength="6" required></label></div>
 <div class="err" id="err"></div>
@@ -416,7 +462,8 @@ const today=iso(new Date());
 let sel=today<START?START:today>RACE?RACE:today;
 let month=sel.slice(0,7);
 const $=id=>document.getElementById(id);
-const setSync=t=>$('sync').textContent=t;
+function setSync(t){$('sync').textContent=t;let s='local',l='Sync einrichten';if(/^Synchronisiert/.test(t)){s='ok';l='Sync an'}else if(/Wird synchronisiert/.test(t)){s='busy';l='Sync …'}else if(/^Offline/.test(t)){s='off';l='Offline'}else if(/fehlgeschlagen|nicht erreichbar/.test(t)){s='err';l='Sync-Fehler'}else if(/Sync nicht eingerichtet/.test(t)){s='local';l='Nur lokal'}
+ $('sdot').dataset.s=s;$('acctTxt').textContent=l;$('acct').title=t;$('acct').setAttribute('aria-label','Sync und Konto: '+t)}
 const isDone=e=>!!(state.done[e.id]&&state.done[e.id].v);
 const checkable=e=>T[e.type][2]>=0;
 const RUNT=['run','long','club','opt','race'];const isRun=e=>RUNT.includes(e.type);
@@ -469,7 +516,7 @@ function head(){const c=calc();const dl=Math.round((pd(RACE)-pd(today))/864e5);
  $('plabel').textContent=p===null?'noch nichts fällig':p>=90?'voll im Plan':p>=70?'gut dabei':p>=50?'etwas Rückstand':'deutlich hinter Plan';
  $('gpct').textContent=c.g+' %';$('gbar').style.width=c.g+'%';
  const wn=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
- $('stats').innerHTML=`<span><b>${fkm(c.km)}</b>km gelaufen</span><span><b>${c.longest?fkm(c.longest):'–'}</b>km längster Lauf</span><span><b>${wn}</b>/ 22 Wochen</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
+ $('stats').innerHTML=`<span><b>${fkm(c.km)}<small> km</small></b>gelaufen</span><span><b>${c.longest?fkm(c.longest)+'<small> km</small>':'–'}</b>längster Lauf</span><span><b>${wn}<small> / 22</small></b>Woche</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
 function mark(e){const c=T[e.type][1];if(!checkable(e))return`<span class="mk info" style="--c:${c}"></span>`;
  const cls=isDone(e)?'done':(e.date<today&&e.type!=='opt'?'miss':'');return`<span class="mk ${cls}" style="--c:${c}"></span>`}
 function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MON[m-1]+' '+y;
@@ -518,8 +565,8 @@ function weekv(){const e0=(EV[sel]||[])[0];if(!e0){$('week').innerHTML='<h3>Trai
  $('week').innerHTML=`<h3>Woche ${n} von 22${LIGHT.includes(n)&&n<21?' · leichte Woche':''}</h3><div class="meta">${PH(n)} · ${Math.round(kmDone)} von ${Math.round(goal)} km</div><div class="kmbar"><i style="width:${Math.min(100,kmDone/goal*100)}%"></i></div>${rows}`}
 const REGURL='https://atoshalbmarathon.tsg78-hd.de/ihre-anmeldung/';
 function regv(){const r=state.done.anmeldung&&state.done.anmeldung.v;
- $('reg').innerHTML=r?'<span class="ok">✓ Für den Lauf angemeldet</span><button data-reg>Rückgängig</button>'
- :'<a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Ich bin angemeldet</button>'}
+ $('reg').innerHTML=r?'<span class="ok">✓ Für den Lauf angemeldet <button data-reg>Rückgängig</button></span>'
+ :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>'}
 function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="${e.id}">+ Echte Werte eintragen</button>`;
  return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''} · bearbeiten</button>`}
 let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
@@ -595,7 +642,7 @@ const ICO={star:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-
 const daysTo=d=>Math.round((pd(d)-pd(today))/864e5);
 const TH={
  xmas:{bg:'linear-gradient(160deg,#21603f 0%,#133d2b 75%)',tc:'#1d5a3d',ic:'star',fx:'snow',n:42,
-  t:()=>today<'2026-12-24'?'Advent · noch '+daysTo('2026-12-24')+' Tage bis Heiligabend':today==='2026-12-24'?'Frohe Weihnachten! Heute ist Heiligabend':today<='2026-12-26'?'Frohe Weihnachten':'Schöne Feiertage'},
+  t:()=>today<'2026-12-24'?'Noch '+daysTo('2026-12-24')+' Tage bis Heiligabend':today==='2026-12-24'?'Frohe Weihnachten! Heute ist Heiligabend':today<='2026-12-26'?'Frohe Weihnachten':'Schöne Feiertage'},
  nye:{bg:'linear-gradient(160deg,#1a1f4d 0%,#2a1b4e 65%,#3d1d40 100%)',tc:'#1d1f4b',ic:'spark',fx:'fire',n:8,
   t:()=>today<'2026-12-31'?'Bald ist Silvester · guten Rutsch!':today==='2026-12-31'?'Silvester · guten Rutsch ins neue Jahr!':'Frohes neues Jahr 2027'},
  winter:{bg:'linear-gradient(160deg,#2f6a8c 0%,#1b4462 80%)',tc:'#285d7c',ic:'snow',fx:'snow',n:16,t:()=>'Winterlauf: Zwiebellook und Stirnlampe'},
@@ -641,8 +688,7 @@ const CFG=window.HM_CONFIG||{};const sb=(CFG.url&&CFG.anonKey&&window.supabase)?
 let user=null,busy=false,again=false;
 const rel=t=>{const m=Math.round((Date.now()-t)/6e4);return m<1?'gerade eben':m<60?'vor '+m+' min':m<1440?'vor '+Math.round(m/60)+' h':'vor '+Math.round(m/1440)+' Tagen'};
 function status(){const btn=$('acct');
- if(!sb){setSync('Nur auf diesem Gerät gespeichert (Sync nicht eingerichtet)');btn.hidden=true;return}
- btn.hidden=false;btn.textContent=user?'Konto':'Anmelden für Sync';
+ if(!sb){setSync('Nur auf diesem Gerät gespeichert (Sync nicht eingerichtet)');return}
  if(!user){setSync('Nur auf diesem Gerät gespeichert');return}
  if(!navigator.onLine){setSync('Offline · wird synchronisiert, sobald du online bist');return}
  setSync(state.synced?'Synchronisiert '+rel(state.synced):'Wird synchronisiert …')}
@@ -663,7 +709,9 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 setInterval(()=>{if(document.visibilityState==='visible')sync()},60000);setInterval(status,30000);
 // account dialog
 const dlg=$('dlg'),err=$('err');
-function openDlg(){err.textContent='';const on=!!user;$('fields').hidden=on;$('dh').textContent=on?'Dein Konto':'Sync einrichten';
+function openDlg(){err.textContent='';$('dsync').textContent='Status: '+$('sync').textContent;
+ if(!sb){$('fields').hidden=true;$('login').hidden=true;$('signup').hidden=true;$('dh').textContent='Sync nicht eingerichtet';$('dp').textContent='In config.js fehlen die Supabase-Daten (Adresse und Schlüssel). Bis dahin speichert die App nur auf diesem Gerät.';$('close').textContent='Schließen';dlg.showModal();return}
+ $('login').hidden=false;const on=!!user;$('fields').hidden=on;$('dh').textContent=on?'Dein Konto':'Sync einrichten';
  $('dp').textContent=on?'Angemeldet als '+user.email+'. Deine Häkchen werden automatisch synchronisiert.':'Mit einem Konto sind deine Häkchen auf iPhone und PC gleich. Offline gemachte Häkchen werden nachgeladen, sobald du wieder online bist.';
  $('login').textContent=on?'Abmelden':'Anmelden';$('signup').hidden=on;$('em').required=!on;$('pw').required=!on;dlg.showModal()}
 $('acct').onclick=openDlg;$('close').onclick=()=>dlg.close();

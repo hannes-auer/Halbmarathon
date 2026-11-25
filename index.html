@@ -498,6 +498,19 @@ dialog.sheet::backdrop{background:rgba(0,0,0,.5)}
 .day.st-done.now .d,.day.st-race.now .d{background:#fff;color:#1d1716}
 .day.st-part .frac{color:light-dark(#0f766e,#7fe0d4)}
 .day.st-part .ic{stroke:light-dark(#0f766e,#7fe0d4)}
+.dsec{border-top:1px solid var(--line);padding:6px 0}
+.dsec:first-of-type{margin-top:12px}
+.dsec .tog{border:0;background:none;padding:0;min-height:44px;font-size:15px}
+.dsec .vol{margin:4px 0 8px}
+.dsec .bests{margin-bottom:8px}
+.wrow.tdy{outline:none;background:light-dark(#ece6e2,#2c2522);border-radius:8px;padding-inline:8px}
+.wrow.tdy .wd{color:var(--ink)}
+.bdg .md{position:relative}
+.bdg .md svg{width:28px;height:28px;fill:none;stroke:var(--mute);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bdg.got .md{background:radial-gradient(circle at 35% 30%,#f7d774,#d9a21b 60%,#a87a0c);box-shadow:0 2px 8px rgba(169,122,12,.35)}
+.bdg.got .md svg{stroke:#fff;fill:rgba(255,255,255,.18)}
+.bdg .md small{position:absolute;right:-6px;bottom:-4px;min-width:22px;height:20px;padding:0 5px;border-radius:10px;background:var(--card);border:1.5px solid var(--line);font-size:11px;line-height:17px;color:var(--ink);font-family:Barlow,sans-serif;font-weight:700;text-align:center}
+.bdg.got .md small{border-color:#d9a21b;color:#8a6208}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -519,7 +532,7 @@ dialog.sheet::backdrop{background:rgba(0,0,0,.5)}
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <symbol id="i-shoe" viewBox="0 0 24 24"><g transform="rotate(22 20.5 18)"><path d="M2.5 18h18a1.5 1.5 0 0 0 .6-2.9l-5.6-2.4-2.3-3.4-2.6 1.6-1.8-1.6-4.3-1.3-2 1.5z"/><path d="M9 13l1.5-1M11.5 14.5l1.5-1"/></g><path d="M11 21.5h11"/></symbol>
-<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z"/></symbol><symbol id="i-move" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M3 9h12M8 3v4M14 3v4M15 15h6M18 12l3 3-3 3"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z"/></symbol><symbol id="i-move" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M3 9h12M8 3v4M14 3v4M15 15h6M18 12l3 3-3 3"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 </svg>
 <div class="bibin hd">
   <div class="topbar">
@@ -872,9 +885,13 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
  <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${trendHTML()}
  <div class="chart" aria-label="Kilometer pro Woche, geplant und gelaufen. Tippe auf eine Woche für Details.">${cols}${bubW?bubHTML(bubW,act,mx):''}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
  <div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2" style="display:block"><div class="phs" aria-hidden="true">${WEEKKM.map((_,i)=>`<i style="background:${PHC(i+1)}"></i>`).join('')}</div><div class="pkm" aria-label="Geplante Kilometer pro Woche">${WEEKKM.map(k=>`<span>${Math.round(k)}</span>`).join('')}</div><div class="phl">${PHS.map(([n,a,b,c])=>`<span><i style="background:${c}"></i>${n} (Wo ${a}${b>a?'–'+b:''})</span>`).join('')}</div><div class="phl"><span><i style="border:1.5px dashed var(--mute);height:10px"></i>geplante km</span><span><i style="background:var(--red);height:10px"></i>gelaufene km</span><span>Zahlenreihe: geplante km pro Woche</span><span>Tippe auf eine Woche für Details</span></div><p style="margin-top:8px">Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>${volSug()}
- <div class="togs"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label><button class="tog" data-vol="1" aria-expanded="${!!ui.volOpen}">Umfang anpassen</button><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button></div>
-<div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:14px">${bestsHTML()}</div></div></div>
-<div class="clp${ui.volOpen?' open':''}" id="volW"><div class="clpi">${volHTML()}</div></div><div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`${sortbar}<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div>`;$('diary').dataset.n=logs.length}
+ <div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label></div>
+<div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label>
+<div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:8px">${bestsHTML()}</div></div></div></div>
+<div class="dsec"><button class="tog" data-vol="1" aria-expanded="${!!ui.volOpen}">Umfang anpassen</button>
+<div class="clp${ui.volOpen?' open':''}" id="volW"><div class="clpi">${volHTML()}</div></div></div>
+<div class="dsec"><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button>
+<div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`${sortbar}<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div></div>`;$('diary').dataset.n=logs.length}
 $('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$(x.dataset.sw==='recs'?'recsW':'diaLegW').classList.toggle('open',x.checked)});
 $('diary').addEventListener('click',ev=>{const cw=ev.target.closest('[data-wk]');if(cw){const n=+cw.dataset.wk;bubW=bubW===n?0:n;diaryv();ev.stopPropagation();return}
  const vp=ev.target.closest('[data-volp]');if(vp){const prev=state.done.vol;state.done.vol={v:1,t:Date.now(),pct:+vp.dataset.volp,from:+vp.dataset.volfrom};save();render();vib();snack(+vp.dataset.volp?'Umfang +'+vp.dataset.volp+' % ab Woche '+vp.dataset.volfrom:'Umfang wie geplant',()=>{state.done.vol=prev||{v:0,t:Date.now()};save();render()});return}
@@ -886,7 +903,7 @@ function badgesv(){const s=stats();const g=got();let ch=false;
  for(const m of MS){const k='ms:'+m[0];if(g.has(m[0])&&!(state.done[k]&&state.done[k].v)){state.done[k]={v:1,t:Date.now()};ch=true}}
  if(ch)save();
  $('msub').textContent=g.size+' von '+MS.length+' erreicht';
- const card=m=>{const ok=g.has(m[0]);return`<div class="bdg${ok?' got':''}"><div class="md">${m[1]}</div><div class="bt">${m[2]}</div><div class="bp">${ok?'geschafft':m[4](s)}</div></div>`};
+ const card=m=>{const ok=g.has(m[0]);return`<div class="bdg${ok?' got':''}"><div class="md"><svg aria-hidden="true"><use href="#i-trophy"/></svg><small>${m[1]}</small></div><div class="bt">${m[2]}</div><div class="bp">${ok?'geschafft':m[4](s)}</div></div>`};
  let html;
  if(msAll)html=`<div class="badges">${MS.map(card).join('')}</div>`;
  else{const recent=MS.filter(m=>g.has(m[0])).sort((a,b)=>state.done['ms:'+b[0]].t-state.done['ms:'+a[0]].t).slice(0,3);

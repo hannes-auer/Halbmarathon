@@ -523,6 +523,77 @@ dialog.sheet::backdrop{background:rgba(0,0,0,.5)}
 .freeday{list-style:none;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
 #pop{width:min(300px,88vw)}
 main{overflow-anchor:none}
+/* --- v26 --- */
+.dist,.prog,.wxb{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);margin-bottom:12px}
+.dist svg,.wxb svg{width:26px;height:26px;flex-shrink:0;fill:none;stroke:var(--teal);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.dist b,.wxb b{display:block;font-weight:600}
+.dist span,.wxb span{display:block;font-size:14px;color:var(--mute)}
+.wxb small{display:block;font-size:13px;color:var(--teal);font-weight:600;margin-top:2px}
+.wxb{margin:8px 0 0;background:light-dark(#eef6fb,#16242e);border-color:light-dark(#cfe3f1,#24394a)}
+.wxb svg{stroke:var(--amber)}
+.prog{flex-direction:column;gap:4px;border:2px solid var(--teal)}
+.prog span{font-size:14px;color:var(--mute);font-weight:600}
+.prog b{display:block;font-family:"Barlow Condensed",Barlow,sans-serif;font-size:40px;line-height:1}
+.prog small{display:block;font-size:13px;color:var(--mute)}
+.prog em{font-style:normal;font-size:14px}
+.prog p{margin:4px 0 0;font-size:13px;color:var(--mute)}
+.wxh{list-style:none;padding:10px 12px;border-radius:12px;border:1px dashed var(--line)}
+.wxh>b{display:block;font-size:14px}
+.raceb,.racehd,.dbtn{min-height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--gold);color:#1d1716;font-weight:700;cursor:pointer;margin-top:8px}
+.racehd{margin:0 0 0 10px;min-height:40px;border-radius:999px}
+.dbtns{display:flex;flex-wrap:wrap;gap:8px;padding:6px 0 4px}
+.dbtn{margin:0;background:var(--ink);color:var(--bg)}
+.dbtn.gold{background:var(--gold);color:#1d1716}
+.rsec{border-top:1px solid var(--line);padding:14px 0}
+.rsec:first-child{border-top:0}
+.rsec h3{font-size:22px;margin-bottom:8px}
+.rcd{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:clamp(34px,8vw,52px);line-height:1.05}
+.rcd small{display:block;font-family:Barlow,sans-serif;font-size:15px;color:var(--mute);margin-top:4px}
+.rrow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end}
+.rrow label{display:grid;gap:4px;font-weight:600;font-size:14px}
+.rrow input{font:inherit;font-size:18px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:9em}
+.rnote{margin:8px 0 0;font-size:13px;color:var(--mute)}
+.splits{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+.splits th,.splits td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+.splits td:last-child,.splits th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.rtips{margin:10px 0 0;padding-left:18px;font-size:14px}.rtips li{margin:3px 0}
+.rcl{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.rcl label{display:flex;align-items:center;gap:12px;min-height:44px;padding:4px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;position:relative}
+.rcl input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.rcl .bx{width:24px;height:24px;border-radius:7px;border:2px solid var(--teal);display:grid;place-items:center;color:#fff;font-weight:700;flex-shrink:0}
+.rcl input:checked~.bx{background:var(--teal)}
+.rcl input:checked~span:last-child{color:var(--mute);text-decoration:line-through}
+.fin{border-radius:16px;padding:20px;background:linear-gradient(150deg,#d9a21b,#b23a26);color:#fff;text-align:center}
+.fin .ft{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:64px;line-height:1}
+.fin .fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px;text-align:left}
+.fin .fg div{background:rgba(255,255,255,.16);border-radius:10px;padding:8px 10px}
+.fin .fg b{display:block;font-family:"Barlow Condensed",Barlow,sans-serif;font-size:24px}
+.fin .fg span{font-size:13px;opacity:.9}
+.fin button{margin-top:14px;min-height:44px;padding:0 18px;border-radius:10px;border:0;background:#fff;color:#1d1716;font-weight:700;cursor:pointer}
+/* wrapped */
+dialog.wrap{padding:0;border:0;width:min(440px,100vw);height:min(820px,100dvh);max-height:100dvh;max-width:100vw;border-radius:22px;overflow:hidden;color:#fff;background:#111}
+dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
+.wslide{position:absolute;inset:0;padding:calc(70px + env(safe-area-inset-top)) 28px calc(40px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:center;gap:14px;transition:background .4s}
+.wslide .k{font-size:15px;font-weight:600;opacity:.85;letter-spacing:.02em}
+.wslide .big{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:clamp(72px,24vw,120px);line-height:.9}
+.wslide .mid{font-family:"Barlow Condensed",Barlow,sans-serif;font-size:clamp(34px,10vw,48px);line-height:1}
+.wslide p{margin:0;font-size:18px;line-height:1.4}
+.wslide .sm{font-size:15px;opacity:.85}
+.wslide .mb{display:flex;align-items:flex-end;gap:8px;height:120px;margin-top:6px}
+.wslide .mb div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:12px}
+.wslide .mb i{display:block;width:100%;background:rgba(255,255,255,.85);border-radius:6px 6px 2px 2px}
+.wslide .mb div.top i{background:#fff;box-shadow:0 0 18px rgba(255,255,255,.6)}
+.wslide .tro{display:flex;flex-wrap:wrap;gap:10px}
+.wslide .tro svg{width:34px;height:34px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;background:rgba(255,255,255,.16);border-radius:50%;padding:7px}
+.wslide.in>*{animation:win .5s ease-out both}.wslide.in>*:nth-child(2){animation-delay:.08s}.wslide.in>*:nth-child(3){animation-delay:.16s}.wslide.in>*:nth-child(4){animation-delay:.24s}
+@keyframes win{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.wbars{position:absolute;top:calc(14px + env(safe-area-inset-top));left:14px;right:60px;display:flex;gap:4px;z-index:3}
+.wbars i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.35)}.wbars i.on{background:#fff}
+.wx{position:absolute;top:calc(4px + env(safe-area-inset-top));right:10px;z-index:4;width:44px;height:44px;border:0;background:none;color:#fff;font-size:20px;cursor:pointer}
+.wnav{position:absolute;top:60px;bottom:0;z-index:2;border:0;background:none;cursor:pointer}
+.wprev{left:0;width:33%}.wnext{right:0;width:67%}
+@media(max-width:600px){dialog.wrap{width:100vw;height:100dvh;border-radius:0;margin:0}}
+@media(prefers-reduced-motion:reduce){.wslide.in>*{animation:none}}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -543,7 +614,7 @@ main{overflow-anchor:none}
 <path d="M362 272 V290 M442 272 V290 M522 272 V290 M602 272 V290"/>
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-<symbol id="i-shoe" viewBox="0 0 24 24"><g transform="rotate(18 20.5 19)"><path d="M4 17.5v-4c0-1.6.5-2.9 1.3-3.9l2.3.9 1.4-1.3 2.4 2.8c1.2 1.4 2.9 2.2 4.8 2.5l2.4.4a2.6 2.6 0 0 1 2.2 2.6v1z"/><path d="M3.5 17.5h18.2a.8.8 0 0 1 .8.8v.2a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M10 12.6l1.8-1.2M12.2 14.2l1.8-1.2"/></g><path d="M1.5 10.5h2.5M1 13.5h2"/></symbol>
+<symbol id="i-shoe" viewBox="0 0 24 24"><path d="M2 17.5h18.5a1.5 1.5 0 0 0 .6-2.9l-5.6-2.4-2.3-3.4-2.6 1.6-1.8-1.6L4 7.5 2 9z"/><path d="M2 20.5h20"/><path d="M8.5 12.5l1.5-1M11 14l1.5-1"/></symbol>
 <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z"/></symbol><symbol id="i-move" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M3 9h12M8 3v4M14 3v4M15 15h6M18 12l3 3-3 3"/></symbol><symbol id="m-star" viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></symbol>
 <symbol id="m-cal" viewBox="0 0 24 24"><path d="M5 5h14v15H5zM5 10h14M9 3v4M15 3v4M9 15l2 2 4-4"/></symbol>
 <symbol id="m-road" viewBox="0 0 24 24"><path d="M8 21 10.5 3M16 21 13.5 3M12 6v2M12 11v2.5M12 16.5v2.5"/></symbol>
@@ -556,6 +627,9 @@ main{overflow-anchor:none}
 <symbol id="m-bolt" viewBox="0 0 24 24"><path d="M13.5 2.5 4.5 14h7l-1 7.5 9-11.5h-7z"/></symbol>
 <symbol id="m-dumb" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 <symbol id="m-medal" viewBox="0 0 24 24"><path d="M8 3h3l2 5M16 3h-3M13 3l-2 5"/><circle cx="12" cy="14.5" r="5.5"/><path d="M12 12v5M10.5 13l1.5-1"/></symbol>
+<symbol id="m-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+<symbol id="m-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/></symbol>
+<symbol id="m-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
 <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 </svg>
 <div class="bibin hd">
@@ -615,6 +689,8 @@ main{overflow-anchor:none}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="snack" id="snack" role="status" aria-live="polite"><span id="snackT"></span><button id="snackU">Rückgängig</button></div>
 <label class="hap" id="hapl" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
+<dialog id="racedlg" class="sheet" aria-labelledby="raceh"><div class="shd"><h2 id="raceh">Renntag</h2><button class="shx" id="racex" aria-label="Schließen">✕</button></div><div class="shb" id="racebody"></div></dialog>
+<dialog id="wrapdlg" class="wrap" aria-label="Dein Rückblick"><div class="wbars" id="wbars"></div><button class="wx" id="wrapx" aria-label="Schließen">✕</button><div class="wslide" id="wslide"></div><button class="wnav wprev" id="wprev" aria-label="Zurück"></button><button class="wnav wnext" id="wnext" aria-label="Weiter"></button></dialog>
 <dialog id="legdlg" class="sheet" aria-labelledby="legh"><div class="shd"><h2 id="legh">Beintag-Übungen</h2><button class="shx" id="legx" aria-label="Schließen">✕</button></div><div class="shb" id="legbody"></div></dialog>
 <dialog id="xdlg"><form class="dlg" id="xform">
 <h2>Prüfungen</h2><p>Deine Prüfungen erscheinen im Kalender. Beim Verschieben von Einheiten warnt die App, und am Tag davor schlägt sie die Kurzvariante vor.</p>
@@ -826,10 +902,10 @@ function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute'
  const e0=ev[0];$('dsub').textContent=(sel===today?fmt(sel)+' · ':'')+(()=>{const w=Math.floor((pd(sel)-pd(START))/6048e5)+1;return sel>=START&&sel<=RACE?'Woche '+w+' · '+PH(w):'Außerhalb des Plans'})();
  const exT=(EV[add(sel,1)]||[]).find(x=>x.type==='exam'),exN=(EV[sel]||[]).find(x=>x.type==='exam');
  const exh=exN?`<li class="exh"><b>Heute Prüfung. Viel Erfolg!</b>Training nur, wenn es passt. Die Kurzvariante zählt auch.</li>`:exT?`<li class="exh"><b>Morgen Prüfung: ${exT.text.replace('Prüfung: ','')}</b>Wenn es knapp wird, ist die Kurzvariante völlig okay. Harte Einheiten lieber verschieben.</li>`:'';
- $('items').innerHTML=exh+(ev.length?'':'')+ev.map(e=>{const[tl,c]=T[e.type];const ck=checkable(e),d=isDone(e);
+ $('items').innerHTML=exh+wxTomorrow()+(ev.length?'':'')+ev.map(e=>{const[tl,c]=T[e.type];const ck=checkable(e),d=isDone(e);
   const mvd=e.date!==e.orig,can=MOVABLE(e);
   const sh=shortOf(e),isS=isShort(e);
-  return`<li class="it${d?' done':''}${isS?' short':''}${ck?'':' info'}" style="--c:${c}"${can?` draggable="true" data-drag="${e.id}"`:''}>${ck?`<label class="cb" data-cb="${e.id}"><input type="checkbox" switch class="hsw" data-id="${e.id}" ${d?'checked':''} aria-label="${tl}: ${e.text.replace(/"/g,'')} abhaken"><span aria-hidden="true">${d?'✓':''}</span></label>`:'<span class="cb" aria-hidden="true">•</span>'}<div><div class="tag">${tl}${e.km?' · '+String(e.km).replace('.',',')+' km':''}${mvd?` <span class="mvt">· verschoben von ${fmtS(e.orig)}</span>`:''}</div><div class="t">${e.text}</div>${e.hint?`<div class="h">${e.hint}</div>`:''}${isS?`<div class="kvd">✓ Kurzvariante: ${sh?sh.text:''}</div><div><button class="upg" data-full="${e.id}">Doch voll geschafft</button></div>`:''}${e.type==='exam'?`<button class="exb" data-xedit="${e.exKey}">Prüfung bearbeiten oder verschieben</button>`:''}<div class="acts">${d&&isRun(e)?logLine(e):''}${can?`<button class="mvb" data-mv="${e.id}"><svg aria-hidden="true"><use href="#i-move"/></svg>Verschieben</button>`:''}</div>${sh&&!d?`<details class="kvx"><summary>Nur Kurzvariante geschafft?</summary><div class="kvt">Kurzvariante: ${sh.text}. Zählt als erledigt, im Fortschritt zu 60 %.</div><label class="kv" style="--c:${c}"><input type="checkbox" switch class="hsw2" data-short="${e.id}" aria-label="Kurzvariante abhaken: ${sh.text}">Ja, Kurzvariante abhaken</label></details>`:''}</div></li>`}).join('')+(ev.some(e=>checkable(e))?'':`<li class="freeday"><p class="pfree">Frei, kein Training geplant. Gönn dir Erholung.</p>${stretchHTML(sel)}</li>`);const leg=ev.find(e=>e.type==='gym'&&e.text.startsWith('Beine'));$('legs').innerHTML=leg?legsSummary(leg.wk):''}
+  return`<li class="it${d?' done':''}${isS?' short':''}${ck?'':' info'}" style="--c:${c}"${can?` draggable="true" data-drag="${e.id}"`:''}>${ck?`<label class="cb" data-cb="${e.id}"><input type="checkbox" switch class="hsw" data-id="${e.id}" ${d?'checked':''} aria-label="${tl}: ${e.text.replace(/"/g,'')} abhaken"><span aria-hidden="true">${d?'✓':''}</span></label>`:'<span class="cb" aria-hidden="true">•</span>'}<div><div class="tag">${tl}${e.km?' · '+String(e.km).replace('.',',')+' km':''}${mvd?` <span class="mvt">· verschoben von ${fmtS(e.orig)}</span>`:''}</div><div class="t">${e.text}</div>${e.hint?`<div class="h">${e.hint}</div>`:''}${(e.type==='long'||e.type==='race')&&!d&&wxSoon(e.date)?`<div data-wx="${e.date}">${wxHTML(e.date)}</div>`:''}${e.type==='race'?'<button class="raceb" data-race>Renntag-Modus öffnen</button>':''}${isS?`<div class="kvd">✓ Kurzvariante: ${sh?sh.text:''}</div><div><button class="upg" data-full="${e.id}">Doch voll geschafft</button></div>`:''}${e.type==='exam'?`<button class="exb" data-xedit="${e.exKey}">Prüfung bearbeiten oder verschieben</button>`:''}<div class="acts">${d&&isRun(e)?logLine(e):''}${can?`<button class="mvb" data-mv="${e.id}"><svg aria-hidden="true"><use href="#i-move"/></svg>Verschieben</button>`:''}</div>${sh&&!d?`<details class="kvx"><summary>Nur Kurzvariante geschafft?</summary><div class="kvt">Kurzvariante: ${sh.text}. Zählt als erledigt, im Fortschritt zu 60 %.</div><label class="kv" style="--c:${c}"><input type="checkbox" switch class="hsw2" data-short="${e.id}" aria-label="Kurzvariante abhaken: ${sh.text}">Ja, Kurzvariante abhaken</label></details>`:''}</div></li>`}).join('')+(ev.some(e=>checkable(e))?'':`<li class="freeday"><p class="pfree">Frei, kein Training geplant. Gönn dir Erholung.</p>${stretchHTML(sel)}</li>`);const leg=ev.find(e=>e.type==='gym'&&e.text.startsWith('Beine'));$('legs').innerHTML=leg?legsSummary(leg.wk):''}
 function legsSummary(n){const k=n<=11?0:n<=20?1:2;const py=PLYO.includes(n)&&k<2;const list=EXD.filter(e=>e.dose[k]&&(e.block!=='plyo'||py));
  const min=k===2?35:py?70:55;
  return`<section class="legsum"><div><b>Beintag-Übungen${py?' <span class="plyb">Plyo-Woche</span>':''}</b><span>${list.length} Übungen · ca. ${min} min${py?' · mit Sprungblock':''}</span></div><button class="b pri" data-legs="${n}">Übungen öffnen</button></section>`}
@@ -865,7 +941,7 @@ function weekv(){const e0=selWk()?{wk:selWk()}:null;if(!e0){$('week').innerHTML=
 const REGURL='https://atoshalbmarathon.tsg78-hd.de/ihre-anmeldung/';
 function regv(){const r=state.done.anmeldung&&state.done.anmeldung.v;
  $('reg').innerHTML=r?'<span class="ok">✓ Für den Lauf angemeldet <button data-reg>Rückgängig</button></span>'
- :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>'}
+ :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>';if(today>='2027-04-19')$('reg').insertAdjacentHTML('beforeend','<button class="racehd" data-race>Renntag-Modus</button>')}
 function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="${e.id}">+ Echte Werte eintragen</button>`;
  return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''}${l.temp!=null?' · '+fkm(l.temp)+' °C':''} · bearbeiten</button>`}
 let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
@@ -909,10 +985,11 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
   <dl><div><dt>Distanz</dt><dd>${fkm(l.km)} km</dd></div><div><dt>Zeit</dt><dd>${l.sec?fdur(l.sec):'–'}</dd></div><div><dt>Pace</dt><dd>${fpace(l.km,l.sec)}</dd></div><div><dt>Gefühl</dt><dd>${l.feel?dots(l.feel):'–'}</dd></div></dl>
   ${l.note?`<p class="nt">${esc(l.note)}</p>`:''}<button class="lg ed" data-log="${e.id}">bearbeiten</button></li>`}).join('');
  $('diary').innerHTML=`<h2>Lauftagebuch</h2>
- <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${trendHTML()}
+ <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${distHTML(s.km)}${prognHTML()}${trendHTML()}
  <div class="chart" aria-label="Kilometer pro Woche, geplant und gelaufen. Tippe auf eine Woche für Details.">${cols}${bubW?bubHTML(bubW,act,mx):''}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
  <div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2" style="display:block"><div class="phs" aria-hidden="true">${WEEKKM.map((_,i)=>`<i style="background:${PHC(i+1)}"></i>`).join('')}</div><div class="pkm" aria-label="Geplante Kilometer pro Woche">${WEEKKM.map(k=>`<span>${Math.round(k)}</span>`).join('')}</div><div class="phl">${PHS.map(([n,a,b,c])=>`<span><i style="background:${c}"></i>${n} (Wo ${a}${b>a?'–'+b:''})</span>`).join('')}</div><div class="phl"><span><i style="border:1.5px dashed var(--mute);height:10px"></i>geplante km</span><span><i style="background:var(--red);height:10px"></i>gelaufene km</span><span>Zahlenreihe: geplante km pro Woche</span><span>Tippe auf eine Woche für Details</span></div><p style="margin-top:8px">Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>${volSug()}
- <div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label></div>
+ <div class="dsec dbtns"><button class="dbtn" data-wrap>Rückblick ansehen</button><button class="dbtn gold" data-race>Renntag-Modus</button></div>
+<div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label></div>
 <div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label>
 <div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:8px">${bestsHTML()}</div></div></div></div>
 <div class="dsec"><button class="tog" data-vol="1" aria-expanded="${!!ui.volOpen}">Umfang anpassen</button>
@@ -1242,11 +1319,121 @@ function placePop(tile,html){const pop=$('pop');pop.innerHTML=html;pop.hidden=fa
  let x=r.left+r.width/2-pw/2;x=Math.max(8,Math.min(innerWidth-pw-8,x));let y=r.top-ph-8;if(y<8)y=Math.min(innerHeight-ph-8,r.bottom+8);pop.style.left=x+'px';pop.style.top=Math.max(8,y)+'px'}
 function showFree(tile,s){const info=(EV[s]||[]).filter(e=>e.type==='exam'||e.type==='ski');
  placePop(tile,`<h4>${fmt(s)}</h4>${info.map(e=>`<p class="pinfo">${e.text}</p>`).join('')}<p class="pfree">Frei, kein Training geplant.</p>${stretchHTML(s)}`)}
-function renderSel(){applyVol();applyMoves();cal();calLegv();dayv();weekv();tipv();recapv()}
+// ---------- v24: keep the day card the same height within a week ----------
+function dayLock(){const card=document.querySelector('.side > section:nth-child(2)');const wk=selWk();card.style.minHeight='';
+ if(!wk){dayv();return}const keep=sel;let mx=0;
+ for(let k=0;k<7;k++){const d=add(START,(wk-1)*7+k);if(d>RACE)break;sel=d;dayv();mx=Math.max(mx,card.offsetHeight)}
+ sel=keep;dayv();card.style.minHeight=mx+'px'}
+// ---------- v26: prognosis, distances, weather, race mode, wrapped ----------
+const HM=21.0975;
+const PMIN=5,PLONG=12;
+function progn(asOf){const lim=add(asOf,-42);const rs=[];
+ for(const e of ITEMS){if(!isRun(e)||!isDone(e)||e.date>asOf||e.date<lim)continue;const l=LOG(e.id);if(!l||!l.sec||!l.km||l.km<5)continue;rs.push({km:l.km,sec:l.sec})}
+ const long=rs.filter(r=>r.km>=PLONG).sort((a,b)=>b.km-a.km)[0];const ok=rs.length>=PMIN&&!!long;
+ if(!ok)return{ok:false,n:rs.length,long:!!long};
+ // A: Riegel mit Exponent 1.10 (Einsteiger ermüden stärker), drittbester statt bester Lauf
+ const ps=rs.map(r=>r.sec*Math.pow(HM/r.km,1.10)).sort((a,b)=>a-b);const A=ps[Math.min(2,ps.length-1)];
+ // B: aus dem längsten Lauf, Renntempo max. 20 s/km schneller als dessen Pace
+ const B=(long.sec/long.km-20)*HM;
+ // langsamere Schätzung, +3 % erstes Rennen, +3 min Hügel
+ const sec=Math.max(A,B)*1.03+180;return{ok:true,sec,n:rs.length}}
+const hm=s=>{s=Math.ceil(s/60);return Math.floor(s/60)+':'+pad(s%60)};
+function prognHTML(){const p=progn(today);
+ if(!p.ok){const miss=[];if(p.n<PMIN)miss.push(`${PMIN-p.n} ${PMIN-p.n===1?'weiterer Lauf':'weitere Läufe'} ab ${PMIN} km mit Zeit`);if(!p.long)miss.push(`ein langer Lauf ab ${PLONG} km mit Zeit`);
+  return`<div class="prog" style="border-style:dashed;border-color:var(--line)"><span>Zielzeit-Prognose Halbmarathon</span><p style="margin:2px 0 0;font-size:15px;color:var(--ink)">Noch zu wenig Daten für eine ehrliche Prognose.</p><small>Es fehlen: ${miss.join(' und ')} aus den letzten 6 Wochen.</small></div>`}
+ const q=progn(add(today,-21));const d=q.ok?p.sec-q.sec:null;
+ return`<div class="prog"><span>Zielzeit-Prognose Heidelberg</span><b>ca. ${hm(p.sec)} h</b><small>Ø ${fdur(p.sec/HM)}/km · realistischer Bereich ${hm(p.sec-180)}–${hm(p.sec+240)} h</small>${d!==null&&Math.abs(d)>=60?`<em class="${d<0?'up':'down'}">${d<0?'▲ '+fdur(-d)+' schneller':'▼ '+fdur(d)+' langsamer'} als vor 3 Wochen</em>`:''}<p>Bewusst vorsichtig gerechnet: für dein erstes Rennen und die Hügel in Heidelberg ist schon ein Zuschlag drin. Grundlage sind ${p.n} Läufe ab ${PMIN} km aus den letzten 6 Wochen, inklusive deines längsten.</p></div>`}
+const CITIES=[['Esslingen',48.7406,9.3108],['Ludwigsburg',48.8975,9.1916],['Böblingen',48.6856,9.0141],['Tübingen',48.5216,9.0576],['Heilbronn',49.1427,9.2109],['Pforzheim',48.8922,8.6946],['Karlsruhe',49.0069,8.4037],['Ulm',48.4011,9.9876],['Heidelberg',49.3988,8.6724],['Schwetzingen',49.3833,8.5667],['Mannheim',49.4875,8.466],['Straßburg',48.5734,7.7521],['Frankfurt',50.1109,8.6821],['Zürich',47.3769,8.5417],['Nürnberg',49.4521,11.0767],['München',48.1351,11.582],['Köln',50.9375,6.9603],['Mailand',45.4642,9.19],['Paris',48.8566,2.3522],['Wien',48.2082,16.3738],['Hamburg',53.5511,9.9937],['Berlin',52.52,13.405]];
+const hav=(a,b,c,d)=>{const r=x=>x*Math.PI/180;const s=Math.sin(r(c-a)/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(r(d-b)/2)**2;return 12742*Math.asin(Math.sqrt(s))};
+const CDIST=CITIES.map(([n,a,b])=>[n,hav(48.7758,9.1829,a,b)]).sort((x,y)=>x[1]-y[1]);
+function distInfo(km){const past=CDIST.filter(c=>c[1]<=km);return{last:past[past.length-1],next:CDIST.find(c=>c[1]>km)}}
+function distHTML(km){const{last,next}=distInfo(km);
+ return`<div class="dist"><svg aria-hidden="true"><use href="#m-pin"/></svg><div>${last?`<b>So weit wie von Stuttgart nach ${last[0]}</b><span>Luftlinie Stuttgart–${last[0]}: ${Math.round(last[1])} km, du bist ${fkm(km)} km gelaufen.</span>`:`<b>${fkm(km)} km gelaufen</b>`}${next?`<span>Nächstes Ziel: ${next[0]}, noch ${fkm(Math.ceil((next[1]-km)*10)/10)} km.</span>`:''}${km>=HM?`<span>Das sind schon ${fkm(Math.floor(km/HM*10)/10)} Halbmarathons.</span>`:''}</div></div>`}
+// weather
+const WXC={0:'klar',1:'meist klar',2:'teils bewölkt',3:'bedeckt',45:'Nebel',48:'Nebel',51:'Nieselregen',53:'Nieselregen',55:'Nieselregen',56:'Eisregen',57:'Eisregen',61:'leichter Regen',63:'Regen',65:'starker Regen',66:'Eisregen',67:'Eisregen',71:'leichter Schnee',73:'Schnee',75:'starker Schnee',77:'Schneegriesel',80:'Schauer',81:'Schauer',82:'starke Schauer',85:'Schneeschauer',86:'Schneeschauer',95:'Gewitter',96:'Gewitter',99:'Gewitter'};
+let wxData=null,wxBusy=false;try{const c=JSON.parse(localStorage.getItem('hm27wx')||'null');if(c&&c.h&&Date.now()-c.ts<6*3600e3)wxData=c}catch(e){}
+function loadWx(){if(wxBusy||!navigator.onLine)return;if(wxData&&Date.now()-wxData.ts<3600e3)return;wxBusy=true;const p=lastPos||{lat:48.79,lon:9.15};
+ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&hourly=temperature_2m,precipitation_probability,wind_speed_10m,weather_code&timezone=Europe%2FBerlin&forecast_days=8`)
+ .then(r=>r.ok?r.json():null).then(d=>{wxBusy=false;if(!d||!d.hourly)return;wxData={ts:Date.now(),h:d.hourly};try{localStorage.setItem('hm27wx',JSON.stringify(wxData))}catch(e){}fillWx()}).catch(()=>{wxBusy=false})}
+function bestWindow(date){if(!wxData)return null;const H=wxData.h;const idx=[];H.time.forEach((t,i)=>{if(t.slice(0,10)===date){const hr=+t.slice(11,13);if(hr>=7&&hr<=18)idx.push(i)}});if(idx.length<3)return null;
+ let best=null;for(let k=0;k<idx.length-1;k++){const a=idx[k],b=idx[k+1];const pp=Math.max(H.precipitation_probability[a]??0,H.precipitation_probability[b]??0),wi=Math.max(H.wind_speed_10m[a],H.wind_speed_10m[b]),te=(H.temperature_2m[a]+H.temperature_2m[b])/2;
+  const sc=pp*1.2+Math.max(0,wi-10)*1.5+Math.abs(te-10)*1.2;if(!best||sc<best.sc)best={sc,h:+H.time[a].slice(11,13),te,pp,wi,code:H.weather_code[a]}}return best}
+function wxHTML(date){const b=bestWindow(date);if(!b)return'';const tip=b.te<3?'Handschuhe und Mütze einpacken.':b.te>18?'Wasser mitnehmen und lieber früh los.':b.pp>50?'Regenjacke und Kappe helfen.':b.wi>25?'Gegen den Wind starten, mit Rückenwind zurück.':'Gute Bedingungen!';
+ return`<div class="wxb"><svg aria-hidden="true"><use href="#m-sun"/></svg><div><b>Bester Zeitraum: ${b.h}–${b.h+2} Uhr</b><span>${Math.round(b.te)} °C · ${WXC[b.code]||'–'} · Regenrisiko ${Math.round(b.pp)} % · Wind ${Math.round(b.wi)} km/h</span><small>${tip}</small></div></div>`}
+function fillWx(){document.querySelectorAll('[data-wx]').forEach(el=>{el.innerHTML=wxHTML(el.dataset.wx)})}
+const wxSoon=d=>{const n=Math.round((pd(d)-pd(today))/864e5);return n>=0&&n<=7};
+function wxTomorrow(){const lt=(EV[add(sel,1)]||[]).find(x=>(x.type==='long'||x.type==='race')&&!isDone(x));if(!lt||!wxSoon(lt.date))return'';
+ return`<li class="wxh"><b>Morgen: ${lt.text}</b><div data-wx="${lt.date}">${wxHTML(lt.date)}</div></li>`}
+addEventListener('online',()=>{wxData&&(wxData.ts=0);loadWx()});setTimeout(loadWx,1200);
+// race mode
+const RCL=['Startunterlagen abgeholt','Schuhe und Kleidung wie bei der Generalprobe','Startnummer mit Sicherheitsnadeln','Frühstück ca. 3 Stunden vor dem Start','Gels oder Traubenzucker eingepackt','Uhr bzw. Handy geladen','Anreise nach Heidelberg geplant','Wechselkleidung für danach'];
+const RC=()=>({start:'09:00',goal:'',finish:'',cl:{},...(state.done.race||{})});
+function saveRace(p){state.done.race={...RC(),...p,v:1,t:Date.now()};save()}
+function ptime(s){const p=String(s||'').trim().split(':').map(Number);if(!p.length||p.some(x=>isNaN(x)))return 0;return p.length===3?p[0]*3600+p[1]*60+p[2]:p.length===2?p[0]*60+p[1]:0}
+const raceItem=()=>ITEMS.find(e=>e.type==='race');
+function raceHTML(){const r=RC();const pg=progn(today);const goal=ptime(r.goal)||(pg.ok?Math.ceil(pg.sec/60)*60:0);const pace=goal/HM;const fin=ptime(r.finish);
+ const sp=[5,10,15,20,HM].map(k=>`<tr><td>${k===HM?'Ziel (21,1 km)':'km '+k}</td><td>${fdur(pace*k)}</td></tr>`).join('');
+ const ready=today>=RACE;const s=stats();const got_=got().size;const wk=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
+ const finCard=fin?`<div class="fin"><div class="k">Finisher · Heidelberger Halbmarathon 2027</div><div class="ft">${fdur(fin)}</div><div>Ø ${fdur(fin/HM)}/km${ptime(r.goal)?` · Ziel war ${fdur(ptime(r.goal))} (${fin<=ptime(r.goal)?'geschafft!':'+'+fdur(fin-ptime(r.goal))})`:''}</div>
+  <div class="fg"><div><b>${fkm(Math.round(s.km-(fin?HM:0)))} km</b><span>im Training gelaufen</span></div><div><b>${s.runs-(fin?1:0)}</b><span>Trainingsläufe</span></div><div><b>${wk} Wochen</b><span>Vorbereitung</span></div><div><b>${got_}</b><span>Trophäen</span></div></div><button data-wrap>Rückblick ansehen</button></div>`:'';
+ return`${finCard?`<div class="rsec">${finCard}</div>`:''}
+ <div class="rsec"><h3>Countdown</h3><div class="rcd" id="rcd"></div><div class="rrow" style="margin-top:10px"><label>Startzeit<input type="time" id="rstart" value="${r.start}"></label></div><p class="rnote">Die genaue Startzeit steht in deinen Startunterlagen.</p></div>
+ <div class="rsec"><h3>Zielzeit und Pace-Plan</h3><div class="rrow"><label>Deine Zielzeit<input id="rgoal" inputmode="numeric" placeholder="${pg.ok?hm(pg.sec)+':00':'2:10:00'}" value="${r.goal}"></label>${goal?`<div><b style="font-family:'Barlow Condensed';font-size:28px">${fdur(pace)}/km</b><div class="rnote" style="margin:0">Ø Pace für ${fdur(goal)}</div></div>`:''}</div>
+ <p class="rnote">${pg.ok?`Vorschlag aus deiner Prognose: ca. ${hm(pg.sec)} h, Hügel und erstes Rennen schon eingerechnet.`:'Noch keine Prognose möglich. Trag eine Zielzeit ein, dann bekommst du deinen Pace-Plan.'}</p>${goal?`<table class="splits"><thead><tr><th>Zwischenzeit</th><th>Zeit</th></tr></thead><tbody>${sp}</tbody></table>`:''}
+ <ul class="rtips"><li>Die ersten 5 km bewusst 5–10 s/km langsamer laufen.</li><li>Bergauf nach Gefühl, nicht nach Uhr. Bergab locker rollen lassen.</li><li>Ab km 15 darfst du zulegen, wenn noch Kraft da ist.</li></ul></div>
+ <div class="rsec"><h3>Checkliste</h3><ul class="rcl">${RCL.map((t,i)=>`<li><label><input type="checkbox" switch data-rcl="${i}" ${r.cl&&r.cl[i]?'checked':''}><span class="bx">✓</span><span>${t}</span></label></li>`).join('')}</ul></div>
+ <div class="rsec"><h3>Nach dem Rennen</h3>${ready?`<div class="rrow"><label>Deine Zielzeit<input id="rfin" inputmode="numeric" placeholder="1:59:30" value="${r.finish}"></label><button class="raceb" id="rfinb" style="margin:0">${fin?'Aktualisieren':'Speichern'}</button></div>`:'<p class="rnote" style="margin:0">Ab dem Renntag kannst du hier deine Zielzeit eintragen und bekommst deine Finisher-Karte.</p>'}</div>`}
+let rcT=null;
+function rcd(){const el=$('rcd');if(!el)return;const r=RC();const st=new Date(RACE+'T'+(r.start||'09:00')+':00');let ms=st-Date.now();
+ if(ms<=0){el.innerHTML=ptime(r.finish)?'Geschafft!<small>Glückwunsch zum Halbmarathon.</small>':'Los geht’s!<small>Viel Erfolg in Heidelberg.</small>';return}
+ const d=Math.floor(ms/864e5);ms-=d*864e5;const hh=Math.floor(ms/36e5);ms-=hh*36e5;const mm=Math.floor(ms/6e4),ss=Math.floor(ms%6e4/1e3);
+ el.innerHTML=(d?d+' Tage, ':'')+pad(hh)+':'+pad(mm)+':'+pad(ss)+'<small>bis zum Startschuss</small>'}
+function openRace(){$('racebody').innerHTML=raceHTML();rcd();clearInterval(rcT);rcT=setInterval(rcd,1000);$('racedlg').showModal();$('racebody').scrollTop=0}
+$('racex').onclick=()=>$('racedlg').close();$('racedlg').addEventListener('close',()=>clearInterval(rcT));
+$('racebody').addEventListener('change',ev=>{const t=ev.target;
+ if(t.id==='rstart'){saveRace({start:t.value||'09:00'});rcd()}
+ if(t.id==='rgoal'){const v=ptime(t.value);saveRace({goal:v?fdur(v):''});$('racebody').innerHTML=raceHTML();rcd()}
+ if(t.dataset.rcl!==undefined){const r=RC();const cl={...(r.cl||{})};cl[t.dataset.rcl]=t.checked?1:0;saveRace({cl});if(t.checked)vib()}});
+$('racebody').addEventListener('click',ev=>{if(ev.target.id!=='rfinb')return;const v=ptime($('rfin').value);if(!v||v<3600||v>14400){$('rfin').focus();toast('Bitte Zeit als h:mm:ss eingeben','z. B. 1:59:30');return}
+ const first=!ptime(RC().finish);const before=got();saveRace({finish:fdur(v)});const ri=raceItem();if(ri&&!isDone(ri)){state.done[ri.id]={v:1,t:Date.now()};save()}render();$('racebody').innerHTML=raceHTML();rcd();
+ if(first){vib();confetti(innerWidth/2,innerHeight*.3,140,320);toastQ('Finisher! '+fdur(v),'Glückwunsch zum Heidelberger Halbmarathon!');celebrate(before)}});
+document.addEventListener('click',ev=>{if(ev.target.closest('[data-race]'))openRace();if(ev.target.closest('[data-wrap]'))openWrap()});
+// wrapped
+const MON2=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+function wrapData(){const s=stats();const runs=ITEMS.filter(e=>isRun(e)&&isDone(e));let longest=null,fast=null,cold=null;const mon={},tod={Morgen:0,Mittag:0,Nachmittag:0,Abend:0};
+ for(const e of runs){const k=akm(e);if(!longest||k>longest.k)longest={k,d:e.date};const m=e.date.slice(0,7);mon[m]=(mon[m]||0)+k;const l=LOG(e.id);
+  if(l){if(l.sec&&l.km>=3){const p=l.sec/l.km;if(!fast||p<fast.p)fast={p,d:e.date}}if(l.temp!=null&&(!cold||l.temp<cold.t))cold={t:l.temp,d:e.date};if(l.at){const hr=new Date(l.at).getHours();tod[hr<11?'Morgen':hr<15?'Mittag':hr<18?'Nachmittag':'Abend']++}}}
+ const gym=n=>ITEMS.filter(e=>e.type==='gym'&&e.text.startsWith(n)&&isDone(e)).length;
+ const weeks=[...Array(22).keys()].filter(i=>add(START,i*7+6)<today&&weekStats(i+1)>=.8).length;
+ return{s,runs:runs.length,longest,fast,cold,mon,tod,legs:gym('Beine'),push:gym('Push'),pull:gym('Pull'),shorts:ITEMS.filter(e=>isShort(e)).length,weeks,tro:MS.filter(m=>got().has(m[0])),fin:ptime(RC().finish)}}
+function wrapSlides(){const w=wrapData();const sd=d=>{const x=pd(d);return x.getDate()+'. '+MON[x.getMonth()]};const S=[];
+ const wk=Math.min(22,Math.max(1,Math.floor((pd(today)-pd(START))/6048e5)+1));
+ S.push(['linear-gradient(160deg,#b23a26,#6e1d12)',`<div class="k">Dein Rückblick${w.fin?'':' bisher'}</div><div class="mid">Heidelberger Halbmarathon 2027</div><p>${w.fin?'22 Wochen Vorbereitung. Hier ist alles, was du geschafft hast.':'Woche '+wk+' von 22. So sieht deine Vorbereitung bis jetzt aus.'}</p><p class="sm">Tippe rechts für weiter.</p>`]);
+ const di=distInfo(w.s.km);
+ S.push(['linear-gradient(160deg,#0f766e,#083c38)',`<div class="k">Gelaufen</div><div class="big">${fkm(Math.round(w.s.km))}</div><p>Kilometer${di.last?`, das ist so weit wie von Stuttgart nach <b>${di.last[0]}</b> (Luftlinie).`:'.'}</p>${di.next?`<p class="sm">Bis ${di.next[0]} fehlen noch ${fkm(Math.ceil(di.next[1]-w.s.km))} km.</p>`:''}`]);
+ S.push(['linear-gradient(160deg,#1d1716,#3b2b12)',`<div class="k">Läufe</div><div class="big">${w.runs}</div><p>Mal bist du losgelaufen.</p>${w.longest?`<p class="sm">Dein längster Lauf: ${fkm(w.longest.k)} km am ${sd(w.longest.d)}.</p>`:''}`]);
+ if(w.fast)S.push(['linear-gradient(160deg,#d9a21b,#a8540c)',`<div class="k">Schnellster Lauf</div><div class="big" style="font-size:clamp(64px,20vw,104px)">${fdur(w.fast.p)}</div><p>pro Kilometer, am ${sd(w.fast.d)}.</p>${w.fast.p<300?'<p class="sm">Unter 5 Minuten. Respekt!</p>':''}`]);
+ const ms=Object.entries(w.mon).sort();if(ms.length){const mx=Math.max(...ms.map(x=>x[1]));const top=ms.find(x=>x[1]===mx);
+  S.push(['linear-gradient(160deg,#2f7fc1,#163e60)',`<div class="k">Stärkster Monat</div><div class="mid">${MON[+top[0].slice(5)-1]}</div><p>${fkm(Math.round(top[1]))} km in einem Monat.</p><div class="mb">${ms.map(([m,k])=>`<div class="${k===mx?'top':''}"><i style="height:${Math.max(4,k/mx*100)}%"></i>${MON2[+m.slice(5)-1]}</div>`).join('')}</div>`])}
+ const tv=Object.entries(w.tod).sort((a,b)=>b[1]-a[1]);if(tv[0][1]>0||w.cold){const nm={Morgen:'Morgenläufer',Mittag:'Mittagsläufer',Nachmittag:'Nachmittagsläufer',Abend:'Abendläufer'};
+  S.push(['linear-gradient(160deg,#355e3b,#16301b)',`<div class="k">Dein Laufstil</div>${tv[0][1]>0?`<div class="mid">${nm[tv[0][0]]}</div><p>Die meisten Läufe hast du am ${tv[0][0]} eingetragen.</p>`:''}${w.cold?`<p class="sm">Kältester Lauf: ${fkm(w.cold.t)} °C am ${sd(w.cold.d)}. Respekt!</p>`:''}`])}
+ S.push(['linear-gradient(160deg,#6e1d12,#1d1716)',`<div class="k">Im Gym</div><div class="big">${w.legs}</div><p>Beintage${w.push+w.pull?`, dazu ${w.push} × Push und ${w.pull} × Pull`:''}.</p>${w.shorts?`<p class="sm">${w.shorts} Mal hast du die Kurzvariante gewählt, statt ausfallen zu lassen. Genau so geht das.</p>`:''}`]);
+ S.push(['linear-gradient(160deg,#d9a21b,#6e4a06)',`<div class="k">Trophäen</div><div class="big">${w.tro.length}</div><p>von ${MS.length} Meilensteinen erreicht.</p><div class="tro">${w.tro.slice(-10).map(m=>`<svg aria-hidden="true"><use href="#${MSI[m[0]]||'i-trophy'}"/></svg>`).join('')}</div>`]);
+ const dl=Math.round((pd(RACE)-pd(today))/864e5);
+ S.push(['linear-gradient(160deg,#b23a26,#d9a21b)',w.fin?`<div class="k">Finisher</div><div class="big" style="font-size:clamp(64px,20vw,110px)">${fdur(w.fin)}</div><p>Heidelberger Halbmarathon, 25. April 2027. Du hast es geschafft!</p>`:`<div class="k">Weiter geht’s</div><div class="big">${Math.max(dl,0)}</div><p>Tage bis Heidelberg. Du bist auf einem guten Weg.</p>`]);
+ return S}
+let wI=0,wS=[];
+function wShow(){const[bg,html]=wS[wI];const el=$('wslide');el.style.background=bg;el.innerHTML=html;el.classList.remove('in');void el.offsetWidth;el.classList.add('in');$('wbars').innerHTML=wS.map((_,i)=>`<i class="${i<=wI?'on':''}"></i>`).join('')}
+function openWrap(){wS=wrapSlides();wI=0;$('wrapdlg').showModal();wShow()}
+$('wnext').onclick=()=>{if(wI<wS.length-1){wI++;wShow()}else $('wrapdlg').close()};$('wprev').onclick=()=>{if(wI>0){wI--;wShow()}};$('wrapx').onclick=()=>$('wrapdlg').close();
+$('wrapdlg').addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('wnext').click();if(e.key==='ArrowLeft')$('wprev').click()});
+try{document.fonts.ready.then(()=>dayLock())}catch(e){}
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(dayLock,200)});
+function renderSel(){applyVol();applyMoves();cal();calLegv();dayLock();weekv();tipv();recapv()}
 function selectDay(s,el){const kind=el&&el.closest('#cal')?'.day':el&&el.classList.contains('wrow')?'.wrow':null;const y0=el?el.getBoundingClientRect().top:0;
  sel=s;month=s.slice(0,7);renderSel();
  if(kind){const n=document.querySelector(`${kind}[data-d="${s}"]`);if(n){const dy=n.getBoundingClientRect().top-y0;if(Math.abs(dy)>1)window.scrollBy(0,dy)}}}
-function render(){applyVol();applyMoves();head();regv();cal();calLegv();dayv();weekv();tipv();recapv();diaryv();badgesv()}
+function render(){applyVol();applyMoves();head();regv();cal();calLegv();dayLock();weekv();tipv();recapv();diaryv();badgesv()}
 function cache(){try{localStorage.setItem('hm27',JSON.stringify(state))}catch(e){}}
 let tmr;function save(){cache();clearTimeout(tmr);tmr=setTimeout(sync,800)}
 document.addEventListener('click',ev=>{if(ev.target.closest('[data-reg]')){const c=state.done.anmeldung;const before=got();state.done.anmeldung={v:c&&c.v?0:1,t:Date.now()};save();render();if(!(c&&c.v)){haptic();celebrate(before)}return}

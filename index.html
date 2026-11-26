@@ -119,7 +119,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .dlg .err{color:var(--red);font-size:15px;min-height:1em}
 .bib{position:relative;overflow:hidden}
 .bibin{position:relative;z-index:1}
-.gate{position:absolute;right:-10px;bottom:-6px;width:min(640px,95%);height:auto;opacity:.2;pointer-events:none}
+.gate{position:absolute;right:-10px;bottom:-6px;width:min(640px,95%);height:auto;opacity:.24;pointer-events:none}
 .reg{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:14px;font-size:15px}
 .reg a,.reg button{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;font-weight:600;text-decoration:none;cursor:pointer}
 .reg a{background:#fff;color:var(--red);border:0}
@@ -522,7 +522,7 @@ dialog.sheet::backdrop{background:rgba(0,0,0,.5)}
 .strt .strn{display:block;margin-top:8px;font-size:12px;color:var(--mute)}
 .freeday{list-style:none;padding:12px 14px;border:1px dashed var(--line);border-radius:12px}
 #pop{width:min(300px,88vw)}
-main{overflow-anchor:none}
+main{overflow-anchor:none}html,body{overflow-anchor:none}
 /* --- v26 --- */
 .dist,.prog,.wxb{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);margin-bottom:12px}
 .dist svg,.wxb svg{width:26px;height:26px;flex-shrink:0;fill:none;stroke:var(--teal);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
@@ -600,18 +600,62 @@ dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
 </style>
 </head>
 <body>
-<header class="bib"><div class="fx" id="fx" aria-hidden="true"></div><svg class="gate" viewBox="0 0 640 300" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-<path d="M0 290 Q20 284 40 290 T80 290 T120 290 T160 290 T200 290 T240 290 T280 290 T320 290 T360 290 T400 290 T440 290 T480 290 T520 290 T560 290 T600 290 T640 290"/>
-<path d="M118 272 V108 H172 V272 M228 272 V108 H282 V272"/>
-<path d="M114 108 H176 M224 108 H286 M114 100 H176 M224 100 H286"/>
-<path d="M122 100 Q122 74 145 66 Q168 74 168 100 M232 100 Q232 74 255 66 Q278 74 278 100"/>
-<path d="M139 66 V54 H151 V66 M249 66 V54 H261 V66 M139 54 Q145 42 151 54 M249 54 Q255 42 261 54 M145 46 V26 M255 46 V26"/>
-<path d="M141 22 Q145 18 149 22 M251 22 Q255 18 259 22"/>
-<path d="M172 150 H228 M186 272 V224 A14 14 0 0 1 214 224 V272"/>
-<path d="M140 150 V168 M150 150 V168 M140 200 V218 M150 200 V218 M250 150 V168 M260 150 V168 M250 200 V218 M260 200 V218"/>
-<path d="M282 210 H640 M282 222 H640"/>
-<path d="M282 272 Q322 228 362 272 Q402 228 442 272 Q482 228 522 272 Q562 228 602 272 Q622 250 640 248"/>
-<path d="M362 272 V290 M442 272 V290 M522 272 V290 M602 272 V290"/>
+<header class="bib"><div class="fx" id="fx" aria-hidden="true"></div><svg class="gate" viewBox="0 0 640 300" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><style>.gate .f{fill:rgba(255,255,255,.10)}.gate .f2{fill:rgba(255,255,255,.22)}.gate .t{stroke-width:1.5}.gate .hill{stroke-width:2;opacity:.55}</style>
+<path class="hill" d="M286 196 C330 150 380 132 430 140 C480 148 520 118 570 110 C600 106 625 116 640 122"/>
+<path class="hill" d="M0 214 C30 196 60 190 96 200"/>
+<path class="f" d="M0 272 V232 L14 218 L28 232 V222 L44 206 L60 222 V272 Z"/><path class="f" d="M60 272 V236 L78 220 L96 236 V272 Z"/><path class="t" d="M10 246 h6 M36 240 h6 M36 256 h6 M74 248 h6"/>
+<path class="f" d="M96 272 V196 H121 V272 Z"/><path class="f2" d="M93 196 L108 182 L124 196 Z"/>
+<path class="f" d="M177 272 V146 H233 V272 Z"/>
+<path class="f2" d="M173 146 L186 128 H224 L237 146 Z"/>
+<path d="M190 272 V222 A15 15 0 0 1 220 222 V272"/>
+<path class="t" d="M194 226 H216 M192 236 H218 M192 246 H218 M198 213 V272 M205 207 V272 M212 213 V272"/>
+<path d="M199 186 V174 A6 6 0 0 1 211 174 V186 Z"/><path class="t" d="M184 160 H226"/>
+<path class="f" d="M119 272 V116 H177 V272 Z"/>
+<path class="t" d="M128 124 V268 M168 124 V268"/>
+<path class="t" d="M119 180 Q148 186 177 180"/>
+<path class="t" d="M119 236 Q148 242 177 236"/>
+<path d="M115 116 Q148 124 181 116 V106 Q148 113 115 106 Z" class="f2"/>
+<path class="t" d="M121 108 V117"/>
+<path class="t" d="M130 108 V117"/>
+<path class="t" d="M139 108 V117"/>
+<path class="t" d="M148 108 V117"/>
+<path class="t" d="M157 108 V117"/>
+<path class="t" d="M166 108 V117"/>
+<path class="t" d="M175 108 V117"/>
+<path class="f2" d="M117 106 C117 88 132 86 137 74 C140 66 142 62 142 58 H154 C154 62 156 66 159 74 C164 86 179 88 179 106 Q148 112 117 106 Z"/>
+<path class="f" d="M143 58 V46 H153 V58"/>
+<path class="t" d="M148 48 V56"/>
+<path class="f2" d="M141 46 Q148 30 155 46 Z"/>
+<path d="M148 37 V18"/><circle cx="148" cy="25" r="2.2"/><path d="M145 18 H151"/>
+<path d="M145 156 V143 A3 3 0 0 1 151 143 V156"/>
+<path d="M145 210 V199 A3 3 0 0 1 151 199 V210"/>
+<path d="M135 252 V246 M161 252 V246"/>
+<path class="f" d="M233 272 V116 H291 V272 Z"/>
+<path class="t" d="M242 124 V268 M282 124 V268"/>
+<path class="t" d="M233 180 Q262 186 291 180"/>
+<path class="t" d="M233 236 Q262 242 291 236"/>
+<path d="M229 116 Q262 124 295 116 V106 Q262 113 229 106 Z" class="f2"/>
+<path class="t" d="M235 108 V117"/>
+<path class="t" d="M244 108 V117"/>
+<path class="t" d="M253 108 V117"/>
+<path class="t" d="M262 108 V117"/>
+<path class="t" d="M271 108 V117"/>
+<path class="t" d="M280 108 V117"/>
+<path class="t" d="M289 108 V117"/>
+<path class="f2" d="M231 106 C231 88 246 86 251 74 C254 66 256 62 256 58 H268 C268 62 270 66 273 74 C278 86 293 88 293 106 Q262 112 231 106 Z"/>
+<path class="f" d="M257 58 V46 H267 V58"/>
+<path class="t" d="M262 48 V56"/>
+<path class="f2" d="M255 46 Q262 30 269 46 Z"/>
+<path d="M262 37 V18"/><circle cx="262" cy="25" r="2.2"/><path d="M259 18 H265"/>
+<path d="M259 156 V143 A3 3 0 0 1 265 143 V156"/>
+<path d="M259 210 V199 A3 3 0 0 1 265 199 V210"/>
+<path d="M249 252 V246 M275 252 V246"/>
+<path class="f" d="M291 272 V204 H640 V272 H625 Q625 226 588 226 H572 Q545 226 545 272 H535 Q535 226 508 226 H492 Q465 226 465 272 H455 Q455 226 428 226 H412 Q385 226 385 272 H375 Q375 226 348 226 H332 Q305 226 305 272 H291 Z"/>
+<path d="M291 194 H640 M291 204 H640"/>
+<path class="t" d="M298 194 V204 M308 194 V204 M318 194 V204 M328 194 V204 M338 194 V204 M348 194 V204 M358 194 V204 M368 194 V204 M378 194 V204 M388 194 V204 M398 194 V204 M408 194 V204 M418 194 V204 M428 194 V204 M438 194 V204 M448 194 V204 M458 194 V204 M468 194 V204 M478 194 V204 M488 194 V204 M498 194 V204 M508 194 V204 M518 194 V204 M528 194 V204 M538 194 V204 M548 194 V204 M558 194 V204 M568 194 V204 M578 194 V204 M588 194 V204 M598 194 V204 M608 194 V204 M618 194 V204 M628 194 V204 M638 194 V204"/>
+<path d="M291 272 V204 M291 272 H305 M385 272 H375 M465 272 H455 M545 272 H535 M625 272 H640 M291 212 H640"/><path class="t" d="M380 252 V272 M460 252 V272 M540 252 V272"/>
+<path d="M0 282 Q20 277 40 282 T80 282 T120 282 T160 282 T200 282 T240 282 T280 282 T320 282 T360 282 T400 282 T440 282 T480 282 T520 282 T560 282 T600 282 T640 282"/>
+<path class="t" d="M120 292 h40 M236 292 h50 M350 291 h30 M440 293 h44 M540 291 h36 M30 293 h50"/>
 </svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <symbol id="i-shoe" viewBox="0 0 24 24"><path d="M2 17.5h18.5a1.5 1.5 0 0 0 .6-2.9l-5.6-2.4-2.3-3.4-2.6 1.6-1.8-1.6L4 7.5 2 9z"/><path d="M2 20.5h20"/><path d="M8.5 12.5l1.5-1M11 14l1.5-1"/></symbol>
@@ -676,8 +720,9 @@ dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
     </div></div></div></div>
   </section>
   <div class="side">
+    <section class="card racecard" id="racecard" hidden></section>
     <section class="card recap" id="recap" hidden></section>
-    <section class="card"><div class="dhead"><h2 id="dtitle">–</h2><p id="dsub"></p></div><ul class="items" id="items"></ul><div id="legs"></div></section>
+    <section class="card" id="daycard"><div class="dhead"><h2 id="dtitle">–</h2><p id="dsub"></p></div><ul class="items" id="items"></ul><div id="legs"></div></section>
     <section class="card week" id="week"></section>
   </div>
   <div class="extra">
@@ -941,7 +986,7 @@ function weekv(){const e0=selWk()?{wk:selWk()}:null;if(!e0){$('week').innerHTML=
 const REGURL='https://atoshalbmarathon.tsg78-hd.de/ihre-anmeldung/';
 function regv(){const r=state.done.anmeldung&&state.done.anmeldung.v;
  $('reg').innerHTML=r?'<span class="ok">✓ Für den Lauf angemeldet <button data-reg>Rückgängig</button></span>'
- :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>';if(today>='2027-04-19')$('reg').insertAdjacentHTML('beforeend','<button class="racehd" data-race>Renntag-Modus</button>')}
+ :'<span class="grp"><a href="'+REGURL+'" target="_blank" rel="noopener">Zur Anmeldung ↗</a><button data-reg>Bin angemeldet</button></span>'}
 function logLine(e){const l=LOG(e.id);if(!l)return`<button class="lg" data-log="${e.id}">+ Echte Werte eintragen</button>`;
  return`<button class="lg" data-log="${e.id}"><b>${fkm(l.km)} km${l.sec?' · '+fdur(l.sec)+' · '+fpace(l.km,l.sec):''}</b>${l.feel?' · Gefühl '+l.feel+'/5':''}${l.temp!=null?' · '+fkm(l.temp)+' °C':''} · bearbeiten</button>`}
 let ui={calLeg:false,diaLeg:false,runs:false};try{Object.assign(ui,JSON.parse(localStorage.getItem('hm27ui')||'{}'))}catch(e){}
@@ -985,18 +1030,18 @@ function diaryv(){const s=stats();const wk=Math.min(22,Math.max(1,Math.floor((pd
   <dl><div><dt>Distanz</dt><dd>${fkm(l.km)} km</dd></div><div><dt>Zeit</dt><dd>${l.sec?fdur(l.sec):'–'}</dd></div><div><dt>Pace</dt><dd>${fpace(l.km,l.sec)}</dd></div><div><dt>Gefühl</dt><dd>${l.feel?dots(l.feel):'–'}</dd></div></dl>
   ${l.note?`<p class="nt">${esc(l.note)}</p>`:''}<button class="lg ed" data-log="${e.id}">bearbeiten</button></li>`}).join('');
  $('diary').innerHTML=`<h2>Lauftagebuch</h2>
- <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${distHTML(s.km)}${prognHTML()}${trendHTML()}
+ <div class="tiles" style="margin-top:14px"><div class="tile"><b>${fkm(s.km)}</b><span>km gelaufen</span></div><div class="tile"><b>${s.runs}</b><span>Läufe</span></div><div class="tile"><b>${s.skm?fdur(s.sec/s.skm):'–'}</b><span>Ø Pace pro km</span></div><div class="tile"><b>${s.feel?fkm(s.feel):'–'}</b><span>Ø Gefühl (1–5)</span></div></div>${distHTML(s.km)}${trendHTML()}
  <div class="chart" aria-label="Kilometer pro Woche, geplant und gelaufen. Tippe auf eine Woche für Details.">${cols}${bubW?bubHTML(bubW,act,mx):''}</div><div class="wls">${WEEKKM.map((_,i)=>`<span>${i+1}</span>`).join('')}</div>
  <div class="clp${ui.diaLeg?' open':''}" id="diaLegW"><div class="clpi"><div class="leg2" style="display:block"><div class="phs" aria-hidden="true">${WEEKKM.map((_,i)=>`<i style="background:${PHC(i+1)}"></i>`).join('')}</div><div class="pkm" aria-label="Geplante Kilometer pro Woche">${WEEKKM.map(k=>`<span>${Math.round(k)}</span>`).join('')}</div><div class="phl">${PHS.map(([n,a,b,c])=>`<span><i style="background:${c}"></i>${n} (Wo ${a}${b>a?'–'+b:''})</span>`).join('')}</div><div class="phl"><span><i style="border:1.5px dashed var(--mute);height:10px"></i>geplante km</span><span><i style="background:var(--red);height:10px"></i>gelaufene km</span><span>Zahlenreihe: geplante km pro Woche</span><span>Tippe auf eine Woche für Details</span></div><p style="margin-top:8px">Echte Werte trägst du beim Abhaken eines Laufs ein. Ohne Eintrag zählt die geplante Distanz.</p></div></div></div>${volSug()}
- <div class="dsec dbtns"><button class="dbtn" data-wrap>Rückblick ansehen</button><button class="dbtn gold" data-race>Renntag-Modus</button></div>
-<div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label></div>
+ <div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="diaLeg" ${ui.diaLeg?'checked':''}><span class="tr"></span>Legende anzeigen</label></div>
+${progn(today).ok?`<div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="prog" ${ui.prog?'checked':''}><span class="tr"></span>Zielzeit-Prognose anzeigen</label><div class="clp${ui.prog?' open':''}" id="progW"><div>${prognHTML()}</div></div></div>`:''}
 <div class="dsec"><label class="swt"><input type="checkbox" switch role="switch" data-sw="recs" ${ui.recs?'checked':''}><span class="tr"></span>Rekorde anzeigen</label>
 <div class="clp${ui.recs?' open':''}" id="recsW"><div class="clpi"><div style="margin-top:8px">${bestsHTML()}</div></div></div></div>
 <div class="dsec"><button class="tog" data-vol="1" aria-expanded="${!!ui.volOpen}">Umfang anpassen</button>
 <div class="clp${ui.volOpen?' open':''}" id="volW"><div class="clpi">${volHTML()}</div></div></div>
 <div class="dsec"><button class="tog" data-ui="runs" aria-expanded="${ui.runs}">${ui.runs?'Läufe ausblenden':'Einzelne Läufe ('+logs.length+')'}</button>
 <div class="clp${ui.runs?' open':''}" id="runsW"><div class="clpi">${logs.length?`${sortbar}<ul class="rl">${runs}</ul>`:'<p class="empty2" style="margin-top:12px">Noch keine Einträge. Hak einen Lauf ab und trag Distanz, Zeit und Gefühl ein.</p>'}</div></div></div>`;$('diary').dataset.n=logs.length}
-$('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$(x.dataset.sw==='recs'?'recsW':'diaLegW').classList.toggle('open',x.checked)});
+$('diary').addEventListener('change',ev=>{const x=ev.target.closest('[data-sw]');if(!x)return;ui[x.dataset.sw]=x.checked;saveUi();$({recs:'recsW',prog:'progW'}[x.dataset.sw]||'diaLegW').classList.toggle('open',x.checked)});
 $('diary').addEventListener('click',ev=>{const cw=ev.target.closest('[data-wk]');if(cw){const n=+cw.dataset.wk;bubW=bubW===n?0:n;diaryv();ev.stopPropagation();return}
  const vp=ev.target.closest('[data-volp]');if(vp){const prev=state.done.vol;state.done.vol={v:1,t:Date.now(),pct:+vp.dataset.volp,from:+vp.dataset.volfrom};save();render();vib();snack(+vp.dataset.volp?'Umfang +'+vp.dataset.volp+' % ab Woche '+vp.dataset.volfrom:'Umfang wie geplant',()=>{state.done.vol=prev||{v:0,t:Date.now()};save();render()});return}
  const vn=ev.target.closest('[data-volno]');if(vn){ui.volNo=+vn.dataset.volno;saveUi();diaryv();return}
@@ -1168,7 +1213,7 @@ function showPop(tile){const s=tile.dataset.d;const ev=(EV[s]||[]).filter(e=>e.t
 const hidePop=()=>{$('pop').hidden=true};
 document.addEventListener('click',ev=>{const o=ev.target.closest('[data-popopen]');if(o){hidePop();sel=o.dataset.popopen;month=sel.slice(0,7);render();return}if(!$('pop').hidden&&!ev.target.closest('#pop')){if(Date.now()<noClick){ev.stopPropagation();ev.preventDefault();return}hidePop()}},true);
 addEventListener('scroll',hidePop,{passive:true});
-swipe(document.querySelector('.side > section:nth-child(2)'),k=>{const n=add(sel,k);if(n<START||n>RACE)return;sel=n;month=sel.slice(0,7);render()});
+swipe($('daycard'),k=>{const n=add(sel,k);if(n<START||n>RACE)return;sel=n;month=sel.slice(0,7);render()});
 // ---------- v11: tips ----------
 const TIPS=['Locker heißt wirklich locker: Wenn du nicht mehr in ganzen Sätzen reden kannst, bist du zu schnell.',
 'Steigerungen: 20 s langsam schneller werden, nie voll sprinten. Sie machen deinen Laufstil ökonomischer.',
@@ -1320,10 +1365,7 @@ function placePop(tile,html){const pop=$('pop');pop.innerHTML=html;pop.hidden=fa
 function showFree(tile,s){const info=(EV[s]||[]).filter(e=>e.type==='exam'||e.type==='ski');
  placePop(tile,`<h4>${fmt(s)}</h4>${info.map(e=>`<p class="pinfo">${e.text}</p>`).join('')}<p class="pfree">Frei, kein Training geplant.</p>${stretchHTML(s)}`)}
 // ---------- v24: keep the day card the same height within a week ----------
-function dayLock(){const card=document.querySelector('.side > section:nth-child(2)');const wk=selWk();card.style.minHeight='';
- if(!wk){dayv();return}const keep=sel;let mx=0;
- for(let k=0;k<7;k++){const d=add(START,(wk-1)*7+k);if(d>RACE)break;sel=d;dayv();mx=Math.max(mx,card.offsetHeight)}
- sel=keep;dayv();card.style.minHeight=mx+'px'}
+function dayLock(){dayv()}
 // ---------- v26: prognosis, distances, weather, race mode, wrapped ----------
 const HM=21.0975;
 const PMIN=5,PLONG=12;
@@ -1398,6 +1440,9 @@ $('racebody').addEventListener('click',ev=>{if(ev.target.id!=='rfinb')return;con
  const first=!ptime(RC().finish);const before=got();saveRace({finish:fdur(v)});const ri=raceItem();if(ri&&!isDone(ri)){state.done[ri.id]={v:1,t:Date.now()};save()}render();$('racebody').innerHTML=raceHTML();rcd();
  if(first){vib();confetti(innerWidth/2,innerHeight*.3,140,320);toastQ('Finisher! '+fdur(v),'Glückwunsch zum Heidelberger Halbmarathon!');celebrate(before)}});
 document.addEventListener('click',ev=>{if(ev.target.closest('[data-race]'))openRace();if(ev.target.closest('[data-wrap]'))openWrap()});
+const RACEUI='2027-04-11';
+function racecardv(){const el=$('racecard');if(today<RACEUI){el.hidden=true;return}el.hidden=false;const dl=Math.round((pd(RACE)-pd(today))/864e5);const fin=ptime(RC().finish);
+ el.innerHTML=`<h2>${fin?'Geschafft!':dl>0?'Noch '+dl+(dl===1?' Tag':' Tage'):dl===0?'Heute ist Renntag!':'Renntag'}</h2><p class="sub2">${fin?'Finisher in '+fdur(fin)+'. Schau dir deine ganze Vorbereitung an.':'Pace-Plan, Checkliste und Countdown für Heidelberg, dazu dein Rückblick auf die Vorbereitung.'}</p><div class="dbtns"><button class="dbtn gold" data-race>Renntag-Modus</button><button class="dbtn" data-wrap>Rückblick ansehen</button></div>`}
 // wrapped
 const MON2=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 function wrapData(){const s=stats();const runs=ITEMS.filter(e=>isRun(e)&&isDone(e));let longest=null,fast=null,cold=null;const mon={},tod={Morgen:0,Mittag:0,Nachmittag:0,Abend:0};
@@ -1430,10 +1475,16 @@ $('wrapdlg').addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('wnext').c
 try{document.fonts.ready.then(()=>dayLock())}catch(e){}
 let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(dayLock,200)});
 function renderSel(){applyVol();applyMoves();cal();calLegv();dayLock();weekv();tipv();recapv()}
-function selectDay(s,el){const kind=el&&el.closest('#cal')?'.day':el&&el.classList.contains('wrow')?'.wrow':null;const y0=el?el.getBoundingClientRect().top:0;
- sel=s;month=s.slice(0,7);renderSel();
- if(kind){const n=document.querySelector(`${kind}[data-d="${s}"]`);if(n){const dy=n.getBoundingClientRect().top-y0;if(Math.abs(dy)>1)window.scrollBy(0,dy)}}}
-function render(){applyVol();applyMoves();head();regv();cal();calLegv();dayLock();weekv();tipv();recapv();diaryv();badgesv()}
+const padb=document.createElement('div');padb.setAttribute('aria-hidden','true');document.body.appendChild(padb);let padH=0;
+const docH=()=>document.documentElement.scrollHeight;
+addEventListener('scroll',()=>{if(!padH)return;const spare=docH()-(scrollY+innerHeight);if(spare>0){padH=Math.max(0,padH-spare);padb.style.height=padH+'px'}},{passive:true});
+function selectDay(s,el){const kind=el&&el.closest('#cal')?'.day':el&&el.classList.contains('wrow')?'.wrow':null;const y0=el?el.getBoundingClientRect().top:0;const h0=docH();
+ const dc=$('daycard');dc.style.minHeight='';
+ sel=s;month=s.slice(0,7);renderSel();const h1=docH();if(h1<h0){padH+=h0-h1;padb.style.height=padH+'px'}
+ if(kind){const n=document.querySelector(`${kind}[data-d="${s}"]`);if(n){let dy=n.getBoundingClientRect().top-y0;
+  if(dy<-1&&scrollY+dy<0&&dc.compareDocumentPosition(n)&Node.DOCUMENT_POSITION_FOLLOWING){dc.style.minHeight=(dc.offsetHeight-(scrollY+dy))+'px';dy=n.getBoundingClientRect().top-y0}
+  if(Math.abs(dy)>1)window.scrollBy(0,dy)}}}
+function render(){applyVol();applyMoves();head();regv();racecardv();cal();calLegv();dayLock();weekv();tipv();recapv();diaryv();badgesv()}
 function cache(){try{localStorage.setItem('hm27',JSON.stringify(state))}catch(e){}}
 let tmr;function save(){cache();clearTimeout(tmr);tmr=setTimeout(sync,800)}
 document.addEventListener('click',ev=>{if(ev.target.closest('[data-reg]')){const c=state.done.anmeldung;const before=got();state.done.anmeldung={v:c&&c.v?0:1,t:Date.now()};save();render();if(!(c&&c.v)){haptic();celebrate(before)}return}

@@ -594,7 +594,7 @@ dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
 .wprev{left:0;width:33%}.wnext{right:0;width:67%}
 @media(max-width:600px){dialog.wrap{width:100vw;height:100dvh;border-radius:0;margin:0}}
 @media(prefers-reduced-motion:reduce){.wslide.in>*{animation:none}}
-.gate .snowacc{display:none}.bib[data-th=xmas] .gate .snowacc,.bib[data-th=winter] .gate .snowacc{display:inline}.gate .sc,.gate .sb{fill:rgba(255,255,255,.82);transform-box:fill-box;transform:scaleY(var(--sn,0));transition:transform 6s linear}.gate .sc{transform-origin:50% 0}.gate .sb{transform-origin:50% 100%}@media(prefers-reduced-motion:reduce){.gate .sc,.gate .sb{transition:none}}
+.gate .snowacc{display:none}.bib[data-th=xmas] .gate .snowacc,.bib[data-th=winter] .gate .snowacc{display:inline}.gate .sc,.gate .sb{fill:rgba(255,255,255,.82);transform-box:fill-box;transform:scaleY(var(--sn,0));transition:transform 1.5s linear}.gate .sc{transform-origin:50% 0}.gate .sb{transform-origin:50% 100%}@media(prefers-reduced-motion:reduce){.gate .sc,.gate .sb{transition:none}}
 .gate .wtr path{animation:wf 9s linear infinite}@keyframes wf{to{stroke-dashoffset:calc(var(--dl) * -1px)}}@media(prefers-reduced-motion:reduce){.gate .wtr path{animation:none}}
 .strb{margin-top:10px}
 .strl{display:grid;gap:10px}
@@ -608,6 +608,12 @@ dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
 .sx details p,.sx details ul{margin:4px 0 6px;font-size:14px;line-height:1.45}
 .sx details ul{padding-left:18px}
 .gate .rp{animation:rp 3.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes rp{0%,100%{transform:translateX(-4px) scaleX(.97);opacity:.55}50%{transform:translateX(4px) scaleX(1.03);opacity:1}}@media(prefers-reduced-motion:reduce){.gate .rp{animation:none}}
+.osw{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
+.ic.off{stroke:var(--teal)}
+.day.st-odone{background:color-mix(in srgb,var(--teal) 22%,var(--card,transparent));border-color:var(--teal)}
+.day.st-odone .ic.off{stroke:var(--teal)}
+.offit{margin-bottom:8px}
+.tsnow{display:block}
 @media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}.side{order:-1}.bibin{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.nav button,.today{padding:0 8px}.calhead h2{font-size:24px}.day{min-height:56px;padding:3px}.mk{height:12px;font-size:10px;line-height:12px}.calhead h2,.dhead h2{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -654,7 +660,8 @@ dialog.wrap::backdrop{background:rgba(0,0,0,.75)}
 <symbol id="m-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
 <symbol id="m-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/></symbol>
 <symbol id="m-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
-<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11"/></symbol><symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z M14 7l3 3"/></symbol><symbol id="i-stretch" viewBox="0 0 24 24"><circle cx="15.5" cy="4.5" r="2"/><path d="M14.5 7.5 11 13.5M11 13.5l5.5 1.8 1 5.2M11 13.5 4.5 19.5M13.5 9.5l4.5 1.8"/></symbol>
+<symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></symbol>
 </svg>
 <div class="bibin hd">
   <div class="topbar">
@@ -907,6 +914,8 @@ function head(){const c=calc();const dl=Math.round((pd(RACE)-pd(today))/864e5);
  $('stats').innerHTML=`<span><b>${fkm(c.km)}<small> km</small></b>gelaufen</span><span><b>${c.longest?fkm(c.longest)+'<small> km</small>':'–'}</b>längster Lauf</span><span><b>${wn}<small> / 22</small></b>Woche</span>`+(c.opt?`<span><b>${c.opt}</b>Bonusläufe</span>`:'')}
 function mark(e){const c=T[e.type][1];if(!checkable(e))return`<span class="mk info" style="--c:${c}"></span>`;
  const cls=isDone(e)?'done':(e.date<today&&e.type!=='opt'?'miss':'');return`<span class="mk ${cls}" style="--c:${c}"></span>`}
+const isOff=s=>s>=START&&s<=RACE&&!(EV[s]||[]).some(e=>checkable(e));
+const offDone=s=>!!(state.done['off:'+s]&&state.done['off:'+s].v);
 function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MON[m-1]+' '+y;
  const first=new Date(y,m-1,1),off=(first.getDay()+6)%7,len=new Date(y,m,0).getDate();let h='';
  for(let k=0;k<off;k++)h+='<div class="day out"></div>';
@@ -917,10 +926,11 @@ function cal(){const[y,m]=month.split('-').map(Number);$('mname').textContent=MO
   if(req.length){st=nd===req.length?(req.some(isShort)?'dshort':'done'):nd>0?'part':s<today?'miss':'plan';if(race&&st!=='done'&&st!=='dshort')st='race'}
   else if(opt.length)st=opt.some(isDone)?'done':'free';
   else if(ski)st='ski';else if(exam)st='exam';
+  const offd=isOff(s),od=offd&&offDone(s);if(od&&st==='free')st='odone';
   const run=ev.some(isRun),gym=ev.some(e=>e.type==='gym');
-  const ics=(run?'<svg class="ic run"><use href="#i-shoe"/></svg>':'')+(gym?'<svg class="ic gym"><use href="#i-dumbbell"/></svg>':'')+(!run&&!gym&&ski?'<svg class="ic"><use href="#i-snow"/></svg>':'')+(exam&&!req.length?'<svg class="ic"><use href="#i-pen"/></svg>':'');
+  const ics=(run?'<svg class="ic run"><use href="#i-shoe"/></svg>':'')+(gym?'<svg class="ic gym"><use href="#i-dumbbell"/></svg>':'')+(!run&&!gym&&ski?'<svg class="ic"><use href="#i-snow"/></svg>':'')+(exam&&!req.length?'<svg class="ic"><use href="#i-pen"/></svg>':'')+(offd?'<svg class="ic off"><use href="#i-stretch"/></svg>':'');
   const frac=st==='part'?`<span class="frac">${nd}/${req.length}</span><span class="pb" aria-hidden="true"><i style="width:${Math.round(nd/req.length*100)}%"></i></span>`:'';
-  const lbl=ev.filter(e=>e.type!=='rest').map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).join(', ');
+  const lbl=ev.filter(e=>e.type!=='rest').map(e=>T[e.type][0]+(checkable(e)&&isDone(e)?' erledigt':'')).concat(offd?['Off-Tag, Dehnen'+(od?' erledigt':'')]:[]).join(', ');
   h+=`<button class="day st-${st}${s===today?' now':''}${s===sel?' sel':''}" data-d="${s}" aria-label="${fmt(s)}${lbl?': '+lbl:''}"><span class="d">${k}</span>${mvIn?'<span class="mvm" aria-hidden="true">↷</span>':''}<span class="dic2" aria-hidden="true">${ics}</span>${frac}</button>`}
  $('cal').innerHTML=h;$('prev').disabled=month<='2026-11';$('next').disabled=month>='2027-04'}
 function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute':fmt(sel);
@@ -930,7 +940,7 @@ function dayv(){const ev=EV[sel]||[];$('dtitle').textContent=sel===today?'Heute'
  $('items').innerHTML=exh+wxTomorrow()+(ev.length?'':'')+ev.map(e=>{const[tl,c]=T[e.type];const ck=checkable(e),d=isDone(e);
   const mvd=e.date!==e.orig,can=MOVABLE(e);
   const sh=shortOf(e),isS=isShort(e);
-  return`<li class="it${d?' done':''}${isS?' short':''}${ck?'':' info'}" style="--c:${c}"${can?` draggable="true" data-drag="${e.id}"`:''}>${ck?`<label class="cb" data-cb="${e.id}"><input type="checkbox" switch class="hsw" data-id="${e.id}" ${d?'checked':''} aria-label="${tl}: ${e.text.replace(/"/g,'')} abhaken"><span aria-hidden="true">${d?'✓':''}</span></label>`:'<span class="cb" aria-hidden="true">•</span>'}<div><div class="tag">${tl}${e.km?' · '+String(e.km).replace('.',',')+' km':''}${mvd?` <span class="mvt">· verschoben von ${fmtS(e.orig)}</span>`:''}</div><div class="t">${e.text}</div>${e.hint?`<div class="h">${e.hint}</div>`:''}${(e.type==='long'||e.type==='race')&&!d&&wxSoon(e.date)?`<div data-wx="${e.date}">${wxHTML(e.date)}</div>`:''}${e.type==='race'?'<button class="raceb" data-race>Renntag-Modus öffnen</button>':''}${isS?`<div class="kvd">✓ Kurzvariante: ${sh?sh.text:''}</div><div><button class="upg" data-full="${e.id}">Doch voll geschafft</button></div>`:''}${e.type==='exam'?`<button class="exb" data-xedit="${e.exKey}">Prüfung bearbeiten oder verschieben</button>`:''}<div class="acts">${d&&isRun(e)?logLine(e):''}${can?`<button class="mvb" data-mv="${e.id}"><svg aria-hidden="true"><use href="#i-move"/></svg>Verschieben</button>`:''}</div>${sh&&!d?`<details class="kvx"><summary>Nur Kurzvariante geschafft?</summary><div class="kvt">Kurzvariante: ${sh.text}. Zählt als erledigt, im Fortschritt zu 60 %.</div><label class="kv" style="--c:${c}"><input type="checkbox" switch class="hsw2" data-short="${e.id}" aria-label="Kurzvariante abhaken: ${sh.text}">Ja, Kurzvariante abhaken</label></details>`:''}</div></li>`}).join('')+(ev.some(e=>checkable(e))?'':`<li class="freeday"><p class="pfree">Frei, kein Training geplant. Gönn dir Erholung.</p>${stretchHTML(sel,1)}</li>`);const leg=ev.find(e=>e.type==='gym'&&e.text.startsWith('Beine'));$('legs').innerHTML=leg?legsSummary(leg.wk):''}
+  return`<li class="it${d?' done':''}${isS?' short':''}${ck?'':' info'}" style="--c:${c}"${can?` draggable="true" data-drag="${e.id}"`:''}>${ck?`<label class="cb" data-cb="${e.id}"><input type="checkbox" switch class="hsw" data-id="${e.id}" ${d?'checked':''} aria-label="${tl}: ${e.text.replace(/"/g,'')} abhaken"><span aria-hidden="true">${d?'✓':''}</span></label>`:'<span class="cb" aria-hidden="true">•</span>'}<div><div class="tag">${tl}${e.km?' · '+String(e.km).replace('.',',')+' km':''}${mvd?` <span class="mvt">· verschoben von ${fmtS(e.orig)}</span>`:''}</div><div class="t">${e.text}</div>${e.hint?`<div class="h">${e.hint}</div>`:''}${(e.type==='long'||e.type==='race')&&!d&&wxSoon(e.date)?`<div data-wx="${e.date}">${wxHTML(e.date)}</div>`:''}${e.type==='race'?'<button class="raceb" data-race>Renntag-Modus öffnen</button>':''}${isS?`<div class="kvd">✓ Kurzvariante: ${sh?sh.text:''}</div><div><button class="upg" data-full="${e.id}">Doch voll geschafft</button></div>`:''}${e.type==='exam'?`<button class="exb" data-xedit="${e.exKey}">Prüfung bearbeiten oder verschieben</button>`:''}<div class="acts">${d&&isRun(e)?logLine(e):''}${can?`<button class="mvb" data-mv="${e.id}"><svg aria-hidden="true"><use href="#i-move"/></svg>Verschieben</button>`:''}</div>${sh&&!d?`<details class="kvx"><summary>Nur Kurzvariante geschafft?</summary><div class="kvt">Kurzvariante: ${sh.text}. Zählt als erledigt, im Fortschritt zu 60 %.</div><label class="kv" style="--c:${c}"><input type="checkbox" switch class="hsw2" data-short="${e.id}" aria-label="Kurzvariante abhaken: ${sh.text}">Ja, Kurzvariante abhaken</label></details>`:''}</div></li>`}).join('')+(ev.some(e=>checkable(e))?'':(isOff(sel)?`<li class="it offit${offDone(sel)?' done':''}" style="--c:var(--teal)"><label class="cb"><input type="checkbox" switch class="osw" data-off="${sel}" ${offDone(sel)?'checked':''} aria-label="Dehnen am Off-Tag abhaken"><span aria-hidden="true">${offDone(sel)?'✓':''}</span></label><div><div class="tag">Off-Tag · zählt nicht zum Fortschritt</div><div class="t">Dehnen</div></div></li>`:'')+`<li class="freeday"><p class="pfree">Frei, kein Training geplant. Gönn dir Erholung.</p>${stretchHTML(sel,1)}</li>`);const leg=ev.find(e=>e.type==='gym'&&e.text.startsWith('Beine'));$('legs').innerHTML=leg?legsSummary(leg.wk):''}
 function legsSummary(n){const k=n<=11?0:n<=20?1:2;const py=PLYO.includes(n)&&k<2;const list=EXD.filter(e=>e.dose[k]&&(e.block!=='plyo'||py));
  const min=k===2?35:py?70:55;
  return`<section class="legsum"><div><b>Beintag-Übungen${py?' <span class="plyb">Plyo-Woche</span>':''}</b><span>${list.length} Übungen · ca. ${min} min${py?' · mit Sprungblock':''}</span></div><button class="b pri" data-legs="${n}">Übungen öffnen</button></section>`}
@@ -1477,7 +1487,36 @@ function wShow(){const[bg,html]=wS[wI];const el=$('wslide');el.style.background=
 function openWrap(){wS=wrapSlides();wI=0;$('wrapdlg').showModal();wShow()}
 $('wnext').onclick=()=>{if(wI<wS.length-1){wI++;wShow()}else $('wrapdlg').close()};$('wprev').onclick=()=>{if(wI>0){wI--;wShow()}};$('wrapx').onclick=()=>$('wrapdlg').close();
 $('wrapdlg').addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('wnext').click();if(e.key==='ArrowLeft')$('wprev').click()});
-try{document.fonts.ready.then(()=>dayLock())}catch(e){}{let acc=0,last=performance.now();const gs=document.querySelector('svg.gate');const tick=()=>{const n=performance.now();if(!document.hidden)acc+=(n-last)/1000;last=n;gs.style.setProperty('--sn',(1-Math.exp(-acc/420)).toFixed(3))};setInterval(tick,5000);document.addEventListener('visibilitychange',()=>{last=performance.now()});setTimeout(tick,50)}
+try{document.fonts.ready.then(()=>dayLock())}catch(e){}
+const tSnow=(()=>{const h1=document.querySelector('.bib h1');if(!h1)return{draw(){}};const PAD=10;h1.style.position='relative';
+ const cv=document.createElement('canvas');cv.className='tsnow';cv.setAttribute('aria-hidden','true');h1.appendChild(cv);const ctx=cv.getContext('2d');
+ let top=null,tops=[],W=0,H=0,dpr=1,cur=0;
+ function layout(){const r=h1.getBoundingClientRect();if(!r.width)return;dpr=Math.min(2,devicePixelRatio||1);W=Math.ceil(r.width);H=Math.ceil(r.height)+PAD;
+  cv.style.cssText=`position:absolute;left:0;top:${-PAD}px;width:${W}px;height:${H}px;pointer-events:none`;cv.width=W*dpr;cv.height=H*dpr;
+  const off=document.createElement('canvas');off.width=W*dpr;off.height=H*dpr;const o=off.getContext('2d');o.scale(dpr,dpr);
+  const cs=getComputedStyle(h1);const FNT=`${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;try{if(document.fonts&&!document.fonts.check(FNT)){document.fonts.load(FNT).then(()=>layout());}}catch(e){}o.font=FNT;try{if(cs.letterSpacing&&cs.letterSpacing!=='normal')o.letterSpacing=cs.letterSpacing}catch(e){}
+  const m=o.measureText('Hg');const fA=m.fontBoundingBoxAscent||m.actualBoundingBoxAscent,fD=m.fontBoundingBoxDescent||m.actualBoundingBoxDescent;o.fillStyle='#000';
+  const rg=document.createRange();const L={};for(const n of h1.childNodes){if(n.nodeType!==3)continue;const t=n.textContent;for(let i=0;i<t.length;i++){if(/\s/.test(t[i]))continue;rg.setStart(n,i);rg.setEnd(n,i+1);const q=rg.getClientRects()[0];if(!q)continue;
+   const key=Math.round(q.top);(L[key]=L[key]||[]).push([t[i],q.left-r.left,q.top+(q.height-(fA+fD))/2+fA-r.top+PAD])}}
+  const w=W*dpr,hh=H*dpr;tops=[];
+  for(const k in L){o.clearRect(0,0,W,H);for(const [c,x,y] of L[k])o.fillText(c,x,y);const img=o.getImageData(0,0,w,hh).data;const tp=new Int32Array(w).fill(-1);
+   for(let x=0;x<w;x++){for(let y=0;y<hh;y++){if(img[(y*w+x)*4+3]>110){tp[x]=y;break}}}tops.push(tp)}
+  top=tops.length?1:null;
+  draw(cur)}
+ function draw(sn){cur=sn;ctx.clearRect(0,0,cv.width,cv.height);const th=document.querySelector('.bib').dataset.th;if(!top||!(th==='xmas'||th==='winter')||sn<.02)return;
+  const fs=parseFloat(getComputedStyle(h1).fontSize)||40,T=sn*fs*.13*dpr,s=Math.round(1.5*dpr);
+  for(const tp of tops){const w=tp.length;const k=new Float32Array(w);
+   for(let x=0;x<w;x++){const y=tp[x];if(y<0)continue;const a=tp[Math.max(0,x-s)],b=tp[Math.min(w-1,x+s)];const d=Math.max(a<0?0:Math.abs(y-a),b<0?0:Math.abs(b-y))/dpr;k[x]=Math.max(0,1-d/(fs*.12))}
+   const R=Math.round(1.5*dpr),sm=new Float32Array(w);for(let x=0;x<w;x++){if(tp[x]<0)continue;let acc=0,n=0;for(let j=-R;j<=R;j++){const q=x+j;if(q<0||q>=w||tp[q]<0)continue;acc+=k[q];n++}sm[x]=n?acc/n:0}
+   const th2=new Float32Array(w),yy=new Float32Array(w).fill(-1);
+   for(let x=0;x<w;x++){if(tp[x]<0||sm[x]<.05)continue;th2[x]=T*sm[x]*(.8+.2*Math.sin(x*.16/dpr)+.08*Math.sin(x*.7/dpr));yy[x]=tp[x]}
+   const ov=Math.round(1.2*dpr),add=[];for(let x=0;x<w;x++){if(yy[x]<0)continue;for(const dir of[-1,1]){const q=x+dir;if(q>=0&&q<w&&tp[q]<0){for(let j=1;j<=ov;j++){const z=x+dir*j;if(z<0||z>=w||tp[z]>=0)break;add.push([z,yy[x]+j*.6,th2[x]*(1-j/(ov+1))])}}}}
+   for(const [z,y,t] of add){if(yy[z]<0){yy[z]=y;th2[z]=t}}
+   ctx.fillStyle='rgba(20,40,60,.28)';for(let x=0;x<w;x++){if(yy[x]>=0&&th2[x]>.5)ctx.fillRect(x,yy[x]+dpr*.2,1,dpr*.9)}
+   ctx.fillStyle='rgba(246,250,255,.97)';for(let x=0;x<w;x++){if(yy[x]>=0&&th2[x]>.3)ctx.fillRect(x,yy[x]-th2[x],1,th2[x]+dpr*.3)}}}
+ try{new ResizeObserver(()=>layout()).observe(h1)}catch(e){addEventListener('resize',layout)}
+ try{document.fonts.ready.then(layout);document.fonts.addEventListener('loadingdone',()=>layout())}catch(e){}setTimeout(layout,300);setTimeout(layout,2000);return{draw,layout}})();
+{let acc=0,last=performance.now();const gs=document.querySelector('svg.gate');const tick=()=>{const n=performance.now();if(!document.hidden)acc+=(n-last)/1000;last=n;const sn=1-Math.exp(-acc/80);gs.style.setProperty('--sn',sn.toFixed(3));tSnow.draw(sn)};setInterval(tick,1500);document.addEventListener('visibilitychange',()=>{last=performance.now()});setTimeout(tick,50)}
 let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(dayLock,200)});
 function renderSel(){applyVol();applyMoves();cal();calLegv();dayLock();weekv();tipv();recapv()}
 const padb=document.createElement('div');padb.setAttribute('aria-hidden','true');document.body.appendChild(padb);let padH=0;
@@ -1529,6 +1568,7 @@ function toggleItem(id,on,el){const e=ITEMS.find(x=>x.id===id);if(!e)return;
  else if(dNow&&!dBefore){confetti(cx,cy,36,140);toastQ('Tag geschafft!',fmt(e.date))}
  else confetti(cx,cy,12,70);
  if(isRun(e)&&!LOG(id)){pend=before;pendUndo={id,prev};openLog(id)}else celebrate(before)}
+document.addEventListener('change',ev=>{const x=ev.target.closest('input.osw');if(!x)return;state.done['off:'+x.dataset.off]={v:x.checked?1:0,t:Date.now()};save();if(x.checked)vib();renderSel()});
 document.addEventListener('change',ev=>{const x=ev.target.closest('input.hsw');if(!x)return;toggleItem(x.dataset.id,x.checked,x.closest('.cb'))});
 // milestones use the queue too
 const canMv=k=>{const[y,m]=month.split('-').map(Number);const d=new Date(y,m-1+k,1);const nm=d.getFullYear()+'-'+pad(d.getMonth()+1);return nm>='2026-11'&&nm<='2027-04'?nm:null};
